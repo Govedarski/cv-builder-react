@@ -1,0 +1,123 @@
+.loginContainer {
+    font-family: 'Oswald', sans-serif;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.loginContainer > * {
+    width: 100%;
+}
+
+
+.loginContainer h1 {
+    font-size: 1.8em;
+    font-weight: 500;
+    margin: 0.67em 0;
+    font-family: 'Montserrat', sans-serif;
+    -webkit-text-stroke: 2px #ffeba7;
+    color: transparent;
+}
+
+
+
+.loginContainer a, .loginContainer label {
+    color: #464545;
+    display: block;
+    margin-bottom: 8px;
+}
+
+
+.loginContainer i {
+    margin-right: 16px;
+    scale: 1.4;
+    color: #ffffff;
+}
+
+
+.flexColumnCenter {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px
+}
+
+
+/*PASSWORD WRAPPER*/
+.passwordWrapper {
+    width: 100%;
+    max-width: 256px;
+    position: relative;
+    margin-top: -8px;
+    padding: 0;
+}
+
+
+.passwordWrapper i {
+    position: absolute;
+    top: calc(50% + 3px);
+    transform: translate(0, -50%);
+    right: 2px;
+    color: #b0afaf;
+    cursor: pointer;
+}
+
+
+
+/*BUTTONS AND INPUT DESIGN*/
+.loginContainer button, .loginContainer input{
+    box-sizing: border-box;
+    height: 42px;
+    border: none;
+    border-radius: 64px;
+    max-width: 256px;
+    width: 100%;
+    font-weight: bold;
+    font-size: 16px;
+    transition: all .3s;
+}
+
+button.facebookBtn {
+    background-color: #3b5998;
+}
+
+button.googleBtn {
+    background-color: #f2681d;
+}
+
+.loginBtn {
+    background-color: #464545;
+    text-transform: uppercase;
+    margin-top: 8px;
+    height: 32px;
+}
+
+/*BUTTON HOVER*/
+.greenLogin:hover {
+    transform: scaleX(1.1);
+    background-color: green;
+    cursor: pointer;
+}
+
+.redLogin:hover {
+    transform: scaleX(0.8);
+    background-color: red;
+}
+
+.loginContainer button:not(.loginBtn):hover {
+    cursor: pointer;
+    background-color: #000;
+    color: #ffffff;
+}
+
+/*ERRORS*/
+button.loginError, button.loginError:hover {
+    margin-top: 8px;
+    height: 64px;
+    width: 64px;
+    background-color: red;
+    cursor: default;
+    border-radius: 24px;
+}
+
+

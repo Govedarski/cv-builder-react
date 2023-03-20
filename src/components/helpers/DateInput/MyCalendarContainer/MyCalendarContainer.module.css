@@ -1,0 +1,8 @@
+.container{
+    position: relative;
+    width: 100%;
+    left: 12%;
+}
+.container>*{
+    display: inline-block;
+}

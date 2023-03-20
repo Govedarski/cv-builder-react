@@ -1,0 +1,29 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    font-family: 'Oswald', sans-serif;
+
+}
+.container>div{
+    width: 100%;
+    text-align: center;
+}
+.container label{
+    white-space: nowrap;
+}
+
+
+.container>button, .container input:not([type="checkbox"]) {
+    box-sizing: border-box;
+    height: 42px;
+    border: none;
+    border-radius: 64px;
+    width: 100%;
+    max-width: 256px;
+    font-weight: bold;
+    font-size: 16px;
+    transition: all .3s;
+    text-align: center;
+}
