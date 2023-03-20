@@ -24,7 +24,7 @@ export function AuthDataFields() {
                 ...prevState, [e.target.name]: e.target.value
             })
         );
-
+dadas
         switch (e.target.name) {
             case "email":
                 context.validateEmailData(e.target);
