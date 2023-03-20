@@ -1,5 +1,5 @@
 export const validator = {
-    validate(validators,  value, targetName, setData) {
+    validate(validators, targetName,  value, setData) {
         let errors = [];
         for (const validatorFunc of validators) {
             let error = validatorFunc(value,targetName);
