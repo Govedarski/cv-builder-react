@@ -1,0 +1,139 @@
+.navList {
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: calc(100% - 280px);
+    min-width: 360px;
+}
+
+@media screen and (min-width: 378px) {
+    .content {
+        right: 50%;
+        transform: translate(50%);
+    }
+}
+
+.content {
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    z-index: 1;
+    opacity: 0;
+    height: fit-content;
+    min-height: 70px;
+    width: 100%;
+    min-width: 360px;
+    padding: 32px 0;
+    max-width: 1200px;
+    border-radius: 0 0 64px 64px;
+    color: #fff;
+    background-color: #191919;
+    animation: 2s fadeIn ease forwards;
+}
+
+.navList a {
+    text-decoration: none;
+    font-size: 32px;
+    color: #fff;
+}
+
+.navListItem {
+    display: inline-block;
+    height: 0;
+    overflow: hidden;
+    animation: 4s slideUp ease forwards;
+}
+
+.navList li {
+    cursor: pointer;
+    padding: 8px 0;
+    text-transform: uppercase;
+    opacity: 0;
+    transform: translateY(-100px);
+    animation: 4s slideUp ease forwards;
+    position: relative;
+    min-width: max-content;
+
+}
+
+.navList li::before {
+    content: '';
+    position: absolute;
+    height: 5px;
+    width: 0px;
+    left: 0;
+    bottom: 0px;
+    background: #000;
+    transition: all .5s ease;
+}
+
+.navList li:hover:before {
+    width: 100%;
+}
+
+.closeBtn {
+    width: 100%;
+    text-align: center;
+    margin-top: 32px;
+}
+
+.navList .closeBtn:hover:before {
+    width: 0;
+}
+
+.fade {
+    opacity: 1;
+    animation: 2s fadeOut ease both;
+}
+
+.fade * {
+    animation: 4s disappear ease backwards;
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1
+    }
+    to {
+        opacity: 0
+    }
+}
+
+@keyframes fadeIn {
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    0% {
+        height: 0;
+        opacity: 0;
+    }
+    20% {
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+        height: 24px;
+    }
+}
+
+@keyframes disappear {
+    100% {
+        transform: translateY(-100px);
+        opacity: 0;
+    }
+}
+
+
+
