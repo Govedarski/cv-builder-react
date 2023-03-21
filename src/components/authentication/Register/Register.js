@@ -13,9 +13,9 @@ export function Register() {
 
     function changeTabHandler(e) {
         e.preventDefault();
-        if(validator.hasErrors(context.authErrors) || validator.hasErrors(context.profileErrors)){
-            return
-        }
+        // if(validator.hasErrors(context.authErrors) || validator.hasErrors(context.profileErrors)){
+        //     return
+        // }
         let tabIndex = Number(e.target.id);
         setTabIndex(tabIndex);
         setAnimation(true);
@@ -24,27 +24,44 @@ export function Register() {
     let tab = '';
     let tabLabelPosition = '';
     let tabName = '';
+    let errorsData = ''
     switch (tabIndex) {
         case 0:
             tab = <AuthDataFields/>;
             tabLabelPosition = styles.left;
             tabName = 'Credentials';
+            errorsData = context.authErrors
             break;
         case 1:
             tab = <ProfileDataFields/>;
             tabLabelPosition = styles.right;
             tabName = 'Profile';
+            errorsData = context.profileErrors
             break;
 
         default:
             break;
     }
 
+    function checkAllData(){
+        Object.entries(context.authData).forEach(([name, value])=>{
+            context.checkAllAuthData(name, value, context)
+        })
+    }
+
+    function hoverHandler() {
+        Object.entries(context.authData).forEach(([name, value])=>{
+            context.checkAllAuthData(name, value, context)
+        })
+        validator.showAllErrors(context.setAuthErrors, true);
+        validator.showAllErrors(context.setProfileErrors, true);
+    }
     function submitHandler(e) {
         e.preventDefault()
-        console.log(context.authData)
         console.log(context.profileData)
+        console.log(context.publicFields)
     }
+
 
     return (<section className={styles.container}>
         <div className={styles.btnWrapper}>
@@ -79,11 +96,11 @@ export function Register() {
             </div>
             <button
                 className={styles.registerBtn}
+                onMouseEnter={hoverHandler}
             >
                 Register
             </button>
         </form>
-        <ErrorList errorData={context.authErrors}/>
-        {/*<ErrorList errorData={profileErrors}/>*/}
+        <ErrorList errorData={errorsData}/>
     </section>);
 }

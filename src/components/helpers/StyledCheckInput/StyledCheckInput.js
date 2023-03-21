@@ -8,9 +8,14 @@ export function StyledCheckInput({checkBoxData}) {
                 right: `${checkBoxData?.positionX}px`,
                 top: `${checkBoxData?.positionY}px`
             }}>
-            <input type="checkbox" id={checkBoxData?.id}/>
+            <input
+                type="checkbox"
+                id={checkBoxData?.name}
+                name={checkBoxData?.name}
+                onChange={checkBoxData.onChangeHandler}
+            />
 
-            <label htmlFor={checkBoxData?.id} className={styles.checkbox} style={{
+            <label htmlFor={checkBoxData?.name} className={styles.checkbox} style={{
                 width: `${checkBoxData?.size}px`,
                 height: `${checkBoxData?.size}px`,
             }}>

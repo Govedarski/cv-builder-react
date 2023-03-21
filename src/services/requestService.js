@@ -2,8 +2,6 @@ const HOST = 'http://127.0.0.1:5000';
 const timeoutMessage = "Request timed out"
 
 async function requestService(method, url, data, userData) {
-    console.log(url);
-    console.log(data);
     const options = {
         method,
         headers: {},
@@ -11,7 +9,9 @@ async function requestService(method, url, data, userData) {
 
     if (data !== undefined) {
         options.headers['Content-Type'] = 'application/json';
-        options.body = JSON.stringify(data);
+        console.log(data);
+        options.body = JSON.stringify(data)
+            .replaceAll(`""`, "null");
     }
 
     if (userData != null) {

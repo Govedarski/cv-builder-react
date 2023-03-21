@@ -1,34 +1,45 @@
 export const validator = {
-    validate(validators, targetName,  value, setData) {
+    validate(validators, name, value, setData) {
         let errors = [];
         for (const validatorFunc of validators) {
-            let error = validatorFunc(value,targetName);
+            let error = validatorFunc(name, value);
             if (error) {
                 errors.push(error);
             }
         }
-        if (setData){
-            this.setErrors(setData, targetName, errors)
+        if (setData) {
+            this.setErrors(setData, name, errors);
         }
 
         return errors;
     },
-
-    setErrors(setData, targetName, errors) {
-        setData(prevState => ({...prevState, [targetName]: errors}));
+    check(fieldName, targetName, value, validators, setData, optional) {
+        if (fieldName && fieldName !== targetName) {
+            return;
+        }
+        if (optional && value.length === 0) {
+            validator.clearErrors(setData, targetName);
+            return;
+        }
+        validator.validate(validators, targetName, value, setData);
     },
 
-    clearErrors(setData, targetName) {
-        setData(prevState => {
-            let newState = {...prevState};
-            newState[targetName] = [];
-            return newState;
-        })},
+    setErrors(setData, name, errors) {
+        setData(prevState => ({...prevState, [name]: errors}));
+    },
 
-    showError(setData, targetName, show) {
+    clearErrors(setData, name) {
         setData(prevState => {
             let newState = {...prevState};
-            newState[targetName].forEach(x => x.show = show);
+            newState[name] = [];
+            return newState;
+        });
+    },
+
+    showError(setData, name, show) {
+        setData(prevState => {
+            let newState = {...prevState};
+            newState[name].forEach(x => x.show = show);
             return newState;
         });
     },
@@ -43,6 +54,12 @@ export const validator = {
 
     hasErrors(errorsData) {
         return (Object.values(errorsData).some(x => x.length > 0));
+    },
+
+    checkAllData(data, checkFunction) {
+        Object.entries(data).forEach(([name, value]) => {
+            checkFunction(name, value);
+        });
     }
 };
 

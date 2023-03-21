@@ -1,24 +1,44 @@
 import {camelCaseTextToNormalText, capitalize} from '../../../utils/helper_functions.js';
 import {StyledCheckInput} from '../StyledCheckInput/StyledCheckInput.js';
-import styles from './FormField.module.css'
+import styles from './FormField.module.css';
 import {DateInput} from '../DateInput/DateInput.js';
+import {PhoneNumberField} from '../PhoneNumberField/PhoneNumberField.js';
+
 export function FormField(fieldData) {
-    let field = ""
+
+    let field = '';
     switch (fieldData.type) {
-        case "date":
+        case 'date':
             field = (
                 <DateInput
-                ref={fieldData._ref}
-                type={fieldData.type}
-                placeholder={fieldData.placeholder || capitalize(camelCaseTextToNormalText(fieldData.name))}
-                _id={fieldData.name}
-                name={fieldData.name}
-                value={fieldData.value}
-                onChange={fieldData.onChange}
-                onBlur={fieldData.onBlur}
-            />
-            )
-            break
+                    ref={fieldData._ref}
+                    type={fieldData.type}
+                    placeholder={fieldData.placeholder || capitalize(camelCaseTextToNormalText(fieldData.name))}
+                    _id={fieldData.name}
+                    name={fieldData.name}
+                    value={fieldData.value}
+                    onChange={fieldData.onChange}
+                    onBlur={fieldData.onBlur}
+                />
+            );
+            break;
+        case 'phoneNumber':
+            field = (
+                <PhoneNumberField
+                    ref={fieldData._ref}
+                    prefix={fieldData.prefix}
+                    length={fieldData.length}
+                    type={"text"}
+                    placeholder={fieldData.placeholder || capitalize(camelCaseTextToNormalText(fieldData.name))}
+                    id={fieldData.name}
+                    name={fieldData.name}
+                    value={fieldData.value}
+                    onChange={fieldData.onChange}
+                    onBlur={fieldData.onBlur}
+                    title={fieldData.fieldTitle}
+                />
+            );
+            break;
         default:
             field = (
                 <input
@@ -32,17 +52,17 @@ export function FormField(fieldData) {
                     onBlur={fieldData.onBlur}
                     title={fieldData.fieldTitle}
                 />
-            )
-            break
+            );
+            break;
     }
     return (
         <div className={styles.container}>
-            {fieldData.label !==null &&
-            <label
-                htmlFor={`${fieldData.name}`}
-                title={fieldData.labelTitle}>
-                {fieldData.label || capitalize(camelCaseTextToNormalText(fieldData.name)) + ":"}
-            </label>}
+            {fieldData.label !== null &&
+                <label
+                    htmlFor={`${fieldData.name}`}
+                    title={fieldData.labelTitle}>
+                    {fieldData.label || capitalize(camelCaseTextToNormalText(fieldData.name)) + ':'}
+                </label>}
             {fieldData.withCheckBox &&
                 <StyledCheckInput
                     checkBoxData={fieldData.checkBoxData}

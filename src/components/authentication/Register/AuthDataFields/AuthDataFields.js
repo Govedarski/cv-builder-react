@@ -1,42 +1,33 @@
 import {FormField} from '../../../helpers/FormField/FormField.js';
-import {
-    validateEmail,
-    validateMaxLength,
-    validateMinLength
-} from '../../../../utils/validation/validation_functions.js';
 import {validator} from '../../../../utils/validation/validator.js';
 import {useContext} from 'react';
 import {RegisterContext} from '../RegisterContext/RegisterContext.js';
 
 export function AuthDataFields() {
-    const context = useContext(RegisterContext)
+    const context = useContext(RegisterContext);
     const authFields = [
-        {name: 'email', type: 'text'},
+        {name: 'email', type: 'text',},
         {name: 'username', type: 'text', fieldTitle: 'Optional', placeholder: 'Username - optional'},
         {name: 'password', type: 'password'},
-        {name: 'confirmPassword', type: 'password'},
+        {name: 'confirmPassword', type: 'password'}
     ];
 
-
+    function blurHandler(e) {
+        context.checkAllAuthData(e.target.name, e.target.value);
+        validator.showError(context.setAuthErrors, e.target.name, true);
+    }
 
     function onChangeHandler(e) {
         context.setAuthData(prevState => ({
                 ...prevState, [e.target.name]: e.target.value
             })
         );
-        switch (e.target.name) {
-            case "email":
-                context.validateEmailData(e.target);
-                break
-            case "username":
-                context.validateUsernameData(e.target);
-                break
-            default:
-                break
+        context.checkUsername(e.target.name, e.target.value);
+        if (context.authErrors[e.target.name]?.length !== 0) {
+            context.checkAllAuthData(e.target.name, e.target.value);
+            validator.showError(context.setAuthErrors, e.target.name, true);
         }
-        validator.showAllErrors(context.setAuthErrors, true)
     }
-
 
 
     return (
@@ -49,6 +40,7 @@ export function AuthDataFields() {
                     fieldTitle={fieldData.fieldTitle}
                     placeholder={fieldData.placeholder}
                     onChange={onChangeHandler}
+                    onBlur={blurHandler}
                     value={context.authData[fieldData.name]}
                 />)}
         </>

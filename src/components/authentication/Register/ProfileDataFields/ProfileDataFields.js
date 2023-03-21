@@ -1,24 +1,35 @@
 import {FormField} from '../../../helpers/FormField/FormField.js';
 import {ImageInput} from '../../../helpers/ImageInput/ImageInput.js';
 import styles from './ProfiledataFields.module.css';
-import placeholder from "./placeholder.jpg"
+import placeholder from './placeholder.jpg';
 import {StyledCheckInput} from '../../../helpers/StyledCheckInput/StyledCheckInput.js';
 import {useContext} from 'react';
 import {RegisterContext} from '../RegisterContext/RegisterContext.js';
+import {camelCaseTextToSnakeCase} from '../../../../utils/helper_functions.js';
 
 export function ProfileDataFields() {
-    const context = useContext(RegisterContext)
+    const context = useContext(RegisterContext);
+
+    function onCheckboxChangeHandler(e) {
+        if (e.target.checked) {
+            context.setPublicFields(prevState => [...prevState, e.target.name]);
+        } else {
+            context.setPublicFields(prevState => prevState.filter(x => x !== e.target.name));
+        }
+    }
+
     const checkBoxData = {
         size: 14,
         textOn: '(Public)',
         textOff: '(Private)',
-        positionX: 16
+        positionX: 16,
+        onChangeHandler: onCheckboxChangeHandler
     };
     const profileFields = [
         {name: 'firstName', type: 'text'},
         {name: 'lastName', type: 'text'},
         {name: 'dateOfBirth', type: 'date'},
-        {name: 'phoneNumber', type: 'text'},
+        {name: 'phoneNumber', type: 'phoneNumber', prefix:"+359 8", length:8},
         {name: 'city', type: 'text'},
         {name: 'address', type: 'text'},
     ];
@@ -28,16 +39,17 @@ export function ProfileDataFields() {
                 ...prevState, [e.target.name]: e.target.value
             })
         );
+        context.checkAllProfileData(e.target.name, e.target.value)
     }
-
 
     return (
         <>
             <div className={styles.imageWrapper}>
-                <ImageInput data={context.profilePicture} setData={context.setProfilePicture} placeholder={placeholder}/>
-                <StyledCheckInput checkBoxData={{...checkBoxData, id:'profilePicturePublic'}}/>
+                <ImageInput data={context.profilePicture} setData={context.setProfilePicture}
+                            placeholder={placeholder}/>
+                <StyledCheckInput checkBoxData={{...checkBoxData, name: 'profile_picture'}}/>
             </div>
-            {profileFields.map(fieldData =>{
+            {profileFields.map(fieldData => {
                 return <FormField
                     key={fieldData.name}
                     name={fieldData.name}
@@ -45,9 +57,15 @@ export function ProfileDataFields() {
                     type={fieldData.type}
                     onChange={onChangeHandler}
                     value={context.profileData[fieldData.name]}
+                    prefix={fieldData.prefix}
+                    length={fieldData.length}
                     withCheckBox={true}
-                    checkBoxData={{...checkBoxData, id: fieldData.name + 'Public'}}
-                />})}
+                    checkBoxData={{
+                        ...checkBoxData,
+                        name: camelCaseTextToSnakeCase(fieldData.name)
+                    }}
+                />;
+            })}
 
         </>
     );
