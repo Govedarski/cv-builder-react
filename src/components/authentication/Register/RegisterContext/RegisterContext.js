@@ -1,12 +1,16 @@
 import {createContext, useState} from 'react';
 import {
-    checkAllAuthData,
-    checkConfirmPassword,
+    checkAllAuthData, checkConfirmPassword,
     checkEmail,
     checkPassword,
     checkUsername
-} from './register_validators/auth_validators.js';
-import {checkAllProfileData, checkFirstName, checkTextField} from './register_validators/profile_validators.js';
+} from './validators/auth_validators.js';
+import {
+    checkAllProfileData,
+    checkCity,
+    checkFirstName,
+    checkLastName, checkPhoneNumber
+} from './validators/profile_validators.js';
 
 export const RegisterContext = createContext({});
 
@@ -14,7 +18,7 @@ export const RegisterProvider = ({
                                  children,
                              }) => {
     const [authData, setAuthData] = useState({
-        email: '', username: '', password: '', confirmPassword: '',
+        email: '', username: '', password: '', confirmPassword:''
     });
     const [profileData, setProfileData] = useState({
         profilePicture: '',
@@ -54,6 +58,9 @@ export const RegisterProvider = ({
             checkConfirmPassword,
             checkAllAuthData,
             checkFirstName,
+            checkLastName,
+            checkCity,
+            checkPhoneNumber,
             checkAllProfileData
         }}>
             {children}

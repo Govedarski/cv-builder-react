@@ -3,18 +3,19 @@ import {useContext, useState} from 'react';
 import {AuthDataFields} from './AuthDataFields/AuthDataFields.js';
 import {ProfileDataFields} from './ProfileDataFields/ProfileDataFields.js';
 import {ErrorList} from '../../helpers/ErrorList/ErrorList.js';
-import {validator} from '../../../utils/validation/validator.js';
 import {RegisterContext} from './RegisterContext/RegisterContext.js';
+import {errorManager} from '../../../utils/errorManager/errorManager.js';
 
 export function Register() {
     const [tabIndex, setTabIndex] = useState(0);
     const [animation, setAnimation] = useState(false);
-    const context = useContext(RegisterContext)
+    const context = useContext(RegisterContext);
+    const hasError = errorManager.hasError(context.authErrors) || errorManager.hasError(context.profileErrors);
 
     function changeTabHandler(e) {
         e.preventDefault();
-        // if(validator.hasErrors(context.authErrors) || validator.hasErrors(context.profileErrors)){
-        //     return
+        // if (hasError) {
+        //     return;
         // }
         let tabIndex = Number(e.target.id);
         setTabIndex(tabIndex);
@@ -24,47 +25,51 @@ export function Register() {
     let tab = '';
     let tabLabelPosition = '';
     let tabName = '';
-    let errorsData = ''
+    let errorsData = '';
     switch (tabIndex) {
         case 0:
             tab = <AuthDataFields/>;
             tabLabelPosition = styles.left;
             tabName = 'Credentials';
-            errorsData = context.authErrors
+            errorsData = context.authErrors;
             break;
         case 1:
             tab = <ProfileDataFields/>;
             tabLabelPosition = styles.right;
             tabName = 'Profile';
-            errorsData = context.profileErrors
+            errorsData = context.profileErrors;
             break;
 
         default:
             break;
     }
 
-    function checkAllData(){
-        Object.entries(context.authData).forEach(([name, value])=>{
-            context.checkAllAuthData(name, value, context)
-        })
+    function checkAllData() {
+        Object.entries(context.authData).forEach(([name, value]) => {
+            context.checkAllAuthData(name, value, context);
+        });
     }
 
     function hoverHandler() {
-        Object.entries(context.authData).forEach(([name, value])=>{
-            context.checkAllAuthData(name, value, context)
-        })
-        validator.showAllErrors(context.setAuthErrors, true);
-        validator.showAllErrors(context.setProfileErrors, true);
-    }
-    function submitHandler(e) {
-        e.preventDefault()
-        console.log(context.profileData)
-        console.log(context.publicFields)
+        Object.entries(context.authData).forEach(([name, value]) => {
+            context.checkAllAuthData(name, value, context);
+        });
+        errorManager.showAllErrors(context.setAuthErrors, true);
+        errorManager.showAllErrors(context.setProfileErrors, true);
     }
 
+    function submitHandler(e) {
+        e.preventDefault();
+        console.log(context.profileData);
+        console.log(context.publicFields);
+    }
+
+    console.log(errorsData)
 
     return (<section className={styles.container}>
-        <div className={styles.btnWrapper}>
+        <div
+            className={styles.btnWrapper + ' ' + (hasError && styles.tabLabelError)}
+        >
             <label
                 className={styles.tabLabel + ' ' + tabLabelPosition}
 
@@ -72,14 +77,21 @@ export function Register() {
             <button
                 className={styles.credentialsTabBtn}
                 id={0}
+                title={hasError ? 'Profile form is incomplete!' : ''}
+                style={hasError ? {cursor: 'default'} : {}}
                 onClick={changeTabHandler}
-            >Credentials
+            >
+                Credentials
             </button>
             <button
                 className={styles.profileTabBtn}
                 id={1}
+                title={hasError ? 'Credentials form is incomplete!' : ''}
+                style={hasError ? {cursor: 'default'} : {}}
+
                 onClick={changeTabHandler}
-            >Profile
+            >
+                Profile
             </button>
         </div>
 

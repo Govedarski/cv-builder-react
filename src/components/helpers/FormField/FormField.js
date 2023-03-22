@@ -56,7 +56,7 @@ export function FormField(fieldData) {
             break;
     }
     return (
-        <div className={styles.container}>
+        <div className={fieldData.styles || styles.container}>
             {fieldData.label !== null &&
                 <label
                     htmlFor={`${fieldData.name}`}

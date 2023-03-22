@@ -8,7 +8,7 @@ export function ErrorList({errorData}) {
         <ul className={styles.errorsList}>
             {errors.map(x => x.map(errorData => {
                         return (
-                            errorData.show &&
+                            errorData.show && errorData.error &&
                             <li key={errorData.error}>
                                 {capitalize(errorData.error)}
                             </li>

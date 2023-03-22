@@ -1,13 +1,14 @@
 import styles from './Login.module.css';
 import {Link, useNavigate} from 'react-router-dom';
-import {useContext, useRef, useState} from 'react';
+import {useContext, useState} from 'react';
 
 import * as authService from '../../../services/authService/authService.js';
 import {AuthContext} from '../../../context/AuthContext.js';
 import {FormField} from '../../helpers/FormField/FormField.js';
 import {ErrorList} from '../../helpers/ErrorList/ErrorList.js';
-import {validateMinLength} from '../../../utils/validation/validation_functions.js';
-import {validator} from '../../../utils/validation/validator.js';
+import {ValidateMinLength} from '../../../utils/validation/validators.js';
+import {validationManager} from '../../../utils/validation/validatonManager.js';
+import {errorManager} from '../../../utils/errorManager/errorManager.js';
 
 export function Login({setIsLoading}) {
     const {userLogin} = useContext(AuthContext);
@@ -22,8 +23,8 @@ export function Login({setIsLoading}) {
     const eyeClass = isPasswordVisible ? 'fa-eye-slash' : 'fa-eye';
 
     const checkField = (name, value) => {
-        validator.validate(
-            [validateMinLength.bind(null, 3)],
+        validationManager.validate(
+            [new ValidateMinLength(3)],
             name,
             value,
             setErrorData
@@ -38,36 +39,36 @@ export function Login({setIsLoading}) {
     const onChangeHandler = (e) => {
         if (errorData[e.target.name].length !== 0) {
             checkField(e.target.name, e.target.value);
-            validator.showError(setErrorData, e.target.name, true);
+            errorManager.showErrorsFor(e.target.name, setErrorData, true);
         }
         setLoginData(prevState => ({
             ...prevState, [e.target.name]: e.target.value
         }));
         if (errorData.server.length !== 0) {
-            validator.clearErrors(setErrorData, 'server');
+            errorManager.clearErrors(setErrorData, 'server');
         }
     };
 
     let loginBtnClass = styles.loginBtn;
-    loginBtnClass = (validator.hasErrors(errorData))
+    loginBtnClass = (errorManager.hasError(errorData))
         ? loginBtnClass + ' ' + styles.redLogin
         : loginBtnClass + ' ' + styles.greenLogin;
 
     const onHoverHandler = () => {
         checkAllFields();
-        validator.showAllErrors(setErrorData, true);
+        errorManager.showAllErrors(setErrorData, true);
     };
 
     const onBlurHandler = (e) => {
         checkField(e.target.name, e.target.value);
-        validator.showError(setErrorData, e.target.name, true);
+        errorManager.showErrorsFor(e.target.name, setErrorData, true);
     };
     const onSubmitHandler = (e) => {
         e.preventDefault();
         checkAllFields();
-        validator.showAllErrors(setErrorData, true);
+        errorManager.showAllErrors(setErrorData, true);
 
-        if (validator.hasErrors(errorData)) {
+        if (errorManager.hasError(errorData)) {
             return;
         }
         setIsLoading(true);
@@ -82,7 +83,7 @@ export function Login({setIsLoading}) {
             })
             .catch(er => {
                 const errors = [{error: er.message, show: true}];
-                validator.setErrors(setErrorData, 'server', errors);
+                errorManager.setErrors(setErrorData, 'server', errors);
                 setIsLoading(false);
             });
     };
