@@ -17,7 +17,7 @@ export function PhoneNumberField(data) {
             return
         }
         e.target = {...e.target}
-        e.target.value = e.target.value.replaceAll(" ", "")
+        e.target.value = value
         data.onChange(e)
     }
 
@@ -25,6 +25,7 @@ export function PhoneNumberField(data) {
 
         let value = e.target.value;
         value = value.replaceAll(data.prefix, '').replaceAll(' ', '');
+
         e.target.value = data.prefix;
         for (let i = 0; i < value.length; i += 2) {
             e.target.value += value.substring(i, i + 2) + ' ';
@@ -36,7 +37,7 @@ export function PhoneNumberField(data) {
             return
         }
         e.target = {...e.target}
-        e.target.value = e.target.value.replaceAll(" ", "")
+        e.target.value = value
         data.onBlur(e)
 
     }
