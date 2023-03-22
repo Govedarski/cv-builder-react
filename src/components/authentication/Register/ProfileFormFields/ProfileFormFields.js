@@ -1,13 +1,13 @@
 import {FormField} from '../../../helpers/FormField/FormField.js';
-import {ImageInput} from '../../../helpers/ImageInput/ImageInput.js';
+import {ImageInput} from '../../../helpers/custom_inputs/ImageInput/ImageInput.js';
 import styles from './ProfiledataFields.module.css';
 import placeholder from './placeholder.jpg';
-import {StyledCheckInput} from '../../../helpers/StyledCheckInput/StyledCheckInput.js';
+import {StyledCheckInput} from '../../../helpers/custom_inputs/StyledCheckInput/StyledCheckInput.js';
 import {useContext} from 'react';
 import {RegisterContext} from '../RegisterContext/RegisterContext.js';
 import {camelCaseTextToSnakeCase} from '../../../../utils/helper_functions.js';
 
-export function ProfileDataFields() {
+export function ProfileFormFields() {
     const context = useContext(RegisterContext);
 
     function onCheckboxChangeHandler(e) {

@@ -1,7 +1,7 @@
 import styles from './Register.module.css';
 import {useContext, useState} from 'react';
-import {AuthDataFields} from './AuthDataFields/AuthDataFields.js';
-import {ProfileDataFields} from './ProfileDataFields/ProfileDataFields.js';
+import {AuthFormFields} from './AuthFormFields/AuthFormFields.js';
+import {ProfileFormFields} from './ProfileFormFields/ProfileFormFields.js';
 import {ErrorList} from '../../helpers/ErrorList/ErrorList.js';
 import {RegisterContext} from './RegisterContext/RegisterContext.js';
 import {errorManager} from '../../../utils/errorManager/errorManager.js';
@@ -28,13 +28,13 @@ export function Register() {
     let errorsData = '';
     switch (tabIndex) {
         case 0:
-            tab = <AuthDataFields/>;
+            tab = <AuthFormFields/>;
             tabLabelPosition = styles.left;
             tabName = 'Credentials';
             errorsData = context.authErrors;
             break;
         case 1:
-            tab = <ProfileDataFields/>;
+            tab = <ProfileFormFields/>;
             tabLabelPosition = styles.right;
             tabName = 'Profile';
             errorsData = context.profileErrors;

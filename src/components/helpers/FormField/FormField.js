@@ -1,8 +1,8 @@
 import {camelCaseTextToNormalText, capitalize} from '../../../utils/helper_functions.js';
-import {StyledCheckInput} from '../StyledCheckInput/StyledCheckInput.js';
+import {StyledCheckInput} from '../custom_inputs/StyledCheckInput/StyledCheckInput.js';
 import styles from './FormField.module.css';
-import {DateInput} from '../DateInput/DateInput.js';
-import {PhoneNumberField} from '../PhoneNumberField/PhoneNumberField.js';
+import {DateInput} from '../custom_inputs/DateInput/DateInput.js';
+import {PhoneNumberInput} from '../custom_inputs/PhoneNumberInput/PhoneNumberInput.js';
 
 export function FormField(fieldData) {
 
@@ -24,7 +24,7 @@ export function FormField(fieldData) {
             break;
         case 'phoneNumber':
             field = (
-                <PhoneNumberField
+                <PhoneNumberInput
                     ref={fieldData._ref}
                     prefix={fieldData.prefix}
                     length={fieldData.length}

@@ -1,7 +1,7 @@
-import {camelCaseTextToNormalText, capitalize} from '../../../utils/helper_functions.js';
+import {camelCaseTextToNormalText, capitalize} from '../../../../utils/helper_functions.js';
 import {useState} from 'react';
 
-export function PhoneNumberField(data) {
+export function PhoneNumberInput(data) {
     const [number, setNumber] = useState(data.prefix);
 
     function onChangeWrapper(e) {

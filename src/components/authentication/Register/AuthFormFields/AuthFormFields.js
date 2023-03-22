@@ -3,7 +3,7 @@ import {validationManager} from '../../../../utils/validation/validatonManager.j
 import {useContext} from 'react';
 import {RegisterContext} from '../RegisterContext/RegisterContext.js';
 
-export function AuthDataFields() {
+export function AuthFormFields() {
     const context = useContext(RegisterContext);
     const authFields = [
         {name: 'email', type: 'text',},
