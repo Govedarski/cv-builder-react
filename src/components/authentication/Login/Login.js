@@ -31,11 +31,6 @@ export function Login({setIsLoading}) {
         );
     };
 
-    const checkAllFields = () => {
-        Object.entries(loginData).forEach(([name, value]) => {
-            checkField(name, value);
-        });
-    };
     const onChangeHandler = (e) => {
         if (errorData[e.target.name].length !== 0) {
             checkField(e.target.name, e.target.value);
@@ -55,7 +50,7 @@ export function Login({setIsLoading}) {
         : loginBtnClass + ' ' + styles.greenLogin;
 
     const onHoverHandler = () => {
-        checkAllFields();
+        validationManager.checkData(loginData, checkField);
         errorManager.showAllErrors(setErrorData, true);
     };
 
@@ -65,7 +60,7 @@ export function Login({setIsLoading}) {
     };
     const onSubmitHandler = (e) => {
         e.preventDefault();
-        checkAllFields();
+        validationManager.checkData(loginData, checkField);
         errorManager.showAllErrors(setErrorData, true);
 
         if (errorManager.hasError(errorData)) {

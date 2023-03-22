@@ -14,15 +14,21 @@ export const validationManager = {
         return errors;
     },
 
-    check(allowedField, targetName, value, validators, setData, optional) {
-        if (allowedField && allowedField !== targetName) {
+    checkField(targetField, fieldName, value, validators, setData, optional) {
+        if (targetField && targetField !== fieldName) {
             return;
         }
         if (optional && value.length === 0) {
-            errorManager.clearErrors(setData, targetName);
+            errorManager.clearErrors(setData, fieldName);
             return;
         }
-        this.validate(validators, targetName, value, setData);
+        this.validate(validators, fieldName, value, setData);
     },
+
+    checkData(data, checkFunction){
+        return Object.entries(data).forEach(([name, value]) => {
+            checkFunction(name, value);
+        });
+    }
 };
 

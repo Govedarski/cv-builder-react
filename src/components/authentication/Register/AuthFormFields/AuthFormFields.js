@@ -1,7 +1,7 @@
 import {FormField} from '../../../helpers/FormField/FormField.js';
-import {validationManager} from '../../../../utils/validation/validatonManager.js';
 import {useContext} from 'react';
 import {RegisterContext} from '../RegisterContext/RegisterContext.js';
+import {errorManager} from '../../../../utils/errorManager/errorManager.js';
 
 export function AuthFormFields() {
     const context = useContext(RegisterContext);
@@ -14,7 +14,7 @@ export function AuthFormFields() {
 
     function blurHandler(e) {
         context.checkAllAuthData(e.target.name, e.target.value);
-        validationManager.showErrorsFor(e.target.name, context.setAuthErrors,  true);
+        errorManager.showErrorsFor(e.target.name, context.setAuthErrors,  true);
     }
 
     function onChangeHandler(e) {
@@ -25,7 +25,7 @@ export function AuthFormFields() {
         context.checkUsername(e.target.name, e.target.value);
         if (context.authErrors[e.target.name]?.length !== 0) {
             context.checkAllAuthData(e.target.name, e.target.value);
-            validationManager.showErrorsFor(e.target.name, context.setAuthErrors,  true);
+            errorManager.showErrorsFor(e.target.name, context.setAuthErrors,  true);
         }
     }
 

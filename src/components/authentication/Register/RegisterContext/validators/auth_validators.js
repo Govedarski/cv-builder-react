@@ -9,6 +9,7 @@ import {
     ValidateSpecialSymbols,
     ValidateUppercaseCharactersMinCount
 } from '../../../../../utils/validation/validators.js';
+import {errorManager} from '../../../../../utils/errorManager/errorManager.js';
 
 
 export function checkEmail(name, value) {
@@ -16,7 +17,7 @@ export function checkEmail(name, value) {
         new ValidateEmail(),
         new ValidateMinLength(1, {errorMessage: 'Email is required!'})
     ];
-    validationManager.check('email', name, value, validators, this.setAuthErrors, false);
+    validationManager.checkField('email', name, value, validators, this.setAuthErrors, false);
 }
 
 export function checkUsername(name, value) {
@@ -25,7 +26,7 @@ export function checkUsername(name, value) {
         new ValidateMaxLength(64),
         new ValidateIsAlphaNumericAndSpace()
     ];
-    validationManager.check('username', name, value, validators, this.setAuthErrors, true);
+    validationManager.checkField('username', name, value, validators, this.setAuthErrors, true);
 }
 
 export function checkPassword(name, value) {
@@ -42,7 +43,7 @@ export function checkPassword(name, value) {
         );
     }
 
-    validationManager.check('password', name, value, validators, this.setAuthErrors, false);
+    validationManager.checkField('password', name, value, validators, this.setAuthErrors, false);
 }
 
 export function checkConfirmPassword(name, value) {
@@ -54,7 +55,7 @@ export function checkConfirmPassword(name, value) {
         'password',
         value,
         this.SetAuthErrors)[0];
-    validationManager.setError(this.setAuthErrors, 'password', error, 4);
+    errorManager.setError(this.setAuthErrors, 'password', error, 4);
 }
 
 

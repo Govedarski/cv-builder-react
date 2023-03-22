@@ -13,7 +13,7 @@ export function checkFirstName(name, value) {
         new ValidateMaxLength(64),
         new ValidateIsAlphaAndSpace()
     ];
-    validationManager.check('firstName', name, value, validators, this.setProfileErrors, true);
+    validationManager.checkField('firstName', name, value, validators, this.setProfileErrors, true);
 
 }
 export function checkLastName(name, value) {
@@ -22,7 +22,7 @@ export function checkLastName(name, value) {
         new ValidateMaxLength(64),
         new ValidateIsAlphaAndSpace()
     ];
-    validationManager.check('lastName', name, value, validators, this.setProfileErrors, true);
+    validationManager.checkField('lastName', name, value, validators, this.setProfileErrors, true);
 }
 
 export function checkCity(name, value) {
@@ -31,14 +31,14 @@ export function checkCity(name, value) {
         new ValidateMaxLength(64),
         new ValidateIsAlphaAndSpace()
     ];
-    validationManager.check('city', name, value, validators, this.setProfileErrors, true);
+    validationManager.checkField('city', name, value, validators, this.setProfileErrors, true);
 }
 
 export function checkPhoneNumber(name, value) {
     const validators = [
         new ValidateMinLength(8),
     ];
-    validationManager.check('phoneNumber', name, value, validators, this.setProfileErrors, true);
+    validationManager.checkField('phoneNumber', name, value, validators, this.setProfileErrors, true);
 }
 
 
