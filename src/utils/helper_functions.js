@@ -14,6 +14,14 @@ export function camelCaseTextToSnakeCase(camelCaseString) {
         .map((word) => word.toLowerCase()).join('_');
 }
 
+export function changeObjectKeysNaming(obj, converter) {
+    const snakeObj = {};
+    for (let key in obj) {
+        const snakeKey = converter(key);
+        snakeObj[snakeKey] = obj[key];
+    }
+    return snakeObj;
+}
 
 export function formatDate(date, format) {
     let day = String(date.getDate());
@@ -30,3 +38,4 @@ export function formatDate(date, format) {
         .replaceAll("yyyy", year)
     return result
 }
+
