@@ -5,14 +5,12 @@ import {useState} from 'react';
 import {formatDate} from '../../../../utils/helper_functions.js';
 
 export function DateInput(data) {
-    const [date, setData] = useState('');
     const dateFormat = 'dd/MM/yyyy';
-
+    //
     function changeHandlerWrapper(date) {
-        setData(date);
         const target = {
             name: data.name,
-            value: formatDate(date, 'dd/MM/yyyy')
+            value: date
         };
         data.onChange({target});
     }
@@ -26,7 +24,7 @@ export function DateInput(data) {
             onBlur={data.onBlur}
             calendarContainer={MyCalendarContainer}
             placeholderText={data.placeholder}
-            selected={date}
+            selected={data.value}
             dateFormat={dateFormat}
             onChange={changeHandlerWrapper}
             peekNextMonth

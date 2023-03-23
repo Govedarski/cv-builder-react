@@ -71,13 +71,14 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    margin: 16px;
+    margin: 16px 0 32px 0;
     height: 520px;
 }
 
-.registerBtn {
+.submitBtn {
+    border: none;
     position: absolute;
-    bottom: -8px;
+    bottom: -32px;
     left: 50%;
     transform: translate(-50%, 100%);
     background-color: #464545;
@@ -86,6 +87,23 @@
     border-radius: 64px;
     width: 50%;
     max-width: 256px;
+    transition: all .3s;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+/*BUTTON HOVER*/
+.green:hover {
+    background-color: green;
+    cursor: pointer;
+    width: calc(1.1 * 50%);
+    max-width: calc(1.1 * 256px);
+}
+
+.red:hover {
+    background-color: red;
+    width: calc(0.8 * 50%);
+    max-width: calc(0.8 * 256px);
 }
 
 .slideUp {
@@ -119,6 +137,28 @@
 .registerForm span[role=alert] {
     display: none;
 }
+
+.registerTitle{
+    z-index: 10;
+    background: transparent;
+    border-radius: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 256px;
+    position: absolute;
+    top:-100%;
+    left: 50%;
+    transform: translate(-50%);
+    font-size: 1.8em;
+    font-weight: 500;
+    margin: 0.67em 0;
+    font-family: 'Montserrat', sans-serif;
+    -webkit-text-stroke: 2px #ffeba7;
+    color: transparent;
+}
+
+
 
 @keyframes slideRight {
     0% {

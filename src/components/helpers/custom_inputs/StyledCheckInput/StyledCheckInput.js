@@ -10,6 +10,7 @@ export function StyledCheckInput({checkBoxData}) {
             }}>
             <input
                 type="checkbox"
+                checked={checkBoxData.checkedFields?.includes(checkBoxData.name)}
                 id={checkBoxData?.name}
                 name={checkBoxData?.name}
                 onChange={checkBoxData.onChangeHandler}

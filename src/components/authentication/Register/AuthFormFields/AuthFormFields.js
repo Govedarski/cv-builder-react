@@ -36,6 +36,7 @@ export function AuthFormFields() {
                 <FormField
                     key={fieldData.name}
                     name={fieldData.name}
+                    type={fieldData.type}
                     id={fieldData.name}
                     fieldTitle={fieldData.fieldTitle}
                     placeholder={fieldData.placeholder}

@@ -4,6 +4,7 @@ import {AuthFormFields} from './AuthFormFields/AuthFormFields.js';
 import {ProfileFormFields} from './ProfileFormFields/ProfileFormFields.js';
 import {ErrorList} from '../../helpers/ErrorList/ErrorList.js';
 import {RegisterContext} from './RegisterContext/RegisterContext.js';
+import {camelCaseTextToSnakeCase, changeObjectKeysNaming, formatDate} from '../../../utils/helper_functions.js';
 
 export function Register() {
     const [tabIndex, setTabIndex] = useState(0);
@@ -14,9 +15,9 @@ export function Register() {
 
     function changeTabHandler(e) {
         e.preventDefault();
-        // if (hasError) {
-        //     return;
-        // }
+        if (hasError) {
+            return;
+        }
         let tabIndex = Number(e.target.id);
         setTabIndex(tabIndex);
         setAnimation(true);
@@ -39,7 +40,6 @@ export function Register() {
             tabName = 'Profile';
             errorsData = context.profileErrorManager.errorData;
             break;
-
         default:
             break;
     }
@@ -54,17 +54,36 @@ export function Register() {
 
     function submitHandler(e) {
         e.preventDefault();
-        console.log(context.profileData);
-        console.log(context.publicFields);
+        Object.entries(context.authData).forEach(([name, value]) => {
+            context.checkAllAuthData(name, value);
+        });
+        context.authErrorManager.showAllErrors(true);
+        context.profileErrorManager.showAllErrors(true);
+
+        let profileData = {
+            ...context.profileData,
+            publicFields: context.publicFields,
+            profilePictureBinary: context.profilePicture.binary,
+            extension: context.profilePicture.extension
+        };
+        profileData.dateOfBirth = formatDate(profileData.dateOfBirth, "dd/MM/yyyy")
+
+        console.log(context.authData)
+        console.log(changeObjectKeysNaming(profileData, camelCaseTextToSnakeCase))
+        // console.log(profileData)
     }
 
-    console.log(errorsData);
 
     return (
         <section className={styles.container}>
             <div
                 className={styles.btnWrapper + ' ' + (hasError && styles.tabLabelError)}
+                onMouseEnter={hoverHandler}
             >
+                <h1
+                    className={styles.registerTitle}
+
+                >REGISTER</h1>
                 <label
                     className={styles.tabLabel + ' ' + tabLabelPosition}
 
@@ -81,7 +100,7 @@ export function Register() {
                 <button
                     className={styles.profileTabBtn}
                     id={1}
-                    title={hasError ? 'Credentials form is incomplete!' : ''}
+                    title={hasError ? 'You need to fill in your credentials before fill in profile information!' : ''}
                     style={hasError ? {cursor: 'default'} : {}}
 
                     onClick={changeTabHandler}
@@ -102,7 +121,7 @@ export function Register() {
                     {tab}
                 </div>
                 <button
-                    className={styles.registerBtn}
+                    className={styles.submitBtn + ' ' + (hasError ? styles.red : styles.green)}
                     onMouseEnter={hoverHandler}
                 >
                     Register

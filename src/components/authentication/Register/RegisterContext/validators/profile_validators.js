@@ -36,7 +36,7 @@ export function checkCity(name, value) {
 
 export function checkPhoneNumber(name, value) {
     const validators = [
-        new ValidateMinLength(8),
+        new ValidateMinLength(13),
     ];
     validationManager.checkField('phoneNumber', name, value, validators, this.profileErrorManager, true);
 }

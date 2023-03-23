@@ -62,7 +62,8 @@ export function ProfileFormFields() {
                     withCheckBox={true}
                     checkBoxData={{
                         ...checkBoxData,
-                        name: camelCaseTextToSnakeCase(fieldData.name)
+                        name: camelCaseTextToSnakeCase(fieldData.name),
+                        checkedFields: context.publicFields
                     }}
                 />;
             })}

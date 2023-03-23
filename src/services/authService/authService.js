@@ -7,3 +7,7 @@ export async function loginJobSeeker(identifier, password) {
         password
     })
 }
+
+export async function register(credentials, profileData){
+    let registerData = {credentials, profileData}
+}

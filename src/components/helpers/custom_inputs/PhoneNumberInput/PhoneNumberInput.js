@@ -2,7 +2,10 @@ import {camelCaseTextToNormalText, capitalize} from '../../../../utils/helper_fu
 import {useState} from 'react';
 
 export function PhoneNumberInput(data) {
-    const [number, setNumber] = useState(data.prefix);
+    const prefixNoSpace = data.prefix.replaceAll(' ', '');
+    const initialValue = data.value ? format(data.value) : data.prefix;
+    const [number, setNumber] = useState(initialValue);
+
     function onChangeWrapper(e) {
         let value = e.target.value;
         value = value.replaceAll(data.prefix, '').replaceAll(' ', '');
@@ -12,36 +15,39 @@ export function PhoneNumberInput(data) {
         }
         setNumber(e.target.value);
 
-        if (!data.onChange){
-            return
+        if (!data.onChange) {
+            return;
         }
 
-        e.target = {...e.target}
-        e.target.value = value
-        e.target.name = data.name
-        data.onChange(e)
+        e.target = {...e.target};
+        e.target.value = data.prefix.replace(' ', '') + value;
+        e.target.name = data.name;
+        data.onChange(e);
     }
 
     function onBlurWrapper(e) {
+        let value = format(e.target.value)
 
-        let value = e.target.value;
-        value = value.replaceAll(data.prefix, '').replaceAll(' ', '');
+        setNumber(value);
 
-        e.target.value = data.prefix;
+        if (!data.onBlur) {
+            return;
+        }
+        e.target = {...e.target};
+        e.target.value = data.prefix.replace(' ', '') + value;
+        e.target.name = data.name;
+        data.onBlur(e);
+
+    }
+
+    function format(value) {
+        value = value.replaceAll(' ', '').replaceAll(prefixNoSpace, '');
+
+        let result = data.prefix;
         for (let i = 0; i < value.length; i += 2) {
-            e.target.value += value.substring(i, i + 2) + ' ';
+            result += value.substring(i, i + 2) + ' ';
         }
-
-        setNumber(e.target.value.trim());
-
-        if (!data.onBlur){
-            return
-        }
-        e.target = {...e.target}
-        e.target.value = value
-        e.target.name = data.name
-        data.onBlur(e)
-
+        return result.trim();
     }
 
     return (

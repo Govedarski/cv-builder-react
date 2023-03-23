@@ -27,7 +27,7 @@ export const RegisterProvider = ({
         profilePicture: '',
         firstName: '',
         lastName: '',
-        dataOfBirth: '',
+        dateOfBirth: '',
         phoneNumber: '',
         city: '',
         address: '',
