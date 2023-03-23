@@ -1,6 +1,7 @@
 import {createContext, useState} from 'react';
 import {
-    checkAllAuthData, checkConfirmPassword,
+    checkAllAuthData,
+    checkConfirmPassword,
     checkEmail,
     checkPassword,
     checkUsername
@@ -9,8 +10,10 @@ import {
     checkAllProfileData,
     checkCity,
     checkFirstName,
-    checkLastName, checkPhoneNumber
+    checkLastName,
+    checkPhoneNumber
 } from './validators/profile_validators.js';
+import {useErrorManager} from '../../../../hooks/userErrorManager.js';
 
 export const RegisterContext = createContext({});
 
@@ -35,8 +38,8 @@ export const RegisterProvider = ({
         extension:""
     })
     const [publicFields, setPublicFields] = useState([])
-    const [authErrors, setAuthErrors] = useState({});
-    const [profileErrors, setProfileErrors] = useState({});
+    const authErrorManager = useErrorManager({email: [], username: [], password: []})
+    const profileErrorManager = useErrorManager({})
 
     return (
         <RegisterContext.Provider value={{
@@ -46,12 +49,10 @@ export const RegisterProvider = ({
             setProfileData,
             profilePicture,
             setProfilePicture,
-            authErrors,
-            setAuthErrors,
-            profileErrors,
-            setProfileErrors,
             publicFields,
             setPublicFields,
+            authErrorManager,
+            profileErrorManager,
             checkEmail,
             checkUsername,
             checkPassword,

@@ -9,7 +9,6 @@ import {
     ValidateSpecialSymbols,
     ValidateUppercaseCharactersMinCount
 } from '../../../../../utils/validation/validators.js';
-import {errorManager} from '../../../../../utils/errorManager/errorManager.js';
 
 
 export function checkEmail(name, value) {
@@ -17,7 +16,7 @@ export function checkEmail(name, value) {
         new ValidateEmail(),
         new ValidateMinLength(1, {errorMessage: 'Email is required!'})
     ];
-    validationManager.checkField('email', name, value, validators, this.setAuthErrors, false);
+    validationManager.checkField('email', name, value, validators, this.authErrorManager, false);
 }
 
 export function checkUsername(name, value) {
@@ -26,7 +25,7 @@ export function checkUsername(name, value) {
         new ValidateMaxLength(64),
         new ValidateIsAlphaNumericAndSpace()
     ];
-    validationManager.checkField('username', name, value, validators, this.setAuthErrors, true);
+    validationManager.checkField('username', name, value, validators, this.authErrorManager, true);
 }
 
 export function checkPassword(name, value) {
@@ -36,32 +35,26 @@ export function checkPassword(name, value) {
         new ValidateNumberCharactersMinCount(1),
         new ValidateSpecialSymbols(1)
     ];
+    validationManager.checkField('password', name, value, validators, this.authErrorManager, false);
 
-    if (this.authErrors?.password?.length > 4) {
-        validators.push(
-            new ValidatePasswordMatch(this.authData.confirmPassword)
-        );
+    if (this.authData.confirmPassword.length > 0 && name === 'password') {
+        let errors = validationManager.validate(
+            [new ValidatePasswordMatch(this.authData.confirmPassword)],
+            'confirmPassword',
+            value);
+        this.authErrorManager.setErrors('confirmPassword', errors);
     }
-
-    validationManager.checkField('password', name, value, validators, this.setAuthErrors, false);
 }
 
 export function checkConfirmPassword(name, value) {
-    if (name !== 'confirmPassword') {
-        return;
-    }
-    let error = validationManager.validate(
-        [new ValidatePasswordMatch(this.authData.password)],
-        'password',
-        value,
-        this.SetAuthErrors)[0];
-    errorManager.setError(this.setAuthErrors, 'password', error, 4);
+    const validator = [new ValidatePasswordMatch(this.authData.password)];
+    validationManager.checkField('confirmPassword', name, value, validator, this.authErrorManager, false);
 }
 
 
 export function checkAllAuthData(name, value) {
-    this.checkEmail(name, value);
     this.checkUsername(name, value);
+    this.checkEmail(name, value);
     this.checkPassword(name, value);
     this.checkConfirmPassword(name, value);
 }

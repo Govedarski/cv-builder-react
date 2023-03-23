@@ -1,17 +1,17 @@
 import validator from 'email-validator';
 
 class Validator {
-    showByDefault = false;
+    showByDefault=false;
 
     constructor(options = {}) {
-        this.show = options.show !== undefined ? options.show : this.showByDefault;
+        this.show = options.show;
         this.errorMessage = options.errorMessage;
     }
 
     getError(defaultErrorMessage) {
         return {
             error: this.errorMessage || (defaultErrorMessage),
-            show: this.show
+            show: this.show || this.showByDefault
         };
     }
 }

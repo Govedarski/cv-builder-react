@@ -1,28 +1,26 @@
-import {errorManager} from '../errorManager/errorManager.js';
-
 export const validationManager = {
-    validate(validators, name, value, setData) {
+    validate(validators, name, value, errorManager) {
         let errors = [];
         for (const validator of validators) {
             let error = validator.validate(name, value);
             errors.push(error || {});
         }
-        if (setData) {
-            errorManager.setErrors(setData, name, errors);
+        if (errorManager) {
+            errorManager.setErrors(name, errors);
         }
 
         return errors;
     },
 
-    checkField(targetField, fieldName, value, validators, setData, optional) {
+    checkField(targetField, fieldName, value, validators, errorManager, optional) {
         if (targetField && targetField !== fieldName) {
             return;
         }
         if (optional && value.length === 0) {
-            errorManager.clearErrors(setData, fieldName);
+            errorManager.clearErrors(fieldName);
             return;
         }
-        this.validate(validators, fieldName, value, setData);
+        return this.validate(validators, fieldName, value, errorManager);
     },
 
     checkData(data, checkFunction){

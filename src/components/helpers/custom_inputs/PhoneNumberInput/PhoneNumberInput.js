@@ -3,7 +3,6 @@ import {useState} from 'react';
 
 export function PhoneNumberInput(data) {
     const [number, setNumber] = useState(data.prefix);
-
     function onChangeWrapper(e) {
         let value = e.target.value;
         value = value.replaceAll(data.prefix, '').replaceAll(' ', '');
@@ -16,8 +15,10 @@ export function PhoneNumberInput(data) {
         if (!data.onChange){
             return
         }
+
         e.target = {...e.target}
         e.target.value = value
+        e.target.name = data.name
         data.onChange(e)
     }
 
@@ -38,6 +39,7 @@ export function PhoneNumberInput(data) {
         }
         e.target = {...e.target}
         e.target.value = value
+        e.target.name = data.name
         data.onBlur(e)
 
     }

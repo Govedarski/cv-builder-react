@@ -1,7 +1,6 @@
 import {FormField} from '../../../helpers/FormField/FormField.js';
 import {useContext} from 'react';
 import {RegisterContext} from '../RegisterContext/RegisterContext.js';
-import {errorManager} from '../../../../utils/errorManager/errorManager.js';
 
 export function AuthFormFields() {
     const context = useContext(RegisterContext);
@@ -14,19 +13,20 @@ export function AuthFormFields() {
 
     function blurHandler(e) {
         context.checkAllAuthData(e.target.name, e.target.value);
-        errorManager.showErrorsFor(e.target.name, context.setAuthErrors,  true);
+        context.authErrorManager.showErrorsFor(e.target.name);
     }
 
-    function onChangeHandler(e) {
+    function changeHandler(e) {
+        if (context.authErrorManager.didFieldShowErrors(e.target.name)) {
+            context.checkAllAuthData(e.target.name, e.target.value);
+            context.authErrorManager.showErrorsFor(e.target.name);
+        } else {
+            context.checkUsername(e.target.name, e.target.value);
+        }
         context.setAuthData(prevState => ({
                 ...prevState, [e.target.name]: e.target.value
             })
         );
-        context.checkUsername(e.target.name, e.target.value);
-        if (context.authErrors[e.target.name]?.length !== 0) {
-            context.checkAllAuthData(e.target.name, e.target.value);
-            errorManager.showErrorsFor(e.target.name, context.setAuthErrors,  true);
-        }
     }
 
 
@@ -39,7 +39,7 @@ export function AuthFormFields() {
                     id={fieldData.name}
                     fieldTitle={fieldData.fieldTitle}
                     placeholder={fieldData.placeholder}
-                    onChange={onChangeHandler}
+                    onChange={changeHandler}
                     onBlur={blurHandler}
                     value={context.authData[fieldData.name]}
                 />)}

@@ -8,14 +8,14 @@ import {FormField} from '../../helpers/FormField/FormField.js';
 import {ErrorList} from '../../helpers/ErrorList/ErrorList.js';
 import {ValidateMinLength} from '../../../utils/validation/validators.js';
 import {validationManager} from '../../../utils/validation/validatonManager.js';
-import {errorManager} from '../../../utils/errorManager/errorManager.js';
+import {useErrorManager} from '../../../hooks/userErrorManager.js';
 
 export function Login({setIsLoading}) {
     const {userLogin} = useContext(AuthContext);
     const navigate = useNavigate();
     const [isPasswordVisible, togglePasswordVisibility] = useState(false);
     const [loginData, setLoginData] = useState({identifier: '', password: ''});
-    const [errorData, setErrorData] = useState({identifier: [], password: [], server: []});
+    const errorManager = useErrorManager({identifier: [], password: [], server: []});
 
     const passwordVisibilityHandler = () => {
         togglePasswordVisibility(prevState => !prevState);
@@ -27,43 +27,43 @@ export function Login({setIsLoading}) {
             [new ValidateMinLength(3)],
             name,
             value,
-            setErrorData
+            errorManager
         );
     };
 
     const onChangeHandler = (e) => {
-        if (errorData[e.target.name].length !== 0) {
+        if (errorManager.didFieldShowErrors(e.target.name)) {
             checkField(e.target.name, e.target.value);
-            errorManager.showErrorsFor(e.target.name, setErrorData, true);
+            errorManager.showErrorsFor(e.target.name,);
         }
         setLoginData(prevState => ({
             ...prevState, [e.target.name]: e.target.value
         }));
-        if (errorData.server.length !== 0) {
-            errorManager.clearErrors(setErrorData, 'server');
+        if (errorManager.didFieldShowErrors('server')) {
+            errorManager.clearErrors('server');
         }
     };
 
     let loginBtnClass = styles.loginBtn;
-    loginBtnClass = (errorManager.hasError(errorData))
+    loginBtnClass = (errorManager.hasError())
         ? loginBtnClass + ' ' + styles.redLogin
         : loginBtnClass + ' ' + styles.greenLogin;
 
     const onHoverHandler = () => {
         validationManager.checkData(loginData, checkField);
-        errorManager.showAllErrors(setErrorData, true);
+        errorManager.showAllErrors();
     };
 
     const onBlurHandler = (e) => {
         checkField(e.target.name, e.target.value);
-        errorManager.showErrorsFor(e.target.name, setErrorData, true);
+        errorManager.showErrorsFor(e.target.name);
     };
     const onSubmitHandler = (e) => {
         e.preventDefault();
         validationManager.checkData(loginData, checkField);
-        errorManager.showAllErrors(setErrorData, true);
+        errorManager.showAllErrors();
 
-        if (errorManager.hasError(errorData)) {
+        if (errorManager.hasError()) {
             return;
         }
         setIsLoading(true);
@@ -77,12 +77,11 @@ export function Login({setIsLoading}) {
                 setIsLoading(false);
             })
             .catch(er => {
-                const errors = [{error: er.message, show: true}];
-                errorManager.setErrors(setErrorData, 'server', errors);
+                const errors = [{error: er.message}];
+                errorManager.setErrors('server', errors);
                 setIsLoading(false);
             });
     };
-
     return (<section className={styles.loginContainer}>
         <form className={styles.flexColumnCenter} onSubmit={onSubmitHandler}>
             <h1>Login</h1>
@@ -117,7 +116,7 @@ export function Login({setIsLoading}) {
             >
                 Login
             </button>
-            <ErrorList errorData={errorData}/>
+            <ErrorList errorData={errorManager.errorData}/>
         </form>
         <div className={styles.flexColumnCenter}>
             <button className={styles.facebookBtn}>
