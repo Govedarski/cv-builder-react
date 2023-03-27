@@ -8,10 +8,12 @@ import {FormField} from '../../helpers/FormField/FormField.js';
 import {ErrorList} from '../../helpers/ErrorList/ErrorList.js';
 import {ValidateMinLength} from '../../../utils/validation/validators.js';
 import {validationManager} from '../../../utils/validation/validatonManager.js';
-import {useErrorManager} from '../../../hooks/userErrorManager.js';
+import {useErrorManager} from '../../../hooks/useErrorManager.js';
+import {LoadingContext} from '../../../context/LoadingContext.js';
 
-export function Login({setIsLoading}) {
+export function Login() {
     const {userLogin} = useContext(AuthContext);
+    const {setIsLoading} = useContext(LoadingContext);
     const navigate = useNavigate();
     const [isPasswordVisible, togglePasswordVisibility] = useState(false);
     const [loginData, setLoginData] = useState({identifier: '', password: ''});
@@ -69,12 +71,12 @@ export function Login({setIsLoading}) {
         setIsLoading(true);
         authService.loginJobSeeker(loginData.identifier, loginData.password)
             .then(result => {
+                setIsLoading(false);
                 if (!result) {
                     return;
                 }
                 userLogin(result);
                 navigate('/');
-                setIsLoading(false);
             })
             .catch(er => {
                 const errors = [{error: er.message}];

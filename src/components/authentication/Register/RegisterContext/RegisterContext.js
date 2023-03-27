@@ -13,13 +13,12 @@ import {
     checkLastName,
     checkPhoneNumber
 } from './validators/profile_validators.js';
-import {useErrorManager} from '../../../../hooks/userErrorManager.js';
+import {Register} from '../Register.js';
+import {useErrorManager} from '../../../../hooks/useErrorManager.js';
 
 export const RegisterContext = createContext({});
 
-export const RegisterProvider = ({
-                                 children,
-                             }) => {
+export const RegisterProvider = () => {
     const [authData, setAuthData] = useState({
         email: '', username: '', password: '', confirmPassword:''
     });
@@ -63,7 +62,7 @@ export const RegisterProvider = ({
             checkPhoneNumber,
             checkAllProfileData
         }}>
-            {children}
+            <Register/>
         </RegisterContext.Provider>
     );
 };

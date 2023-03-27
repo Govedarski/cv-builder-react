@@ -8,13 +8,15 @@ import {camelCaseTextToSnakeCase, changeObjectKeysNaming, formatDate} from '../.
 import {register} from '../../../services/authService/authService.js';
 import {AuthContext} from '../../../context/AuthContext.js';
 import {useNavigate} from 'react-router-dom';
+import {LoadingContext} from '../../../context/LoadingContext.js';
 
 export function Register() {
     const [tabIndex, setTabIndex] = useState(0);
     const [animation, setAnimation] = useState(false);
     const context = useContext(RegisterContext);
     const {userLogin} = useContext(AuthContext);
-    const navigate = useNavigate()
+    const {setIsLoading} = useContext(LoadingContext);
+    const navigate = useNavigate();
 
 
     const hasError = context.authErrorManager.hasError() || context.profileErrorManager.hasError();
@@ -70,6 +72,7 @@ export function Register() {
             return;
         }
 
+        setIsLoading(true);
         let profileData = {
             ...context.profileData,
             publicFields: context.publicFields,
@@ -83,24 +86,26 @@ export function Register() {
             {email, username, password},
             changeObjectKeysNaming(profileData, camelCaseTextToSnakeCase)
         ).then(result => {
+            setIsLoading(false);
             if (!result) {
                 return;
             }
-            userLogin(result)
-            navigate("/")
+            userLogin(result);
+            navigate('/');
         }).catch(
-                error=>{
-                    if (error.message.type === "Unique constraint violation"){
-                        setTabIndex(0)
-                        context.authErrorManager.setErrors("server",
-                            [{error:error.message.email},
-                                {error:error.message.username}])
-                        context.authErrorManager.showErrorsFor("server")
-                        return
-                    }
-                    alert("Something went wrong on our server. Please try again later.")
+            error => {
+                if (error.message.type === 'Unique constraint violation') {
+                    setTabIndex(0);
+                    context.authErrorManager.setErrors('server',
+                        [{error: error.message.email},
+                            {error: error.message.username}]);
+                    context.authErrorManager.showErrorsFor('server');
+                    return;
                 }
-            )
+                alert('Something went wrong on our server. Please try again later.');
+                setIsLoading(false);
+            }
+        );
     }
 
 
