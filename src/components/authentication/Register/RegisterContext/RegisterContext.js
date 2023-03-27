@@ -24,7 +24,6 @@ export const RegisterProvider = ({
         email: '', username: '', password: '', confirmPassword:''
     });
     const [profileData, setProfileData] = useState({
-        profilePicture: '',
         firstName: '',
         lastName: '',
         dateOfBirth: '',

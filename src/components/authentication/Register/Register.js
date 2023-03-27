@@ -5,11 +5,17 @@ import {ProfileFormFields} from './ProfileFormFields/ProfileFormFields.js';
 import {ErrorList} from '../../helpers/ErrorList/ErrorList.js';
 import {RegisterContext} from './RegisterContext/RegisterContext.js';
 import {camelCaseTextToSnakeCase, changeObjectKeysNaming, formatDate} from '../../../utils/helper_functions.js';
+import {register} from '../../../services/authService/authService.js';
+import {AuthContext} from '../../../context/AuthContext.js';
+import {useNavigate} from 'react-router-dom';
 
 export function Register() {
     const [tabIndex, setTabIndex] = useState(0);
     const [animation, setAnimation] = useState(false);
     const context = useContext(RegisterContext);
+    const {userLogin} = useContext(AuthContext);
+    const navigate = useNavigate()
+
 
     const hasError = context.authErrorManager.hasError() || context.profileErrorManager.hasError();
 
@@ -60,17 +66,41 @@ export function Register() {
         context.authErrorManager.showAllErrors(true);
         context.profileErrorManager.showAllErrors(true);
 
+        if (hasError) {
+            return;
+        }
+
         let profileData = {
             ...context.profileData,
             publicFields: context.publicFields,
             profilePictureBinary: context.profilePicture.binary,
-            extension: context.profilePicture.extension
+            profilePictureExtension: context.profilePicture.extension
         };
-        profileData.dateOfBirth = formatDate(profileData.dateOfBirth, "dd/MM/yyyy")
+        profileData.dateOfBirth = formatDate(profileData.dateOfBirth, 'dd/MM/yyyy');
 
-        console.log(context.authData)
-        console.log(changeObjectKeysNaming(profileData, camelCaseTextToSnakeCase))
-        // console.log(profileData)
+        const {email, username, password} = context.authData;
+        register(
+            {email, username, password},
+            changeObjectKeysNaming(profileData, camelCaseTextToSnakeCase)
+        ).then(result => {
+            if (!result) {
+                return;
+            }
+            userLogin(result)
+            navigate("/")
+        }).catch(
+                error=>{
+                    if (error.message.type === "Unique constraint violation"){
+                        setTabIndex(0)
+                        context.authErrorManager.setErrors("server",
+                            [{error:error.message.email},
+                                {error:error.message.username}])
+                        context.authErrorManager.showErrorsFor("server")
+                        return
+                    }
+                    alert("Something went wrong on our server. Please try again later.")
+                }
+            )
     }
 
 
@@ -91,7 +121,7 @@ export function Register() {
                 <button
                     className={styles.credentialsTabBtn}
                     id={0}
-                    title={hasError ? 'Profile form is incomplete!' : ''}
+                    title={hasError ? 'Error occurred in your profile\'s data!' : ''}
                     style={hasError ? {cursor: 'default'} : {}}
                     onClick={changeTabHandler}
                 >
@@ -100,7 +130,7 @@ export function Register() {
                 <button
                     className={styles.profileTabBtn}
                     id={1}
-                    title={hasError ? 'You need to fill in your credentials before fill in profile information!' : ''}
+                    title={hasError ? 'Error occurred in your credential\'s data!' : ''}
                     style={hasError ? {cursor: 'default'} : {}}
 
                     onClick={changeTabHandler}

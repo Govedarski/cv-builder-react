@@ -24,7 +24,7 @@ export function Navigation() {
 
     return (
         <nav className={styles.siteNav}>
-            <Link to="/" className={styles.logoLink}>
+            <Link to="/" className={styles.logoLink + " " + styles.leftLink}>
                 <img src={blueLogo} alt="Logo"/>
                 <span className={styles.linkSpan}>-LINK</span>
             </Link>
@@ -32,7 +32,7 @@ export function Navigation() {
                 ? <Menu hideMenuHandler={hideMenuHandler}/>
                 : <Arrow onClick={showMenuHandler}>Menu</Arrow>}
 
-            <Link to="/" className={styles.logoLink}>
+            <Link to="/" className={styles.logoLink + " " + styles.rightLink}>
                 <img src={redLogo} alt="Logo"/>
                 <span className={styles.linkSpan}>-LINK</span>
                 <span className={styles.recruiterSpan}>Recruiter</span>

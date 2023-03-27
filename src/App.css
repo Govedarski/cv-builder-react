@@ -1,6 +1,6 @@
 main {
     max-width: 1200px;
-    min-height: calc(100vh - 96px);
+    min-height: calc(100vh - 116px);
     margin: auto;
     display: flex;
 }
@@ -8,6 +8,7 @@ main {
 header, footer {
     box-sizing: border-box;
     background-color: #464545;
+    width: 100%;
     max-width: 1200px;
     margin: auto;
     border: 1px solid black;
@@ -22,8 +23,12 @@ header {
 }
 
 footer {
+    position: fixed;
+    bottom: 0;
+    right:50%;
     min-height: 32px;
     border-radius: 64px 64px 0 0;
+    transform: translateX(50%);
 }
 
 header>*, main>*, footer>*{

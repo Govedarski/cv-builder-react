@@ -32,7 +32,8 @@ async function requestService(method, url, data, userData) {
 
         if (res.ok === false) {
             const error = await res.json();
-            throw Error(error.message);
+
+            throw error;
         }
 
         if (res.status == 204) {
@@ -41,7 +42,9 @@ async function requestService(method, url, data, userData) {
             return res.json();
         }
     } catch (err) {
-        if (err.message === timeoutMessage) return alert(err.message)
+        if (err.message === timeoutMessage) {
+            return alert(err.message)}
+        console.log(err)
         throw err;
     }
 }

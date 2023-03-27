@@ -24,6 +24,9 @@ export function changeObjectKeysNaming(obj, converter) {
 }
 
 export function formatDate(date, format) {
+    if (!date){
+        return
+    }
     let day = String(date.getDate());
     day = day.length > 1 ? day : '0' + day;
 

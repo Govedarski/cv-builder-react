@@ -7,6 +7,7 @@ export function useErrorManager(initialState) {
         setErrorData,
 
         setErrors(name, errors) {
+            console.log(errors)
             this.setErrorData(prevState => ({...prevState, [name]: errors}));
         },
 

@@ -27,6 +27,9 @@ export function AuthFormFields() {
                 ...prevState, [e.target.name]: e.target.value
             })
         );
+        if (context.authErrorManager.didFieldShowErrors('server')) {
+            context.authErrorManager.clearErrors('server');
+        }
     }
 
 
