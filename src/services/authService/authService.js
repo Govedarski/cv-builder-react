@@ -13,3 +13,10 @@ export async function register(credentials, profileData){
         profile_data : profileData
     })
 }
+
+export async function editCredentials(user_id, data) {
+    return request.put(`/user/${user_id}`, {
+        email: data.email,
+        username: data.username,
+    });
+}

@@ -1,7 +1,14 @@
 const HOST = 'http://127.0.0.1:5000';
-const timeoutMessage = "Request timed out"
+const timeoutMessage = 'Request timed out';
 
-async function requestService(method, url, data, userData) {
+async function requestService(method, url, data) {
+    let authData = localStorage.getItem('authData');
+    try {
+        authData = JSON.parse(authData);
+    } catch {
+        authData = null;
+    }
+
     const options = {
         method,
         headers: {},
@@ -9,20 +16,19 @@ async function requestService(method, url, data, userData) {
 
     if (data !== undefined) {
         options.headers['Content-Type'] = 'application/json';
-        console.log(data);
         options.body = JSON.stringify(data)
-            .replaceAll(`""`, "null");
+            .replaceAll(`""`, 'null');
     }
 
-    if (userData != null) {
-        options.headers['Authorization'] = userData.accessToken;
+    if (authData != null) {
+        options.headers['Authorization'] = 'Bearer ' + authData.token;
     }
     try {
         const requestTimeout = new Promise((_, reject) => {
             setTimeout(() => {
                     reject(new Error(timeoutMessage));
                 },
-                5000);
+                10000);
         });
         const res = await Promise.race([
             fetch(HOST + url, options),
@@ -36,15 +42,16 @@ async function requestService(method, url, data, userData) {
             throw error;
         }
 
-        if (res.status == 204) {
+        if (res.status === 204) {
             return res;
         } else {
             return res.json();
         }
     } catch (err) {
         if (err.message === timeoutMessage) {
-            return alert(err.message)}
-        console.log(err)
+            return alert(err.message);
+        }
+        console.log(err);
         throw err;
     }
 }

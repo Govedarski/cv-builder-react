@@ -1,20 +1,9 @@
 import {createContext, useState} from 'react';
-import {
-    checkAllAuthData,
-    checkConfirmPassword,
-    checkEmail,
-    checkPassword,
-    checkUsername
-} from './validators/auth_validators.js';
-import {
-    checkAllProfileData,
-    checkCity,
-    checkFirstName,
-    checkLastName,
-    checkPhoneNumber
-} from './validators/profile_validators.js';
+import {authValidator} from '../../../../utils/validation/validators/auth_validators.js';
+import {profileValidator} from '../../../../utils/validation/validators/profile_validators.js';
 import {Register} from '../Register.js';
 import {useErrorManager} from '../../../../hooks/useErrorManager.js';
+import {useImageData} from '../../../../hooks/useImageData.js';
 
 export const RegisterContext = createContext({});
 
@@ -30,11 +19,7 @@ export const RegisterProvider = () => {
         city: '',
         address: '',
     });
-    const [profilePicture, setProfilePicture] = useState({
-        image:"",
-        binary:"",
-        extension:""
-    })
+    const [profilePicture, setProfilePicture] = useImageData();
     const [publicFields, setPublicFields] = useState([])
     const authErrorManager = useErrorManager({email: [], username: [], password: []})
     const profileErrorManager = useErrorManager({})
@@ -51,16 +36,8 @@ export const RegisterProvider = () => {
             setPublicFields,
             authErrorManager,
             profileErrorManager,
-            checkEmail,
-            checkUsername,
-            checkPassword,
-            checkConfirmPassword,
-            checkAllAuthData,
-            checkFirstName,
-            checkLastName,
-            checkCity,
-            checkPhoneNumber,
-            checkAllProfileData
+            ...authValidator,
+            ...profileValidator
         }}>
             <Register/>
         </RegisterContext.Provider>

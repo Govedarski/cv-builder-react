@@ -49,8 +49,10 @@ export function FormField(fieldData) {
                     name={fieldData.name}
                     value={fieldData.value}
                     onChange={fieldData.onChange}
+                    onDoubleClick={fieldData.onDoubleClick}
                     onBlur={fieldData.onBlur}
                     title={fieldData.fieldTitle}
+                    style={fieldData.style}
                 />
             );
             break;

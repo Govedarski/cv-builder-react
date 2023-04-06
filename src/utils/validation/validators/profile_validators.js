@@ -1,22 +1,21 @@
-import {validationManager} from '../../../../../utils/validation/validatonManager.js';
+import {validationManager} from '../validatonManager.js';
 import {
     ValidateIsAlphaAndSpace,
     ValidateMaxLength,
     ValidateMinLength
-} from '../../../../../utils/validation/validators.js';
+} from './validators.js';
 
 
 
-export function checkFirstName(name, value) {
+function checkFirstName(name, value) {
     const validators = [
         new ValidateMinLength(2),
         new ValidateMaxLength(64),
         new ValidateIsAlphaAndSpace()
     ];
     validationManager.checkField('firstName', name, value, validators, this.profileErrorManager, true);
-
 }
-export function checkLastName(name, value) {
+function checkLastName(name, value) {
     const validators = [
         new ValidateMinLength(2),
         new ValidateMaxLength(64),
@@ -25,7 +24,7 @@ export function checkLastName(name, value) {
     validationManager.checkField('lastName', name, value, validators, this.profileErrorManager, true);
 }
 
-export function checkCity(name, value) {
+function checkCity(name, value) {
     const validators = [
         new ValidateMinLength(2),
         new ValidateMaxLength(64),
@@ -34,7 +33,7 @@ export function checkCity(name, value) {
     validationManager.checkField('city', name, value, validators, this.profileErrorManager, true);
 }
 
-export function checkPhoneNumber(name, value) {
+function checkPhoneNumber(name, value) {
     const validators = [
         new ValidateMinLength(13),
     ];
@@ -42,9 +41,25 @@ export function checkPhoneNumber(name, value) {
 }
 
 
-export function checkAllProfileData(name, value) {
+function checkAllProfileData(name, value) {
     this.checkFirstName(name, value);
     this.checkLastName(name, value);
     this.checkCity(name, value);
     this.checkPhoneNumber(name, value);
 }
+
+export const profileValidator = {
+    checkFirstName,
+    checkLastName,
+    checkCity,
+    checkPhoneNumber,
+    checkAllProfileData
+}
+
+export function createProfileValidators(errorManager) {
+    return {
+        ...profileValidator,
+        profileErrorManager: errorManager
+    }
+}
+

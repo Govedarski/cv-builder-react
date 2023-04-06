@@ -9,17 +9,23 @@ export function StyledCheckInput({checkBoxData}) {
                 top: `${checkBoxData?.positionY}px`
             }}>
             <input
+                ref = {checkBoxData?.ref}
                 type="checkbox"
                 checked={checkBoxData.checkedFields?.includes(checkBoxData.name)}
-                id={checkBoxData?.name}
+                id={"id_" + checkBoxData?.name}
                 name={checkBoxData?.name}
                 onChange={checkBoxData.onChangeHandler}
+                defaultChecked={checkBoxData?.defaultValue}
             />
 
-            <label htmlFor={checkBoxData?.name} className={styles.checkbox} style={{
+            <label
+                htmlFor={"id_" + checkBoxData?.name}
+                   className={styles.checkbox}
+                   style={{
                 width: `${checkBoxData?.size}px`,
                 height: `${checkBoxData?.size}px`,
-            }}>
+            }}
+            >
                 <div className={styles.checkboxInner}>
                     <div className={styles.greenBall}
                          style={{

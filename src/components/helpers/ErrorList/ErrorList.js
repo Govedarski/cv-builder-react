@@ -2,7 +2,7 @@ import {capitalize} from '../../../utils/helper_functions.js';
 import styles from './ErrorList.module.css'
 export function ErrorList({errorData}) {
     const errors = Object.values(errorData)
-
+    console.log(errorData)
     return (
         errors.length > 0 &&
         <ul className={styles.errorsList}>

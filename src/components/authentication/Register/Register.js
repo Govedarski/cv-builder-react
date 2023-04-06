@@ -4,17 +4,18 @@ import {AuthFormFields} from './AuthFormFields/AuthFormFields.js';
 import {ProfileFormFields} from './ProfileFormFields/ProfileFormFields.js';
 import {ErrorList} from '../../helpers/ErrorList/ErrorList.js';
 import {RegisterContext} from './RegisterContext/RegisterContext.js';
-import {camelCaseTextToSnakeCase, changeObjectKeysNaming, formatDate} from '../../../utils/helper_functions.js';
+import {camelCaseTextToSnakeCase, changeObjectKeysNaming, dateToString} from '../../../utils/helper_functions.js';
 import {register} from '../../../services/authService/authService.js';
-import {AuthContext} from '../../../context/AuthContext.js';
+import {UserContext} from '../../../context/UserContext.js';
 import {useNavigate} from 'react-router-dom';
 import {LoadingContext} from '../../../context/LoadingContext.js';
+import {routes} from '../../../constants/routes.js';
 
 export function Register() {
     const [tabIndex, setTabIndex] = useState(0);
     const [animation, setAnimation] = useState(false);
     const context = useContext(RegisterContext);
-    const {userLogin} = useContext(AuthContext);
+    const {userLogin} = useContext(UserContext);
     const {setIsLoading} = useContext(LoadingContext);
     const navigate = useNavigate();
 
@@ -79,7 +80,7 @@ export function Register() {
             profilePictureBinary: context.profilePicture.binary,
             profilePictureExtension: context.profilePicture.extension
         };
-        profileData.dateOfBirth = formatDate(profileData.dateOfBirth, 'dd/MM/yyyy');
+        profileData.dateOfBirth = dateToString(profileData.dateOfBirth, 'dd/MM/yyyy');
 
         const {email, username, password} = context.authData;
         register(
@@ -91,7 +92,7 @@ export function Register() {
                 return;
             }
             userLogin(result);
-            navigate('/');
+            navigate(routes.HOME);
         }).catch(
             error => {
                 if (error.message.type === 'Unique constraint violation') {

@@ -4,6 +4,7 @@
     align-items: center;
     width: 100%;
     font-family: 'Oswald', sans-serif;
+    gap: 4px;
 
 }
 .container>div{

@@ -14,16 +14,29 @@ export function camelCaseTextToSnakeCase(camelCaseString) {
         .map((word) => word.toLowerCase()).join('_');
 }
 
-export function changeObjectKeysNaming(obj, converter) {
-    const snakeObj = {};
-    for (let key in obj) {
-        const snakeKey = converter(key);
-        snakeObj[snakeKey] = obj[key];
-    }
-    return snakeObj;
+export function snakeCaseToCamelCase(snakeCaseString) {
+    return snakeCaseString
+        .split('_')
+        .map((word, i) => i === 0 ? word : capitalize(word)).join('');
 }
 
-export function formatDate(date, format) {
+
+export function changeObjectKeysNaming(obj, converter) {
+    const convertedObj = {};
+    for (let key in obj) {
+        const convertedKey = converter(key);
+        if (typeof obj[key] === 'object' && !Array.isArray(obj[key])) {
+            convertedObj[convertedKey] = changeObjectKeysNaming(obj[key], converter);
+        } else {
+            convertedObj[convertedKey] = obj[key];
+        }
+    }
+    return Object.entries(convertedObj).length === 0 ? obj : convertedObj;
+}
+
+
+
+export function dateToString(date, format) {
     if (!date){
         return
     }
@@ -42,3 +55,10 @@ export function formatDate(date, format) {
     return result
 }
 
+export function stringToDate(string, format) {
+    format = format.toLowerCase();
+    let day = string.substring(format.indexOf('dd'), format.indexOf('dd') + 2);
+    let month = string.substring(format.indexOf('mm'), format.indexOf('mm') + 2);
+    let year = string.substring(format.indexOf('yyyy'), format.indexOf('yyyy') + 4);
+    return new Date(year, month - 1, day);
+}

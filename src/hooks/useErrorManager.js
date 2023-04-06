@@ -7,7 +7,6 @@ export function useErrorManager(initialState) {
         setErrorData,
 
         setErrors(name, errors) {
-            console.log(errors)
             this.setErrorData(prevState => ({...prevState, [name]: errors}));
         },
 
@@ -54,8 +53,7 @@ export function useErrorManager(initialState) {
         },
 
         didFieldShowErrors(fieldName) {
-            console.log(Object.values(this.errorData[fieldName] || {}).length > 0
-                && Object.values(this.errorData[fieldName]).every(x => x.show === true))
+
             return Object.values(this.errorData[fieldName] || {}).length > 0
                 && Object.values(this.errorData[fieldName]).every(x => x.show === true);
         },

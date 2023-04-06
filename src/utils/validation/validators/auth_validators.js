@@ -1,4 +1,4 @@
-import {validationManager} from '../../../../../utils/validation/validatonManager.js';
+import {validationManager} from '../validatonManager.js';
 import {
     ValidateEmail,
     ValidateIsAlphaNumericAndSpace,
@@ -8,10 +8,11 @@ import {
     ValidatePasswordMatch,
     ValidateSpecialSymbols,
     ValidateUppercaseCharactersMinCount
-} from '../../../../../utils/validation/validators.js';
+} from './validators.js';
+import {profileValidator} from './profile_validators.js';
 
 
-export function checkEmail(name, value) {
+function checkEmail(name, value) {
     const validators = [
         new ValidateEmail(),
         new ValidateMinLength(1, {errorMessage: 'Email is required!'})
@@ -19,7 +20,7 @@ export function checkEmail(name, value) {
     validationManager.checkField('email', name, value, validators, this.authErrorManager, false);
 }
 
-export function checkUsername(name, value) {
+function checkUsername(name, value) {
     const validators = [
         new ValidateMinLength(3),
         new ValidateMaxLength(64),
@@ -28,7 +29,7 @@ export function checkUsername(name, value) {
     validationManager.checkField('username', name, value, validators, this.authErrorManager, true);
 }
 
-export function checkPassword(name, value) {
+function checkPassword(name, value) {
     const validators = [
         new ValidateMinLength(8),
         new ValidateUppercaseCharactersMinCount(1),
@@ -46,16 +47,30 @@ export function checkPassword(name, value) {
     }
 }
 
-export function checkConfirmPassword(name, value) {
+function checkConfirmPassword(name, value) {
     const validator = [new ValidatePasswordMatch(this.authData.password)];
     validationManager.checkField('confirmPassword', name, value, validator, this.authErrorManager, false);
 }
 
 
-export function checkAllAuthData(name, value) {
+function checkAllAuthData(name, value) {
     this.checkUsername(name, value);
     this.checkEmail(name, value);
     this.checkPassword(name, value);
     this.checkConfirmPassword(name, value);
 }
 
+export const authValidator = {
+    checkUsername,
+    checkEmail,
+    checkPassword,
+    checkConfirmPassword,
+    checkAllAuthData
+}
+
+export function createAuthValidator(errorManager) {
+    return {
+        ...authValidator,
+        authErrorManager: errorManager
+    }
+}

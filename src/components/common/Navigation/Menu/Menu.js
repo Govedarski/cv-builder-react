@@ -3,10 +3,11 @@ import styles from './Menu.module.css';
 import {useContext, useState} from 'react';
 import {Arrow} from '../../../helpers/Arrow/Arrow.js';
 import arrowStyles from '../../../helpers/Arrow/Arrow.module.css';
-import {AuthContext} from '../../../../context/AuthContext.js';
+import {UserContext} from '../../../../context/UserContext.js';
+import {routes} from '../../../../constants/routes.js';
 
 export function Menu({hideMenuHandler}) {
-    const {isAuthenticated} = useContext(AuthContext);
+    const {isAuthenticated, userData} = useContext(UserContext);
     let [hide, setHide] = useState(false);
 
     const fadeHandler = (e) => {
@@ -25,22 +26,25 @@ export function Menu({hideMenuHandler}) {
             <ul
                 onClick={fadeHandler}
                 className={styles.navList}>
-                <li className={styles.navListItem}>
-                    <Link href="src/components/common/Navigation/Menu#">Profile</Link></li>
                 {!isAuthenticated &&
                     <>
                         <li className={styles.navListItem}>
-                            <Link to={'/register'}>Register</Link>
+                            <Link to={routes.REGISTER}>Register</Link>
                         </li>
                         <li className={styles.navListItem}>
-                            <Link to={'/login'}>Login</Link>
+                            <Link to={routes.LOGIN}>Login</Link>
                         </li>
                     </>
                 }
                 {isAuthenticated &&
-                <li className={styles.navListItem}>
-                    <Link to={"/logout"}>Logout</Link>
-                </li>
+                    <>
+                        <li className={styles.navListItem}>
+                            <Link to={routes.OWN_PROFILE}>Profile</Link>
+                        </li>
+                        <li className={styles.navListItem}>
+                            <Link to={routes.LOGOUT}>Logout</Link>
+                        </li>
+                    </>
                 }
                 <li className={styles.closeBtn}>
                     <Arrow

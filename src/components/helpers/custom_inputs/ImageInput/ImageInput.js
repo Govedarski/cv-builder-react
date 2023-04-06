@@ -1,17 +1,18 @@
-import { useRef, useState } from 'react';
-import defaultPlaceholder from "./placeholder.jpeg"
+import {useRef} from 'react';
+import defaultPlaceholder from './placeholder.jpeg';
+import {CloseButton} from '../../CloseButton/CloseButton.js';
+import styles from './ImageInput.module.css';
 
-export function ImageInput({ data, setData, placeholder }) {
+export function ImageInput({imageData, setImageData, imageUrl, placeholder, className, deleteImageHandler}) {
     placeholder = placeholder || defaultPlaceholder;
     const inputRef = useRef();
 
     const handleImageChange = (file) => {
         const reader = new FileReader();
-
         reader.onloadend = () => {
             const base64Encoded = reader.result.split(',')[1];
             const extension = file.type.split('/')[1];
-            setData( { image: reader.result, binary:base64Encoded, extension });
+            setImageData(reader.result, base64Encoded, extension);
         };
 
         reader.readAsDataURL(file);
@@ -32,25 +33,35 @@ export function ImageInput({ data, setData, placeholder }) {
         e.stopPropagation();
     }
 
+    function onDelete() {
+        inputRef.current.value = '';
+        deleteImageHandler();
+    }
+
 
     return (
-        <>
+        <div className={styles.imageContainer}>
             <img
-                src={data?.image || placeholder}
+                src={imageData?.image || imageUrl || placeholder}
                 alt="chosen"
-                style={{ cursor: 'pointer' }}
+                className={className}
+                style={{cursor: 'pointer'}}
                 onClick={onClickHandler}
                 onDrop={onDropHandler}
                 onDragOver={onDragOverHandler}
             />
-            {data?.image && <span>Change image</span>}
+            <CloseButton
+                title={'Delete image'}
+                className={styles.deleteButton}
+                onClick={onDelete}
+            />
             <input
                 ref={inputRef}
                 type="file"
-                style={{ display: 'none' }}
+                style={{display: 'none'}}
                 onChange={(e) => handleImageChange(e.target.files[0])}
                 accept="image/*"
             />
-        </>
+        </div>
     );
 }

@@ -3,16 +3,17 @@ import {Link, useNavigate} from 'react-router-dom';
 import {useContext, useState} from 'react';
 
 import * as authService from '../../../services/authService/authService.js';
-import {AuthContext} from '../../../context/AuthContext.js';
+import {UserContext} from '../../../context/UserContext.js';
 import {FormField} from '../../helpers/FormField/FormField.js';
 import {ErrorList} from '../../helpers/ErrorList/ErrorList.js';
-import {ValidateMinLength} from '../../../utils/validation/validators.js';
+import {ValidateMinLength} from '../../../utils/validation/validators/validators.js';
 import {validationManager} from '../../../utils/validation/validatonManager.js';
 import {useErrorManager} from '../../../hooks/useErrorManager.js';
 import {LoadingContext} from '../../../context/LoadingContext.js';
+import {routes} from '../../../constants/routes.js';
 
 export function Login() {
-    const {userLogin} = useContext(AuthContext);
+    const {userLogin} = useContext(UserContext);
     const {setIsLoading} = useContext(LoadingContext);
     const navigate = useNavigate();
     const [isPasswordVisible, togglePasswordVisibility] = useState(false);
@@ -76,11 +77,12 @@ export function Login() {
                     return;
                 }
                 userLogin(result);
-                navigate('/');
+                navigate(routes.HOME);
             })
             .catch(er => {
                 const errors = [{error: er.message}];
                 errorManager.setErrors('server', errors);
+                errorManager.showErrorsFor('server');
                 setIsLoading(false);
             });
     };

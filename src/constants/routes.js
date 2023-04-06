@@ -3,5 +3,5 @@ export const routes = {
     LOGIN:"/login",
     REGISTER:"/register",
     LOGOUT:"/logout",
-    PROFILE:"/profile/:userId"
+    OWN_PROFILE:"/profile"
 }

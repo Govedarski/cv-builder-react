@@ -29,7 +29,7 @@ export function ProfileFormFields() {
         {name: 'firstName', type: 'text'},
         {name: 'lastName', type: 'text'},
         {name: 'dateOfBirth', type: 'date'},
-        {name: 'phoneNumber', type: 'phoneNumber', prefix:"+359 8", length:8},
+        {name: 'phoneNumber', type: 'phoneNumber', prefix: '+359 8', length: 8},
         {name: 'city', type: 'text'},
         {name: 'address', type: 'text'},
     ];
@@ -39,15 +39,23 @@ export function ProfileFormFields() {
                 ...prevState, [e.target.name]: e.target.value
             })
         );
-        context.checkAllProfileData(e.target.name, e.target.value)
+        context.checkAllProfileData(e.target.name, e.target.value);
     }
 
     return (
         <>
             <div className={styles.imageWrapper}>
-                <ImageInput data={context.profilePicture} setData={context.setProfilePicture}
-                            placeholder={placeholder}/>
-                <StyledCheckInput checkBoxData={{...checkBoxData, name: 'profile_picture'}}/>
+                <ImageInput
+                    imageData={context.profilePicture}
+                    setImageData={context.setProfilePicture}
+                    placeholder={placeholder}
+                />
+                <StyledCheckInput
+                    checkBoxData={{
+                        ...checkBoxData,
+                        name: 'profile_picture'
+                    }}
+                />
             </div>
             {profileFields.map(fieldData => {
                 return <FormField
