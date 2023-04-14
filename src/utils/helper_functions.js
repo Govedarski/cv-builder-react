@@ -62,3 +62,7 @@ export function stringToDate(string, format) {
     let year = string.substring(format.indexOf('yyyy'), format.indexOf('yyyy') + 4);
     return new Date(year, month - 1, day);
 }
+
+export function createAsideLink(name, link) {
+    return {name: name, link: link}
+}

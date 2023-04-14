@@ -1,8 +1,9 @@
 main {
     max-width: 1200px;
-    min-height: calc(100vh - 116px);
     margin: auto;
     display: flex;
+    padding-top: 84px;
+    padding-bottom: 32px;
 }
 
 header, footer {
@@ -19,6 +20,10 @@ header, footer {
 header {
     min-height: 64px;
     border-radius: 0 0 64px 64px;
+    position: fixed;
+    z-index: 300;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 footer {

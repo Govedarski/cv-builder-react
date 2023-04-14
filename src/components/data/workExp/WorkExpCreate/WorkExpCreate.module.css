@@ -1,0 +1,25 @@
+.formContainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    box-sizing: border-box;
+    justify-content: center;
+    gap:16px
+}
+
+.formContainer > * {
+    width: 100%;
+}
+
+.formContainer > *:nth-child(1),
+.formContainer > *:nth-child(2) {
+    width: 256px;
+}
+
+.formContainer label{
+    color: #fff;
+}
+.container h1{
+    text-align: center;
+    margin: 32px 0;
+}

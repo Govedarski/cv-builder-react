@@ -35,6 +35,7 @@ export function DateInput(data) {
             showYearDropdown
             dropdownMode="select"
             maxDate={new Date()}
+            title={data.title}
         />
     );
 }

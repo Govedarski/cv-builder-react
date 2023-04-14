@@ -1,0 +1,69 @@
+.container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+    min-height: 100%;
+    box-sizing: border-box;
+
+}
+
+.mainContent {
+    width: 100%;
+    text-align: center;
+}
+
+.mainContent h1 {
+    font-size: 24px;
+    color: #333;
+    text-transform: uppercase;
+    margin: 32px auto;
+}
+
+.mainContent ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 32px;
+    list-style-type: none;
+    padding: 0;
+    margin: 0 16px;
+}
+
+.mainContent ul li {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    min-width: 128px;
+    width: max-content;
+    transition: all 0.3s ease;
+}
+.mainContent ul li:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+    transform: scale(1.1);
+}
+
+.createBtn{
+    background-color: #464545;
+    border-radius: 64px;
+    padding: 16px;
+    color: #fff;
+    font-size: 16px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    margin: 16px auto;
+    width: 128px;
+}
+
+.createBtn:hover{
+    background-color: #333;
+}
+

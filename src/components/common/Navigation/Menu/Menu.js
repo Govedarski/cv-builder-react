@@ -39,7 +39,10 @@ export function Menu({hideMenuHandler}) {
                 {isAuthenticated &&
                     <>
                         <li className={styles.navListItem}>
-                            <Link to={routes.OWN_PROFILE}>Profile</Link>
+                            <Link to={routes.CV_LIST}>CV</Link>
+                        </li>
+                        <li className={styles.navListItem}>
+                            <Link to={routes.PROFILE_OWN}>Profile</Link>
                         </li>
                         <li className={styles.navListItem}>
                             <Link to={routes.LOGOUT}>Logout</Link>

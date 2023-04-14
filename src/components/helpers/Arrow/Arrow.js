@@ -1,10 +1,10 @@
 import styles from './Arrow.module.css';
 
-export function Arrow({onClick, directionClass, colorClass}) {
+export function Arrow({ className, onClick, directionClass, colorClass}) {
 
     return (
         <div
-            className={styles.container + " " + directionClass + " " + colorClass}
+            className={styles.container + " " + directionClass + " " + colorClass + " " + className}
             onClick={onClick}>
 
             <div className={styles.round}>

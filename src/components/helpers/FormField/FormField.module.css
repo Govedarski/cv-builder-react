@@ -16,7 +16,7 @@
 }
 
 
-.container>button, .container input:not([type="checkbox"]) {
+.container>button, .container input:not([type="checkbox"]), .container textarea, .container select {
     box-sizing: border-box;
     height: 42px;
     border: none;
@@ -27,4 +27,9 @@
     font-size: 16px;
     transition: all .3s;
     text-align: center;
+}
+
+.container textarea {
+    min-height: 128px;
+
 }

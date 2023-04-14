@@ -1,0 +1,55 @@
+.asideMenu {
+    background: #464545;
+    align-self: stretch;
+    padding: 20px;
+    text-decoration: none;
+    font-size: 16px;
+    color: #fff;
+    border-radius: 64px;
+    position: sticky;
+    transition: all 1s ease;
+    overflow: auto;
+    height: calc(100vh - 156px);
+    z-index: 20;
+    top: 84px;
+    border: solid 1px #000;
+}
+
+.asideMenu ul {
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    gap:16px;
+    text-align: center;
+    padding: 0;
+}
+
+.asideMenu ul li {
+    margin-bottom: 10px;
+    cursor: pointer;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.asideMenu a{
+    color: #fff;
+    text-decoration: none;
+}
+
+.asideMenu ul li:hover {
+    opacity: 0.8;
+}
+.arrowRight{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(270deg);
+}
+.arrowLeft{
+    position: relative;
+    left: 50%;
+    transform: translate(-50%, 0) rotate(90deg);
+    margin-top:64px;
+
+}

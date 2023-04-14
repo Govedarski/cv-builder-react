@@ -19,6 +19,7 @@ export function FormField(fieldData) {
                     value={fieldData.value}
                     onChange={fieldData.onChange}
                     onBlur={fieldData.onBlur}
+                    title={fieldData.fieldTitle}
                 />
             );
             break;
@@ -37,6 +38,42 @@ export function FormField(fieldData) {
                     onBlur={fieldData.onBlur}
                     title={fieldData.fieldTitle}
                 />
+            );
+            break;
+        case 'textarea':
+            field = (
+                <textarea
+                    ref={fieldData._ref}
+                    placeholder={fieldData.placeholder || capitalize(camelCaseTextToNormalText(fieldData.name))}
+                    id={fieldData.name}
+                    name={fieldData.name}
+                    value={fieldData.value}
+                    onChange={fieldData.onChange}
+                    onBlur={fieldData.onBlur}
+                    title={fieldData.fieldTitle}
+                    style={fieldData.style}
+                    cols={fieldData.cols}
+                    rows={fieldData.rows}
+                />
+            )
+            break
+        case 'select':
+            field = (
+                <select
+                    ref={fieldData._ref}
+                    id={fieldData.name}
+                    name={fieldData.name}
+                    value={fieldData.value}
+                    onChange={fieldData.onChange}
+                    onBlur={fieldData.onBlur}
+                    title={fieldData.fieldTitle}
+                >
+                    {fieldData.options.map((option, index) => (
+                        <option key={index} value={option}>
+                            {option}
+                        </option>
+                    ))}
+                </select>
             );
             break;
         default:
