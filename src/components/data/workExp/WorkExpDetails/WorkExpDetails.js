@@ -12,22 +12,18 @@ export function WorkExpDetails() {
     const location = useLocation();
     const userContext = useContext(UserContext);
     const userId = userContext.userData.id;
-    const {workExpId} = useParams();
+    const {itemId} = useParams();
     const [data, setData] = React.useState(null);
     const {stateData} = location.state || {};
     const {setIsLoading} = useContext(LoadingContext);
 
 
-    const asideLinks = [
-        createAsideLink("Edit", location.pathname + "/edit"),
-        createAsideLink("Delete", location.pathname + "/delete"),
-        createAsideLink("Back", "back"),
-    ]
+
 
     useEffect(() => {
         if (!stateData) {
             setIsLoading(true);
-            workExpService.getWorkExp(userId, workExpId)
+            workExpService.getWorkExp(userId, itemId)
                 .then((response) => {
                     response = changeObjectKeysNaming(response, snakeCaseToCamelCase)
                     setData(response);
@@ -50,6 +46,5 @@ export function WorkExpDetails() {
 
     return <DetailsTemplate
         sections={sections}
-        asideLinks={asideLinks}
     />
 }

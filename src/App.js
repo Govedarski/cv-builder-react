@@ -14,7 +14,7 @@ import {CVList} from './components/data/cv/CVList/CVList.js';
 import {CVDetails} from "./components/data/cv/CVDetails/CVDetails";
 import {WorkExpList} from "./components/data/workExp/WorkExpList/WorkExpList";
 import {WorkExpDetails} from "./components/data/workExp/WorkExpDetails/WorkExpDetails";
-import {WorkExpCreate} from "./components/data/workExp/WorkExpCreate/WorkExpCreate";
+import {WorkExpCreateEdit} from "./components/data/workExp/WorkExpCreateEdit/WorkExpCreateEdit";
 
 export function App() {
     return (
@@ -34,7 +34,8 @@ export function App() {
                         <Route path={routes.CV_LIST} element={<CVList/>}/>
                         <Route path={routes.CV_DETAILS} element={<CVDetails/>}/>
                         <Route path={routes.WORK_EXP} element={<WorkExpList/>}/>
-                        <Route path={routes.WORK_EXP_CREATE} element={<WorkExpCreate/>}/>
+                        <Route path={routes.WORK_EXP_CREATE} element={<WorkExpCreateEdit/>}/>
+                        <Route path={routes.WORK_EXP_EDIT} element={<WorkExpCreateEdit isEdit={true}/>}/>
                         <Route path={routes.WORK_EXP_DETAILS} element={<WorkExpDetails/>}/>
                     </Routes>
                 </main>

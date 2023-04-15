@@ -1,21 +1,20 @@
 import {FormField} from "../../../helpers/FormField/FormField";
-import styles from './WorkExpCreate.module.css';
 import {useContext, useState} from "react";
 import {employmentTypes} from "../../../../constants/employmentTypes";
 import {useErrorManager} from "../../../../hooks/useErrorManager";
 import {validationManager} from "../../../../utils/validation/validatonManager";
 import {ValidateMaxLength, ValidateMinLength} from "../../../../utils/validation/validators/validators";
-import {ErrorList} from "../../../helpers/ErrorList/ErrorList";
-import {changeObjectKeysNaming, dateToString, snakeCaseToCamelCase} from "../../../../utils/helper_functions";
+import {dateToString, stringToDate} from "../../../../utils/helper_functions";
 import * as workExpService from "../../../../services/dataServices/workExpService/workExpService";
+import {CreateEditTemplate} from "../../CreateEditTemplate/CreateEditTemplate";
 import {UserContext} from "../../../../context/UserContext";
-import {useNavigate} from "react-router-dom";
-import {LoadingContext} from "../../../../context/LoadingContext";
+import {useParams} from "react-router-dom";
 
-export function WorkExpCreate() {
-    const {setIsLoading} = useContext(LoadingContext);
+export function WorkExpCreateEdit({isEdit}) {
     const userContext = useContext(UserContext);
     const userId = userContext.userData.id;
+    const {itemId} = useParams();
+
     const [data, setData] = useState({
         companyName: '',
         jobTitle: '',
@@ -34,7 +33,7 @@ export function WorkExpCreate() {
         endDate: [],
         description: [],
     });
-    const navigate = useNavigate();
+
 
     function createErrorOptions(name) {
         return {errorMessage: `${name} is required`}
@@ -93,6 +92,7 @@ export function WorkExpCreate() {
             errorManager
         )
     }
+
     function checkAll() {
         checkCompanyName()
         checkJobTitle()
@@ -108,90 +108,95 @@ export function WorkExpCreate() {
         }));
     }
 
-
-    function submitHandler(e) {
-        e.preventDefault()
-        checkAll()
-        errorManager.showAllErrors();
-        if (errorManager.hasError()) {
-            return;
-        }
-        setIsLoading(true)
+    function dataModifier(data) {
         let finalData = {...data}
         if (finalData.endDate === '') {
             finalData.endDate = 'Present'
-        }else{
+        } else {
             finalData.endDate = dateToString(finalData.endDate, 'dd/mm/yyyy')
         }
         finalData.startDate = dateToString(finalData.startDate, 'dd/mm/yyyy')
-        workExpService.createWorkExp(userId, finalData).then(
-            (res) => {
-                res = changeObjectKeysNaming(res, snakeCaseToCamelCase)
-                setIsLoading(false)
-                navigate(`/work-experience/${res.id}`, {state: {stateData: res}})
-
-            }
-        ).catch(
-            (err) => {
-                console.log(err)
-                setIsLoading(false)
-            }
-        )
+        return finalData
     }
 
-    return (
-        <div className={styles.container}>
-            <h1>Work Experience Create</h1>
-            <form
-                className={styles.formContainer}
-                onSubmit={submitHandler}
-            >
-                <FormField
-                    name="startDate"
-                    type={"date"}
-                    value={data.startDate}
-                    onChange={onChangeHandler}
-                />
-                <FormField
-                    name="endDate"
-                    type={"date"}
-                    placeholder={"Present"}
-                    value={data.endDate}
-                    onChange={onChangeHandler}
-                    fieldTitle={"Leave blank if you are still working here"}
-                />
-                <FormField
-                    name="companyName"
-                    value={data.companyName}
-                    onChange={onChangeHandler}
-                />
-                <FormField
-                    name="jobTitle"
-                    value={data.jobTitle}
-                    onChange={onChangeHandler}
-                />
-                <FormField
-                    name="fieldOfWork"
-                    value={data.fieldOfWork}
-                    onChange={onChangeHandler}
-                />
-                <FormField
-                    name="employmentType"
-                    type={"select"}
-                    value={data.employmentType}
-                    onChange={onChangeHandler}
-                    options={employmentTypes}
-                />
-                <FormField
-                    name="description"
-                    type={"textarea"}
-                    value={data.description}
-                    onChange={onChangeHandler}
-                />
-                <button className={"submitBtn"}>Submit</button>
-                <ErrorList errorData={errorManager.errorData}/>
-            </form>
-        </div>
-    );
+    function editDataModifier(data) {
+        let finalData = {...data}
+        if (finalData.endDate === 'Present') {
+            finalData.endDate = ''
+        } else {
+            finalData.endDate = stringToDate(finalData.endDate, 'dd/mm/yyyy')
+        }
+        finalData.startDate = stringToDate(finalData.startDate, 'dd/mm/yyyy')
+        delete finalData.id
 
+        return finalData
+    }
+
+    const formFields = [
+        <FormField
+            key={"startDate"}
+            name="startDate"
+            type={"date"}
+            value={data.startDate}
+            onChange={onChangeHandler}
+        />,
+        <FormField
+            key={"endDate"}
+            name="endDate"
+            type={"date"}
+            placeholder={"Present"}
+            value={data.endDate}
+            onChange={onChangeHandler}
+            fieldTitle={"Leave blank if you are still working here"}
+        />,
+        <FormField
+            key={"companyName"}
+            name="companyName"
+            value={data.companyName}
+            onChange={onChangeHandler}
+        />,
+        <FormField
+            key={"jobTitle"}
+            name="jobTitle"
+            value={data.jobTitle}
+            onChange={onChangeHandler}
+        />,
+        <FormField
+            key={"fieldOfWork"}
+            name="fieldOfWork"
+            value={data.fieldOfWork}
+            onChange={onChangeHandler}
+        />,
+        <FormField
+            key={"employmentType"}
+            name="employmentType"
+            type={"select"}
+            value={data.employmentType}
+            onChange={onChangeHandler}
+            options={employmentTypes}
+        />,
+        <FormField
+            key={"description"}
+            name="description"
+            type={"textarea"}
+            value={data.description}
+            onChange={onChangeHandler}
+        />,
+    ]
+    return (
+        <CreateEditTemplate
+            actionService={isEdit
+                ? workExpService.updateWorkExp.bind(null,  userId, itemId)
+                : workExpService.createWorkExp.bind(null, userId)}
+            getService={isEdit && workExpService.getWorkExp.bind(null, userId, itemId)}
+            state={[data, setData]}
+            errorManager={errorManager}
+            validationFunc={checkAll}
+            dataModifier={dataModifier}
+            editDataModifier={editDataModifier}
+            destinationLink={'/work-experience/'}
+            formFields={formFields}
+
+        />
+    );
 }

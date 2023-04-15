@@ -8,6 +8,7 @@ export const routes = {
     CV_CREATE:"/cv/create",
     CV_DETAILS:"/cv/:cvId",
     WORK_EXP:"/work-experience",
-    WORK_EXP_DETAILS:"/work-experience/:workExpId",
+    WORK_EXP_DETAILS:"/work-experience/:itemId",
     WORK_EXP_CREATE:"/work-experience/create",
+    WORK_EXP_EDIT:"/work-experience/:itemId/edit",
 }
