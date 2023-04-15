@@ -11,21 +11,26 @@ export function AsideMenu({links}) {
         setIsAsideOpen(prevState => !prevState);
     }
 
+    links = links.map(link => {
+            switch (link.name) {
+                case "Back":
+                    return <li key={link.name}><Link to="#" onClick={() => window.history.back()}>{link.name}</Link></li>
+                case "Delete":
+                    return <li key={link.name}><Link to="#" onClick={link.link}>{link.name}</Link></li>
+                default:
+                    return <li key={link.name}><Link to={link.link}>{link.name}</Link></li>
+            }
+        }
+    )
+
+
     return (
         <aside className={styles.asideMenu}
                style={{width: isAsideOpen ? '20%' : '50px'}}
         >
             {isAsideOpen &&
                 <ul>
-                    {links.map(({name, link}) => {
-                        return (
-                            <li key={name}>
-                                {link === "back"
-                                    ? <Link to="#" onClick={() => window.history.back()}>{name}</Link>
-                                    : <Link to={link}>{name}</Link>
-                                }
-                            </li>)
-                    })}
+                    {links}
                 </ul>
             }
             <Arrow

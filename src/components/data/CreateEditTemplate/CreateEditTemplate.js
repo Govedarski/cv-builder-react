@@ -5,7 +5,7 @@ import {changeObjectKeysNaming, snakeCaseToCamelCase} from "../../../utils/helpe
 import styles from './CreateEditTemplate.module.css'
 import {ErrorList} from "../../helpers/ErrorList/ErrorList";
 
-export function CreateEditTemplate({
+export function CreateEditTemplate({    title,
                                        actionService,
                                        getService,
                                        state,
@@ -75,7 +75,7 @@ export function CreateEditTemplate({
 
     return (
         <div className={styles.container}>
-            <h1>Work Experience Create</h1>
+            <h1>{title}</h1>
             <form
                 className={styles.formContainer}
                 onSubmit={submitHandler}

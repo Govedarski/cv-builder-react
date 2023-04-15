@@ -1,12 +1,13 @@
 import styles from "../../../DetailsTemplate/DetailsTemplate.module.css";
 import React from "react";
 
-export function SectionEducation({educationData}){
+export function SectionEducation({data}){
+
     return (
         <section id={"education"} className={styles.sectionContainer}>
             <h2 className={styles.sectionInfoTitle}>Education</h2>
             <ul className={styles.sectionInfoList}>
-                {educationData?.map(education => (
+                {data?.map(education => (
                     <li key={education.id} className={styles.sectionInfo}>
                         <p className={styles.sectionInfoItem}>
                             <span className={styles.infoLabel}>Institution: </span>
@@ -14,19 +15,19 @@ export function SectionEducation({educationData}){
                         </p>
                         <p className={styles.sectionInfoItem}>
                             <span className={styles.infoLabel}>Education Level: </span>
-                            {education.education_level}
+                            {education.educationLevel}
                         </p>
                         <p className={styles.sectionInfoItem}>
                             <span className={styles.infoLabel}>Start Date: </span>
-                            {education.start_date}
+                            {education.startDate}
                         </p>
                         <p className={styles.sectionInfoItem}>
                             <span className={styles.infoLabel}>End Date: </span>
-                            {education.end_date}
+                            {education.endDate}
                         </p>
                         <p className={styles.sectionInfoItem}>
                             <span className={styles.infoLabel}>Fields of Study: </span>
-                            {education.fields_of_study.join(", ")}
+                            {education.fieldsOfStudy?.join(", ")}
                         </p>
                         <p className={styles.sectionInfoItem}>
                             <span className={styles.infoLabel}>Qualification: </span>

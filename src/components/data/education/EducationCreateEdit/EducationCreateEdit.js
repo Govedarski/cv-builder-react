@@ -1,80 +1,73 @@
 import {FormField} from "../../../helpers/FormField/FormField";
 import {useContext, useState} from "react";
-import {employmentTypes} from "../../../../constants/employmentTypes";
 import {useErrorManager} from "../../../../hooks/useErrorManager";
 import {validationManager} from "../../../../utils/validation/validatonManager";
 import {ValidateMaxLength, ValidateMinLength} from "../../../../utils/validation/validators/validators";
-import {dateToString, stringToDate} from "../../../../utils/helper_functions";
+import {createErrorOptions, dateToString, stringToDate} from "../../../../utils/helper_functions";
 import * as workExpService from "../../../../services/dataServices/workExpService/workExpService";
 import {CreateEditTemplate} from "../../CreateEditTemplate/CreateEditTemplate";
 import {UserContext} from "../../../../context/UserContext";
 import {useParams} from "react-router-dom";
+import {educationLevels} from "../../../../constants/educationLevels";
+import * as educationService from "../../../../services/dataServices/educationService/educationService";
 
-export function WorkExpCreateEdit({isEdit}) {
+export function EducationCreateEdit({isEdit}) {
     const userContext = useContext(UserContext);
     const userId = userContext.userData.id;
     const {itemId} = useParams();
 
     const [data, setData] = useState({
-        companyName: '',
-        jobTitle: '',
-        fieldOfWork: '',
-        employmentType: 'Full Time',
+        institution: '',
+        qualification: '',
         startDate: '',
         endDate: '',
-        description: ''
+        description: '',
+        educationLevel: 'High School',
+        diplomaNumber: '',
     })
-    const errorManager = useErrorManager({
-        companyName: [],
-        jobTitle: [],
-        fieldOfWork: [],
-        employmentType: [],
-        startDate: [],
-        endDate: [],
-        description: [],
-    });
+
+    const errorManager = useErrorManager({});
 
 
-    function createErrorOptions(name) {
-        return {errorMessage: `${name} is required`}
-    }
 
-    function checkCompanyName() {
-        const name = "companyName"
+
+    function checkInstitution() {
+        const name = "institution"
         const options = createErrorOptions(name)
         validationManager.validate(
-            [new ValidateMinLength(1, options), new ValidateMaxLength(64)],
+            [new ValidateMinLength(1, options),
+                new ValidateMaxLength(100)],
             name,
-            data.companyName,
+            data.institution,
             errorManager
         )
     }
 
-    function checkJobTitle() {
-        const name = "jobTitle"
+    function checkQualification() {
+        const name = "qualification"
         const options = createErrorOptions(name)
         validationManager.validate(
-            [new ValidateMinLength(1, options), new ValidateMaxLength(64)],
+            [new ValidateMinLength(1, options),
+                new ValidateMaxLength(100)],
             name,
-            data.jobTitle,
+            data.qualification,
             errorManager
         )
     }
 
-    function checkFieldOfWork() {
-        const name = "fieldOfWork"
-        const options = createErrorOptions(name)
-        validationManager.validate(
-            [new ValidateMinLength(1, options), new ValidateMaxLength(64)],
-            name,
-            data.fieldOfWork,
-            errorManager
-        )
-    }
 
     function checkDescription() {
         validationManager.validate(
             [new ValidateMaxLength(500)],
+            "description",
+            data.description,
+            errorManager
+        )
+    }
+
+    function checkDiplomaNumber() {
+        validationManager.validate(
+            [new ValidateMaxLength(100)],
             "description",
             data.description,
             errorManager
@@ -94,11 +87,12 @@ export function WorkExpCreateEdit({isEdit}) {
     }
 
     function checkAll() {
-        checkCompanyName()
-        checkJobTitle()
-        checkFieldOfWork()
+        checkInstitution()
+        checkQualification()
+        checkDescription()
         checkDescription()
         checkStartDate()
+        checkDiplomaNumber()
     }
 
 
@@ -128,6 +122,9 @@ export function WorkExpCreateEdit({isEdit}) {
         }
         finalData.startDate = stringToDate(finalData.startDate, 'dd/mm/yyyy')
         delete finalData.id
+        delete finalData.ownerId
+        delete finalData.diplomaFileUrl
+        console.log(finalData)
 
         return finalData
     }
@@ -150,30 +147,30 @@ export function WorkExpCreateEdit({isEdit}) {
             fieldTitle={"Leave blank if you are still working here"}
         />,
         <FormField
-            key={"companyName"}
-            name="companyName"
-            value={data.companyName}
+            key={"institution"}
+            name="institution"
+            value={data.institution}
             onChange={onChangeHandler}
         />,
         <FormField
-            key={"jobTitle"}
-            name="jobTitle"
-            value={data.jobTitle}
+            key={"qualification"}
+            name="qualification"
+            value={data.qualification}
             onChange={onChangeHandler}
         />,
         <FormField
-            key={"fieldOfWork"}
-            name="fieldOfWork"
-            value={data.fieldOfWork}
+            key={"diplomaNumber"}
+            name="diplomaNumber"
+            value={data.diplomaNumber}
             onChange={onChangeHandler}
         />,
         <FormField
-            key={"employmentType"}
-            name="employmentType"
+            key={"educationLevel"}
+            name="educationLevel"
             type={"select"}
-            value={data.employmentType}
+            value={data.educationLevel}
             onChange={onChangeHandler}
-            options={employmentTypes}
+            options={educationLevels}
         />,
         <FormField
             key={"description"}
@@ -185,17 +182,17 @@ export function WorkExpCreateEdit({isEdit}) {
     ]
     return (
         <CreateEditTemplate
-            title={isEdit ? "Edit Work Experience" : "Add Work Experience"}
+            title={isEdit ? "Edit Education" : "Add Education"}
             actionService={isEdit
-                ? workExpService.update.bind(null,  userId, itemId)
-                : workExpService.create.bind(null, userId)}
-            getService={isEdit && workExpService.getItem.bind(null, userId, itemId)}
+                ? educationService.update.bind(null,  userId, itemId)
+                : educationService.create.bind(null, userId)}
+            getService={isEdit && educationService.getItem.bind(null, userId, itemId)}
             state={[data, setData]}
             errorManager={errorManager}
             validationFunc={checkAll}
             dataModifier={dataModifier}
             editDataModifier={editDataModifier}
-            destinationLink={'/work-experience/'}
+            destinationLink={'/education/'}
             formFields={formFields}
 
         />

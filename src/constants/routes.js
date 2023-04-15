@@ -11,4 +11,9 @@ export const routes = {
     WORK_EXP_DETAILS:"/work-experience/:itemId",
     WORK_EXP_CREATE:"/work-experience/create",
     WORK_EXP_EDIT:"/work-experience/:itemId/edit",
+
+    EDUCATION:"/education",
+    EDUCATION_DETAILS:"/education/:itemId",
+    EDUCATION_CREATE:"/education/create",
+    EDUCATION_EDIT:"/education/:itemId/edit",
 }

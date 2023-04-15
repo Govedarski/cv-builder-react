@@ -35,9 +35,8 @@ export function changeObjectKeysNaming(obj, converter) {
 }
 
 
-
 export function dateToString(date, format) {
-    if (!date){
+    if (!date) {
         return
     }
     let day = String(date.getDate());
@@ -65,4 +64,8 @@ export function stringToDate(string, format) {
 
 export function createAsideLink(name, link) {
     return {name: name, link: link}
+}
+
+export function createErrorOptions(name) {
+    return {errorMessage: `${name} is required`}
 }

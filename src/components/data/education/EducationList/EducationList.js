@@ -3,12 +3,9 @@ import {UserContext} from "../../../../context/UserContext";
 import {useContext, useEffect, useState} from "react";
 import {LoadingContext} from "../../../../context/LoadingContext";
 import {routes} from "../../../../constants/routes";
-import * as workExpService from "../../../../services/dataServices/workExpService/workExpService";
-import {
-    changeObjectKeysNaming,
-    snakeCaseToCamelCase
-} from "../../../../utils/helper_functions";
-import {WorkExpItem} from "./WorkExpItem/WorkExpItem";
+import {changeObjectKeysNaming, snakeCaseToCamelCase} from "../../../../utils/helper_functions";
+import * as educationService from "../../../../services/dataServices/educationService/educationService";
+import {EducationItem} from "./EducationItem/EducationItem";
 
 export function EducationList() {
     const userContext = useContext(UserContext);
@@ -18,10 +15,10 @@ export function EducationList() {
 
     useEffect(() => {
         setIsLoading(true);
-        workExpService.getWorkExps(userId)
+        educationService.getList(userId)
             .then((response) => {
                 response = response.map(x => changeObjectKeysNaming(x, snakeCaseToCamelCase))
-                setData(response.map(x => <WorkExpItem key={x.id} data={x}/>));
+                setData(response.map(x => <EducationItem key={x.id} data={x}/>));
                 setIsLoading(false);
             }).catch((error) => {
             setIsLoading(false);
@@ -30,9 +27,9 @@ export function EducationList() {
 
     return (
         <ListTemplate
-            title={'Work Experience List'}
+            title={'Education List'}
             data={data}
-            createLink = {routes.WORK_EXP_CREATE}
+            createLink={routes.EDUCATION_CREATE}
         />
     );
 }

@@ -18,7 +18,7 @@ export function WorkExpList() {
 
     useEffect(() => {
         setIsLoading(true);
-        workExpService.getWorkExps(userId)
+        workExpService.getList(userId)
             .then((response) => {
                 response = response.map(x => changeObjectKeysNaming(x, snakeCaseToCamelCase))
                 setData(response.map(x => <WorkExpItem key={x.id} data={x}/>));
@@ -32,7 +32,7 @@ export function WorkExpList() {
         <ListTemplate
             title={'Work Experience List'}
             data={data}
-            createLink = {routes.WORK_EXP_CREATE}
+            createLink = {routes.EDUCATION_CREATE}
         />
     );
 }

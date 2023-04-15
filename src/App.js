@@ -15,6 +15,9 @@ import {CVDetails} from "./components/data/cv/CVDetails/CVDetails";
 import {WorkExpList} from "./components/data/workExp/WorkExpList/WorkExpList";
 import {WorkExpDetails} from "./components/data/workExp/WorkExpDetails/WorkExpDetails";
 import {WorkExpCreateEdit} from "./components/data/workExp/WorkExpCreateEdit/WorkExpCreateEdit";
+import {EducationList} from "./components/data/education/EducationList/EducationList";
+import {EducationDetails} from "./components/data/education/EducationDetails/EducationDetails";
+import {EducationCreateEdit} from "./components/data/education/EducationCreateEdit/EducationCreateEdit";
 
 export function App() {
     return (
@@ -33,10 +36,16 @@ export function App() {
 
                         <Route path={routes.CV_LIST} element={<CVList/>}/>
                         <Route path={routes.CV_DETAILS} element={<CVDetails/>}/>
+
                         <Route path={routes.WORK_EXP} element={<WorkExpList/>}/>
                         <Route path={routes.WORK_EXP_CREATE} element={<WorkExpCreateEdit/>}/>
                         <Route path={routes.WORK_EXP_EDIT} element={<WorkExpCreateEdit isEdit={true}/>}/>
                         <Route path={routes.WORK_EXP_DETAILS} element={<WorkExpDetails/>}/>
+
+                        <Route path={routes.EDUCATION} element={<EducationList/>}/>
+                        <Route path={routes.EDUCATION_CREATE} element={<EducationCreateEdit/>}/>
+                        <Route path={routes.EDUCATION_EDIT} element={<EducationCreateEdit isEdit={true}/>}/>
+                        <Route path={routes.EDUCATION_DETAILS} element={<EducationDetails/>}/>
                     </Routes>
                 </main>
 

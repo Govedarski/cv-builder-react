@@ -2,14 +2,13 @@ import React, {useContext, useEffect} from 'react';
 import {useLocation, useParams,} from 'react-router-dom';
 import {UserContext} from "../../../../context/UserContext";
 import {LoadingContext} from "../../../../context/LoadingContext";
-import {SectionWorkExp} from "../../workExp/WorkExpDetails/SectionWorkExp/SectionWorkExp";
-import {changeObjectKeysNaming, createAsideLink, snakeCaseToCamelCase} from "../../../../utils/helper_functions";
+import {changeObjectKeysNaming, snakeCaseToCamelCase} from "../../../../utils/helper_functions";
 import {DetailsTemplate} from "../../DetailsTemplate/DetailsTemplate";
-import * as workExpService from "../../../../services/dataServices/workExpService/workExpService";
 import * as educationService from "../../../../services/dataServices/educationService/educationService";
+import {SectionEducation} from "./SectionEducation/SectionEducation";
 
 
-export function WorkExpDetails() {
+export function EducationDetails() {
     const location = useLocation();
     const userContext = useContext(UserContext);
     const userId = userContext.userData.id;
@@ -24,7 +23,7 @@ export function WorkExpDetails() {
     useEffect(() => {
         if (!stateData) {
             setIsLoading(true);
-            workExpService.getItem(userId, itemId)
+            educationService.getItem(userId, itemId)
                 .then((response) => {
                     response = changeObjectKeysNaming(response, snakeCaseToCamelCase)
                     setData(response);
@@ -41,12 +40,12 @@ export function WorkExpDetails() {
     let sections= []
     if (data) {
         sections = [
-            <SectionWorkExp key={"work-exp"} workExpData={[data]}/>,
+            <SectionEducation key={"education"} data={[data]}/>,
         ]
     }
 
     return <DetailsTemplate
         sections={sections}
-        deleteService={workExpService.deleteItem.bind(null, userId, itemId)}
+        deleteService={educationService.deleteItem.bind(null, userId, itemId)}
     />
 }

@@ -5,7 +5,7 @@ import * as cvService from "../../../../services/dataServices/cvService/cvServic
 import {LoadingContext} from "../../../../context/LoadingContext";
 import {SectionPersonalInformation} from "./SectionPersonalInformation/SectionPersonalInformation";
 import {SectionWorkExp} from "../../workExp/WorkExpDetails/SectionWorkExp/SectionWorkExp";
-import {SectionEducation} from "./SectionEducation/SectionEducation";
+import {SectionEducation} from "../../education/EducationDetails/SectionEducation/SectionEducation";
 import {SectionSkills} from "./SectionSkills/SectionSkills";
 import {SectionReferences} from "./SectionReferences/SectionReferences";
 import {SectionCertificates} from "./SectionCertificates/SectionCertificates";
