@@ -7,7 +7,7 @@ import {useContext, useState} from "react";
 import {DeletePopupMenu} from "../DeletePopUpMenu/DeletePopUpMenu";
 import {LoadingContext} from "../../../../context/LoadingContext";
 
-export function DetailsTemplate({sections, deleteService, asideLinks, selectedImage, setSelectedImage}) {
+export function DetailsTemplate({sections, deleteService, asideLinks}) {
     const location = useLocation();
     const listLink = location.pathname.split("/").slice(0, -1).join("/")
     const {setIsLoading} = useContext(LoadingContext);
@@ -48,15 +48,6 @@ export function DetailsTemplate({sections, deleteService, asideLinks, selectedIm
             <AsideMenu links={allAsideLinks}/>
             <div className={styles.cvDetailsContainer}>
                 {sections}
-                {selectedImage && (
-                    <div className={styles.imagePopup}>
-                        <img src={selectedImage} alt="Certificate"/>
-                        <CloseButton
-                            className={styles.closeButton}
-                            onClick={() => setSelectedImage(null)}
-                        />
-                    </div>
-                )}
                 {showDelete && <DeletePopupMenu onDelete={deleteItem} onCancel={hideDeleteMenu}/>}
             </div>
         </>

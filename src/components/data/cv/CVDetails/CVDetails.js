@@ -8,7 +8,7 @@ import {SectionWorkExp} from "../../workExp/WorkExpDetails/SectionWorkExp/Sectio
 import {SectionEducation} from "../../education/EducationDetails/SectionEducation/SectionEducation";
 import {SectionSkills} from "./SectionSkills/SectionSkills";
 import {SectionReferences} from "../../references/ReferencesDetails/SectionReferences/SectionReferences";
-import {SectionCertificates} from "./SectionCertificates/SectionCertificates";
+import {SectionCertificates} from "../../certificates/CertificatesDetails/SectionCertificates/SectionCertificates";
 import {SectionRequirements} from "../../requirements/RequirementsDetails/SectionRequirements/SectionRequirements";
 import {createAsideLink} from "../../../../utils/helper_functions";
 import Scroll from 'react-scroll';
@@ -24,7 +24,6 @@ export function CVDetails() {
     const [cvData, setDataCV] = React.useState({});
     const {cv} = location.state || {};
     const {setIsLoading} = useContext(LoadingContext);
-    const [selectedImage, setSelectedImage] = useState(null);
     const scroller = Scroll.scroller;
 
     useEffect(() => {
@@ -42,9 +41,7 @@ export function CVDetails() {
     )
     window.history.replaceState('', document.title, window.location.pathname)
 
-    function handleImageClick(e) {
-        setSelectedImage(e.target.src);
-    }
+
 
     const asideLinks = [
         createAsideLink("Edit", `/cv/${cvId}/edit`),
@@ -92,8 +89,7 @@ export function CVDetails() {
         <SectionSkills cvData={cvData}/>,
         <SectionReferences referencesData={cvData?.references}/>,
         <SectionCertificates
-            certificatesData={cvData?.certificates}
-            handleImageClick={handleImageClick}/>,
+            certificatesData={cvData?.certificates}/>,
         <section id={"hobbies"} className={styles.sectionContainer}>
             <h2 className={styles.sectionInfoTitle}>Hobbies</h2>
             <p className={styles.sectionInfoContainer}>{cvData.hobbies}</p>
@@ -104,6 +100,5 @@ export function CVDetails() {
     return <DetailsTemplate
         sections={sections}
         asideLinks={asideLinks}
-        selectedImage={selectedImage}
-        setSelectedImage={setSelectedImage}/>
+        />
 }

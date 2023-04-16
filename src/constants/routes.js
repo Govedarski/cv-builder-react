@@ -27,5 +27,10 @@ export const routes = {
     REQUIREMENTS:"/requirements",
     REQUIREMENTS_DETAILS:"/requirements/:itemId",
     REQUIREMENTS_CREATE:"/requirements/create",
-    REQUIREMENTS_EDIT:"/requirements/:itemId/edit"
+    REQUIREMENTS_EDIT:"/requirements/:itemId/edit",
+
+    CERTIFICATES:"/certificates",
+    CERTIFICATES_DETAILS:"/certificates/:itemId",
+    CERTIFICATES_CREATE:"/certificates/create",
+    CERTIFICATES_EDIT:"/certificates/:itemId/edit",
 }

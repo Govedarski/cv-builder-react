@@ -3,7 +3,7 @@ import defaultPlaceholder from './placeholder.jpeg';
 import {CloseButton} from '../../CloseButton/CloseButton.js';
 import styles from './ImageInput.module.css';
 
-export function ImageInput({imageData, setImageData, imageUrl, placeholder, className, deleteImageHandler}) {
+export function ImageInput({imageData, setImageData, imageUrl, placeholder, className, deleteImageHandler, style}) {
     placeholder = placeholder || defaultPlaceholder;
     const inputRef = useRef();
 
@@ -40,7 +40,7 @@ export function ImageInput({imageData, setImageData, imageUrl, placeholder, clas
 
 
     return (
-        <div className={styles.imageContainer}>
+        <div className={styles.imageContainer} style={style}>
             <img
                 src={imageData?.image || imageUrl || placeholder}
                 alt="chosen"

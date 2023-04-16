@@ -11,9 +11,6 @@
     width: 100%;
 }
 
-.formContainer input[type="date"] {
-    width: 256px;
-}
 
 .formContainer label{
     color: #fff;

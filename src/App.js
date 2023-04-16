@@ -24,6 +24,9 @@ import {ReferencesDetails} from "./components/data/references/ReferencesDetails/
 import {RequirementsList} from "./components/data/requirements/RequirementsList/RequirementsList";
 import {RequirementsCreateEdit} from "./components/data/requirements/RequirmentsCreateEdit/RequirementsCreateEdit";
 import {RequirementsDetails} from "./components/data/requirements/RequirementsDetails/RequirmentsDetails";
+import {CertificatesList} from "./components/data/certificates/CertificatesList/CertificatesList";
+import {CertificatesCreateEdit} from "./components/data/certificates/CertificatesCreateEdit/CertificatesCreateEdit";
+import {CertificatesDetails} from "./components/data/certificates/CertificatesDetails/CertificatesDetails";
 
 export function App() {
     return (
@@ -62,6 +65,12 @@ export function App() {
                         <Route path={routes.REQUIREMENTS_CREATE} element={<RequirementsCreateEdit/>}/>
                         <Route path={routes.REQUIREMENTS_EDIT} element={<RequirementsCreateEdit isEdit={true}/>}/>
                         <Route path={routes.REQUIREMENTS_DETAILS} element={<RequirementsDetails/>}/>
+
+
+                        <Route path={routes.CERTIFICATES} element={<CertificatesList/>}/>
+                        <Route path={routes.CERTIFICATES_CREATE} element={<CertificatesCreateEdit/>}/>
+                        <Route path={routes.CERTIFICATES_EDIT} element={<CertificatesCreateEdit isEdit={true}/>}/>
+                        <Route path={routes.CERTIFICATES_DETAILS} element={<CertificatesDetails/>}/>
                     </Routes>
                 </main>
 

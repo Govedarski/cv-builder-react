@@ -33,6 +33,7 @@ export function CreateEditTemplate({   title,
             getService()
                 .then((response) => {
                     response = changeObjectKeysNaming(response, snakeCaseToCamelCase)
+                    console.log(response)
                     response = editDataModifier(response)
                     setData(response);
                     setIsLoading(false);
