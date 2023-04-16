@@ -1,11 +1,11 @@
 import {useContext, useEffect} from "react";
-import {LoadingContext} from "../../../context/LoadingContext";
+import {LoadingContext} from "../../../../context/LoadingContext";
 import {useLocation, useNavigate} from "react-router-dom";
-import {changeObjectKeysNaming, snakeCaseToCamelCase} from "../../../utils/helper_functions";
+import {changeObjectKeysNaming, snakeCaseToCamelCase} from "../../../../utils/helper_functions";
 import styles from './CreateEditTemplate.module.css'
-import {ErrorList} from "../../helpers/ErrorList/ErrorList";
+import {ErrorList} from "../../../helpers/ErrorList/ErrorList";
 
-export function CreateEditTemplate({    title,
+export function CreateEditTemplate({   title,
                                        actionService,
                                        getService,
                                        state,
@@ -35,7 +35,6 @@ export function CreateEditTemplate({    title,
                     response = changeObjectKeysNaming(response, snakeCaseToCamelCase)
                     response = editDataModifier(response)
                     setData(response);
-                    console.log(response)
                     setIsLoading(false);
                 })
                 .catch((error) => {
@@ -57,7 +56,7 @@ export function CreateEditTemplate({    title,
             return;
         }
         setIsLoading(true)
-        let finalData = dataModifier(data)
+        const finalData = dataModifier ? dataModifier(data) : {...data}
         actionService(finalData).then(
             (res) => {
                 res = changeObjectKeysNaming(res, snakeCaseToCamelCase)

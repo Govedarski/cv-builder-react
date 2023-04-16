@@ -1,4 +1,4 @@
-import {ListTemplate} from '../../ListTemplate/ListTemplate.js';
+import {ListTemplate} from '../../common/ListTemplate/ListTemplate.js';
 import {UserContext} from "../../../../context/UserContext";
 import {useContext, useEffect, useState} from "react";
 import * as cvService from "../../../../services/dataServices/cvService/cvService";

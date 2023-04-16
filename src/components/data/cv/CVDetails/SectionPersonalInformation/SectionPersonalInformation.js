@@ -1,4 +1,4 @@
-import styles from "../../../DetailsTemplate/DetailsTemplate.module.css";
+import styles from "../../../common/DetailsTemplate/DetailsTemplate.module.css";
 
 import React, {useContext} from "react";
 import {UserContext} from "../../../../../context/UserContext";

@@ -5,7 +5,7 @@ import {validationManager} from "../../../../utils/validation/validatonManager";
 import {ValidateMaxLength, ValidateMinLength} from "../../../../utils/validation/validators/validators";
 import {createErrorOptions, dateToString, stringToDate} from "../../../../utils/helper_functions";
 import * as workExpService from "../../../../services/dataServices/workExpService/workExpService";
-import {CreateEditTemplate} from "../../CreateEditTemplate/CreateEditTemplate";
+import {CreateEditTemplate} from "../../common/CreateEditTemplate/CreateEditTemplate";
 import {UserContext} from "../../../../context/UserContext";
 import {useParams} from "react-router-dom";
 import {educationLevels} from "../../../../constants/educationLevels";
@@ -136,6 +136,7 @@ export function EducationCreateEdit({isEdit}) {
             type={"date"}
             value={data.startDate}
             onChange={onChangeHandler}
+            style={{width: '256px'}}
         />,
         <FormField
             key={"endDate"}
@@ -145,6 +146,7 @@ export function EducationCreateEdit({isEdit}) {
             value={data.endDate}
             onChange={onChangeHandler}
             fieldTitle={"Leave blank if you are still working here"}
+            style={{width: '256px'}}
         />,
         <FormField
             key={"institution"}

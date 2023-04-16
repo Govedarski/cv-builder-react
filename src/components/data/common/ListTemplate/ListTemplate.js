@@ -1,13 +1,13 @@
 import styles from './ListTemplate.module.css'
 import {Link} from "react-router-dom";
-import {AsideMenu} from "../../helpers/AsideMenu/AsideMenu";
+import {AsideMenu} from "../../../helpers/AsideMenu/AsideMenu";
 
 export function ListTemplate({title, data, createLink}) {
     const asideLinks = [
         {name: 'CV', link: '/cv'},
         {name: 'Work Experience', link: '/work-experience'},
         {name: 'Educations', link: '/education'},
-        {name: 'References', link: '/reference'},
+        {name: 'References', link: '/references'},
         {name: 'Certificates', link: '/certificates '},
         {name: 'Requirements', link: '/requirements'},
     ]

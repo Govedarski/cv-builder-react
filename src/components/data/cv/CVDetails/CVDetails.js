@@ -7,13 +7,13 @@ import {SectionPersonalInformation} from "./SectionPersonalInformation/SectionPe
 import {SectionWorkExp} from "../../workExp/WorkExpDetails/SectionWorkExp/SectionWorkExp";
 import {SectionEducation} from "../../education/EducationDetails/SectionEducation/SectionEducation";
 import {SectionSkills} from "./SectionSkills/SectionSkills";
-import {SectionReferences} from "./SectionReferences/SectionReferences";
+import {SectionReferences} from "../../references/ReferencesDetails/SectionReferences/SectionReferences";
 import {SectionCertificates} from "./SectionCertificates/SectionCertificates";
 import {SectionRequirements} from "./SectionRequirements/SectionRequirements";
 import {createAsideLink} from "../../../../utils/helper_functions";
 import Scroll from 'react-scroll';
-import {DetailsTemplate} from "../../DetailsTemplate/DetailsTemplate";
-import styles from "../../DetailsTemplate/DetailsTemplate.module.css";
+import {DetailsTemplate} from "../../common/DetailsTemplate/DetailsTemplate";
+import styles from "../../common/DetailsTemplate/DetailsTemplate.module.css";
 
 
 export function CVDetails() {

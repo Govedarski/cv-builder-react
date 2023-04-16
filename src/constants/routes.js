@@ -4,9 +4,11 @@ export const routes = {
     REGISTER:"/register",
     LOGOUT:"/logout",
     PROFILE_OWN:"/profile",
+
     CV_LIST:"/cv",
     CV_CREATE:"/cv/create",
     CV_DETAILS:"/cv/:cvId",
+
     WORK_EXP:"/work-experience",
     WORK_EXP_DETAILS:"/work-experience/:itemId",
     WORK_EXP_CREATE:"/work-experience/create",
@@ -16,4 +18,9 @@ export const routes = {
     EDUCATION_DETAILS:"/education/:itemId",
     EDUCATION_CREATE:"/education/create",
     EDUCATION_EDIT:"/education/:itemId/edit",
+
+    REFERENCES:"/references",
+    REFERENCES_DETAILS:"/references/:itemId",
+    REFERENCES_CREATE:"/references/create",
+    REFERENCES_EDIT:"/references/:itemId/edit",
 }

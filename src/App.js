@@ -18,6 +18,9 @@ import {WorkExpCreateEdit} from "./components/data/workExp/WorkExpCreateEdit/Wor
 import {EducationList} from "./components/data/education/EducationList/EducationList";
 import {EducationDetails} from "./components/data/education/EducationDetails/EducationDetails";
 import {EducationCreateEdit} from "./components/data/education/EducationCreateEdit/EducationCreateEdit";
+import {ReferencesList} from "./components/data/references/ReferencesList/ReferencesList";
+import {ReferencesCreateEdit} from "./components/data/references/ReferencesCreateEdit/ReferencesCreateEdit";
+import {ReferencesDetails} from "./components/data/references/ReferencesDetails/ReferencesDetails";
 
 export function App() {
     return (
@@ -46,6 +49,11 @@ export function App() {
                         <Route path={routes.EDUCATION_CREATE} element={<EducationCreateEdit/>}/>
                         <Route path={routes.EDUCATION_EDIT} element={<EducationCreateEdit isEdit={true}/>}/>
                         <Route path={routes.EDUCATION_DETAILS} element={<EducationDetails/>}/>
+
+                        <Route path={routes.REFERENCES} element={<ReferencesList/>}/>
+                        <Route path={routes.REFERENCES_CREATE} element={<ReferencesCreateEdit/>}/>
+                        <Route path={routes.REFERENCES_EDIT} element={<ReferencesCreateEdit isEdit={true}/>}/>
+                        <Route path={routes.REFERENCES_DETAILS} element={<ReferencesDetails/>}/>
                     </Routes>
                 </main>
 

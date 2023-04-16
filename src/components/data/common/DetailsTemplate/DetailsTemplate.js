@@ -1,11 +1,11 @@
-import {AsideMenu} from "../../helpers/AsideMenu/AsideMenu";
-import {CloseButton} from "../../helpers/CloseButton/CloseButton";
+import {AsideMenu} from "../../../helpers/AsideMenu/AsideMenu";
+import {CloseButton} from "../../../helpers/CloseButton/CloseButton";
 import styles from './DetailsTemplate.module.css'
-import {createAsideLink} from "../../../utils/helper_functions";
+import {createAsideLink} from "../../../../utils/helper_functions";
 import {useLocation, useNavigate} from "react-router-dom";
 import {useContext, useState} from "react";
 import {DeletePopupMenu} from "../DeletePopUpMenu/DeletePopUpMenu";
-import {LoadingContext} from "../../../context/LoadingContext";
+import {LoadingContext} from "../../../../context/LoadingContext";
 
 export function DetailsTemplate({sections, deleteService, asideLinks, selectedImage, setSelectedImage}) {
     const location = useLocation();

@@ -3,7 +3,7 @@ import {useLocation, useParams,} from 'react-router-dom';
 import {UserContext} from "../../../../context/UserContext";
 import {LoadingContext} from "../../../../context/LoadingContext";
 import {changeObjectKeysNaming, snakeCaseToCamelCase} from "../../../../utils/helper_functions";
-import {DetailsTemplate} from "../../DetailsTemplate/DetailsTemplate";
+import {DetailsTemplate} from "../../common/DetailsTemplate/DetailsTemplate";
 import * as educationService from "../../../../services/dataServices/educationService/educationService";
 import {SectionEducation} from "./SectionEducation/SectionEducation";
 

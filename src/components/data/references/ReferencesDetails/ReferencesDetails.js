@@ -6,9 +6,11 @@ import {SectionWorkExp} from "../../workExp/WorkExpDetails/SectionWorkExp/Sectio
 import {changeObjectKeysNaming, snakeCaseToCamelCase} from "../../../../utils/helper_functions";
 import {DetailsTemplate} from "../../common/DetailsTemplate/DetailsTemplate";
 import * as workExpService from "../../../../services/dataServices/workExpService/workExpService";
+import * as referencesService from "../../../../services/dataServices/referencesService/referencesService";
+import {SectionReferences} from "./SectionReferences/SectionReferences";
 
 
-export function WorkExpDetails() {
+export function ReferencesDetails() {
     const location = useLocation();
     const userContext = useContext(UserContext);
     const userId = userContext.userData.id;
@@ -23,29 +25,31 @@ export function WorkExpDetails() {
     useEffect(() => {
         if (!stateData) {
             setIsLoading(true);
-            workExpService.getItem(userId, itemId)
+            referencesService.getItem(userId, itemId)
                 .then((response) => {
                     response = changeObjectKeysNaming(response, snakeCaseToCamelCase)
                     setData(response);
                     setIsLoading(false);
                 })
                 .catch((error) => {
+                    console.log(error)
                     setIsLoading(false);
                 });
         } else {
             setData(stateData);
         }
     }, []);
+    console.log(data)
 
     let sections= []
     if (data) {
         sections = [
-            <SectionWorkExp key={"work-exp"} workExpData={[data]}/>,
+            <SectionReferences key={"references"} itemData={[data]}/>,
         ]
     }
 
     return <DetailsTemplate
         sections={sections}
-        deleteService={workExpService.deleteItem.bind(null, userId, itemId)}
+        deleteService={referencesService.deleteItem.bind(null, userId, itemId)}
     />
 }

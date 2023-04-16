@@ -1,4 +1,4 @@
-import styles from "../../../DetailsTemplate/DetailsTemplate.module.css";
+import styles from "../../../common/DetailsTemplate/DetailsTemplate.module.css";
 
 import React from "react";
 

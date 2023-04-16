@@ -1,13 +1,14 @@
-import styles from "../../../DetailsTemplate/DetailsTemplate.module.css";
+import styles from "../../../common/DetailsTemplate/DetailsTemplate.module.css";
 
 import React from "react";
 
-export function SectionReferences({referencesData}) {
+export function SectionReferences({itemData}) {
+    console.log(itemData)
     return (
         <section id={"references"} className={styles.sectionContainer}>
             <h2 className={styles.sectionInfoTitle}>References</h2>
             <ul className={styles.sectionInfoList}>
-                {referencesData?.map(reference => (
+                {itemData?.map(reference => (
                     <li key={reference?.id} className={styles.sectionInfo}>
                         <p className={styles.sectionInfoItem}>
                             <span className={styles.infoLabel}>Name: </span>

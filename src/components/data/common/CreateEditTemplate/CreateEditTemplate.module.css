@@ -11,8 +11,7 @@
     width: 100%;
 }
 
-.formContainer > *:nth-child(1),
-.formContainer > *:nth-child(2) {
+.formContainer input[type="date"] {
     width: 256px;
 }
 

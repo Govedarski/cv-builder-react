@@ -4,10 +4,10 @@ import {useContext, useEffect, useState} from "react";
 import {LoadingContext} from "../../../../context/LoadingContext";
 import {routes} from "../../../../constants/routes";
 import {changeObjectKeysNaming, snakeCaseToCamelCase} from "../../../../utils/helper_functions";
-import * as educationService from "../../../../services/dataServices/educationService/educationService";
-import {EducationItem} from "./EducationItem/EducationItem";
+import * as referencesService from "../../../../services/dataServices/referencesService/referencesService";
+import {ReferencesItem} from "./ReferencesItem/ReferencesItem";
 
-export function EducationList() {
+export function ReferencesList() {
     const userContext = useContext(UserContext);
     const userId = userContext.userData.id;
     const [data, setData] = useState([]);
@@ -15,10 +15,10 @@ export function EducationList() {
 
     useEffect(() => {
         setIsLoading(true);
-        educationService.getList(userId)
+        referencesService.getList(userId)
             .then((response) => {
                 response = response.map(x => changeObjectKeysNaming(x, snakeCaseToCamelCase))
-                setData(response.map(x => <EducationItem key={x.id} data={x}/>));
+                setData(response.map(x => <ReferencesItem key={x.id} data={x}/>));
                 setIsLoading(false);
             }).catch((error) => {
             setIsLoading(false);
@@ -27,9 +27,9 @@ export function EducationList() {
 
     return (
         <ListTemplate
-            title={'Education List'}
+            title={'References List'}
             data={data}
-            createLink={routes.EDUCATION_CREATE}
+            createLink = {routes.REFERENCES_CREATE}
         />
     );
 }

@@ -1,4 +1,4 @@
-import {ListTemplate} from '../../ListTemplate/ListTemplate.js';
+import {ListTemplate} from '../../common/ListTemplate/ListTemplate.js';
 import {UserContext} from "../../../../context/UserContext";
 import {useContext, useEffect, useState} from "react";
 import {LoadingContext} from "../../../../context/LoadingContext";
@@ -32,7 +32,7 @@ export function WorkExpList() {
         <ListTemplate
             title={'Work Experience List'}
             data={data}
-            createLink = {routes.EDUCATION_CREATE}
+            createLink = {routes.WORK_EXP_CREATE}
         />
     );
 }
