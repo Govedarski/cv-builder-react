@@ -2,9 +2,9 @@ import styles from "../../../common/DetailsTemplate/DetailsTemplate.module.css";
 
 import React from "react";
 
-export function SectionRequirements({requirementsData}) {
-    const minSalary = requirementsData?.salary_min_range || "unspecified";
-    const maxSalary = requirementsData?.salary_max_range || "unspecified";
+export function SectionRequirements({data}) {
+    const minSalary = data?.salaryMinRange || "unspecified";
+    const maxSalary = data?.salaryMaxRange || "unspecified";
     return(
         <section id={"requirements"} className={styles.sectionContainer}>
 
@@ -19,7 +19,7 @@ export function SectionRequirements({requirementsData}) {
                 }
                 <p className={styles.sectionInfoItem}>
                     <span className={styles.infoLabel}>Employment type: </span>
-                    {requirementsData?.employment_type}
+                    {data?.employmentType}
                 </p>
             </div>
         </section>

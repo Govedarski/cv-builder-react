@@ -141,3 +141,15 @@ export class ValidatePasswordMatch extends Validator {
 }
 
 
+export class ValidateMinValue extends Validator {
+    constructor(minValue, options = {}) {
+        super(options);
+        this.minValue = minValue;
+    }
+
+    validate(name, value) {
+        if (value < this.minValue) {
+            return this.getError(`${name} must be at least ${this.minValue}!`);
+        }
+    }
+}

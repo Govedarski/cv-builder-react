@@ -9,7 +9,7 @@ import {SectionEducation} from "../../education/EducationDetails/SectionEducatio
 import {SectionSkills} from "./SectionSkills/SectionSkills";
 import {SectionReferences} from "../../references/ReferencesDetails/SectionReferences/SectionReferences";
 import {SectionCertificates} from "./SectionCertificates/SectionCertificates";
-import {SectionRequirements} from "./SectionRequirements/SectionRequirements";
+import {SectionRequirements} from "../../requirements/RequirementsDetails/SectionRequirements/SectionRequirements";
 import {createAsideLink} from "../../../../utils/helper_functions";
 import Scroll from 'react-scroll';
 import {DetailsTemplate} from "../../common/DetailsTemplate/DetailsTemplate";

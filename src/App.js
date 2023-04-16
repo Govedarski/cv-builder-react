@@ -21,6 +21,9 @@ import {EducationCreateEdit} from "./components/data/education/EducationCreateEd
 import {ReferencesList} from "./components/data/references/ReferencesList/ReferencesList";
 import {ReferencesCreateEdit} from "./components/data/references/ReferencesCreateEdit/ReferencesCreateEdit";
 import {ReferencesDetails} from "./components/data/references/ReferencesDetails/ReferencesDetails";
+import {RequirementsList} from "./components/data/requirements/RequirementsList/RequirementsList";
+import {RequirementsCreateEdit} from "./components/data/requirements/RequirmentsCreateEdit/RequirementsCreateEdit";
+import {RequirementsDetails} from "./components/data/requirements/RequirementsDetails/RequirmentsDetails";
 
 export function App() {
     return (
@@ -54,6 +57,11 @@ export function App() {
                         <Route path={routes.REFERENCES_CREATE} element={<ReferencesCreateEdit/>}/>
                         <Route path={routes.REFERENCES_EDIT} element={<ReferencesCreateEdit isEdit={true}/>}/>
                         <Route path={routes.REFERENCES_DETAILS} element={<ReferencesDetails/>}/>
+
+                        <Route path={routes.REQUIREMENTS} element={<RequirementsList/>}/>
+                        <Route path={routes.REQUIREMENTS_CREATE} element={<RequirementsCreateEdit/>}/>
+                        <Route path={routes.REQUIREMENTS_EDIT} element={<RequirementsCreateEdit isEdit={true}/>}/>
+                        <Route path={routes.REQUIREMENTS_DETAILS} element={<RequirementsDetails/>}/>
                     </Routes>
                 </main>
 

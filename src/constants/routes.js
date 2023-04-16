@@ -23,4 +23,9 @@ export const routes = {
     REFERENCES_DETAILS:"/references/:itemId",
     REFERENCES_CREATE:"/references/create",
     REFERENCES_EDIT:"/references/:itemId/edit",
+
+    REQUIREMENTS:"/requirements",
+    REQUIREMENTS_DETAILS:"/requirements/:itemId",
+    REQUIREMENTS_CREATE:"/requirements/create",
+    REQUIREMENTS_EDIT:"/requirements/:itemId/edit"
 }
