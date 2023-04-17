@@ -3,12 +3,17 @@ import styles from "../../../common/DetailsTemplate/DetailsTemplate.module.css";
 import React, {useContext} from "react";
 import {UserContext} from "../../../../../context/UserContext";
 
-export function SectionPersonalInformation() {
+export function SectionPersonalInformation({title, onDoubleClick}) {
     const {profileData} = useContext(UserContext);
     const {userData} = useContext(UserContext);
 
     return (
-        <section id={"personal-information"} className={styles.sectionContainer}>
+        <section
+            onDoubleClick={onDoubleClick}
+            id={"personal-information"}
+            className={styles.sectionContainer}
+            title={title}
+        >
             <h2 className={styles.sectionInfoTitle}>Personal Information</h2>
             <div className={styles.sectionInfoContainer}>
                 <div className={styles.sectionImageContainer}>

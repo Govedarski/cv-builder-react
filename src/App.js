@@ -27,6 +27,7 @@ import {RequirementsDetails} from "./components/data/requirements/RequirementsDe
 import {CertificatesList} from "./components/data/certificates/CertificatesList/CertificatesList";
 import {CertificatesCreateEdit} from "./components/data/certificates/CertificatesCreateEdit/CertificatesCreateEdit";
 import {CertificatesDetails} from "./components/data/certificates/CertificatesDetails/CertificatesDetails";
+import {CVCreate} from "./components/data/cv/CVCreate/CVCreate";
 
 export function App() {
     return (
@@ -45,29 +46,31 @@ export function App() {
 
                         <Route path={routes.CV_LIST} element={<CVList/>}/>
                         <Route path={routes.CV_DETAILS} element={<CVDetails/>}/>
+                        <Route path={routes.CV_CREATE} element={<CVCreate/>}/>
+                        <Route path={routes.CV_EDIT} element={<CVDetails/>}/>
 
-                        <Route path={routes.WORK_EXP} element={<WorkExpList/>}/>
+                        <Route path={routes.WORK_EXP_LIST} element={<WorkExpList/>}/>
                         <Route path={routes.WORK_EXP_CREATE} element={<WorkExpCreateEdit/>}/>
                         <Route path={routes.WORK_EXP_EDIT} element={<WorkExpCreateEdit isEdit={true}/>}/>
                         <Route path={routes.WORK_EXP_DETAILS} element={<WorkExpDetails/>}/>
 
-                        <Route path={routes.EDUCATION} element={<EducationList/>}/>
+                        <Route path={routes.EDUCATION_LIST} element={<EducationList/>}/>
                         <Route path={routes.EDUCATION_CREATE} element={<EducationCreateEdit/>}/>
                         <Route path={routes.EDUCATION_EDIT} element={<EducationCreateEdit isEdit={true}/>}/>
                         <Route path={routes.EDUCATION_DETAILS} element={<EducationDetails/>}/>
 
-                        <Route path={routes.REFERENCES} element={<ReferencesList/>}/>
+                        <Route path={routes.REFERENCES_LIST} element={<ReferencesList/>}/>
                         <Route path={routes.REFERENCES_CREATE} element={<ReferencesCreateEdit/>}/>
                         <Route path={routes.REFERENCES_EDIT} element={<ReferencesCreateEdit isEdit={true}/>}/>
                         <Route path={routes.REFERENCES_DETAILS} element={<ReferencesDetails/>}/>
 
-                        <Route path={routes.REQUIREMENTS} element={<RequirementsList/>}/>
+                        <Route path={routes.REQUIREMENTS_LIST} element={<RequirementsList/>}/>
                         <Route path={routes.REQUIREMENTS_CREATE} element={<RequirementsCreateEdit/>}/>
                         <Route path={routes.REQUIREMENTS_EDIT} element={<RequirementsCreateEdit isEdit={true}/>}/>
                         <Route path={routes.REQUIREMENTS_DETAILS} element={<RequirementsDetails/>}/>
 
 
-                        <Route path={routes.CERTIFICATES} element={<CertificatesList/>}/>
+                        <Route path={routes.CERTIFICATES_LIST} element={<CertificatesList/>}/>
                         <Route path={routes.CERTIFICATES_CREATE} element={<CertificatesCreateEdit/>}/>
                         <Route path={routes.CERTIFICATES_EDIT} element={<CertificatesCreateEdit isEdit={true}/>}/>
                         <Route path={routes.CERTIFICATES_DETAILS} element={<CertificatesDetails/>}/>

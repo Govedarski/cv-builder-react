@@ -38,6 +38,7 @@
 
 /*Section*/
 .sectionContainer {
+    position: relative;
     padding: 2rem;
     background-color: rgba(245, 245, 245, 0.3);
     height: max-content;
@@ -106,6 +107,19 @@
 
 .infoLabel {
     font-weight: bold;
+}
+
+.addBtn{
+    margin: auto;
+    padding: 8px 16px;
+    border-radius: 32px;
+    background-color: #000;
+    color: #fff;
+    font-weight: bold;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
 }
 
 /* Media Query for Responsive Layout */
