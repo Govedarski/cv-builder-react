@@ -5,6 +5,7 @@ import {DateInput} from '../custom_inputs/DateInput/DateInput.js';
 import {PhoneNumberInput} from '../custom_inputs/PhoneNumberInput/PhoneNumberInput.js';
 
 export function FormField(fieldData) {
+    console.log(fieldData.fieldStyle)
 
     let field = '';
     switch (fieldData.type) {
@@ -67,6 +68,7 @@ export function FormField(fieldData) {
                     onChange={fieldData.onChange}
                     onBlur={fieldData.onBlur}
                     title={fieldData.fieldTitle}
+                    style={fieldData.fieldStyle}
                 >
                     {fieldData.options.map((option, index) => (
                         <option key={index} value={option}>

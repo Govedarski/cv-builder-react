@@ -38,7 +38,7 @@ export function SectionRequirements({
         }
     }, [])
 
-    if (addPopUp) {
+    if (addPopUp && Array.isArray(data)){
         data = data?.filter(x => state.requirementsId === x.id)[0]
     }
     const minSalary = data?.salaryMinRange || "unspecified";

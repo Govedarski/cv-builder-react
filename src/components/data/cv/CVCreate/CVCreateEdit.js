@@ -22,12 +22,11 @@ import {EducationItem} from "../../education/EducationList/EducationItem/Educati
 import {ReferencesItem} from "../../references/ReferencesList/ReferencesItem/ReferencesItem";
 import {RequirementsItem} from "../../requirements/RequirementsList/RequirementsItem/RequirementsItem";
 import {CertificatesItem} from "../../certificates/CertificatesList/CertificatesItems/CertificatesItem";
-import {createCV} from "../../../../services/dataServices/cvService/cvService";
-import * as cvServce from "../../../../services/dataServices/cvService/cvService";
 import * as cvService from "../../../../services/dataServices/cvService/cvService";
+import {changeObjectKeysNaming, snakeCaseToCamelCase} from "../../../../utils/helper_functions";
 
 
-export function CVCreate() {
+export function CVCreateEdit({isEdit}) {
     const location = useLocation();
     const userContext = useContext(UserContext);
     const userId = userContext.userData.id;
@@ -45,7 +44,6 @@ export function CVCreate() {
         reference: false,
         certificate: false,
         requirements: false,
-        skills: false
     });
     const [data, setData] = React.useState({
         workExp: [],
@@ -53,11 +51,10 @@ export function CVCreate() {
         reference: [],
         certificate: [],
         requirements: [],
-        professionalSkills: [],
-        softSkills: [],
-        standardLanguages: [],
+        professionalSkills: "",
+        softSkills: "",
+        standardLanguages: "",
     });
-
 
     const [state, setState] = React.useState(cv || {
         name: "",
@@ -71,8 +68,32 @@ export function CVCreate() {
         educationIds: [],
         workExpIds: [],
         certificateIds: [],
-        requirementsId: ""
+        requirementsId: "",
+        publicStatus:"Private"
     })
+
+    useEffect(() => {
+        if (!isEdit) {
+            return
+        }
+        if (!cv) {
+            setIsLoading(true);
+            cvService.getCV(userId, cvId)
+                .then((response) => {
+                    response = changeObjectKeysNaming(response, snakeCaseToCamelCase)
+                    response.workExps = response.workExps.map(x => changeObjectKeysNaming(x, snakeCaseToCamelCase))
+                    setState(response);
+                    setIsLoading(false);
+                })
+                .catch((error) => {
+                    setIsLoading(false);
+                    console.log(error)
+                });
+        } else {
+            setState(cv);
+        }
+    }, []);
+
 
     function changeHandler(event) {
         setState(prevState => ({
@@ -83,14 +104,28 @@ export function CVCreate() {
     }
 
     function EditProfile() {
-        navigate(routes.PROFILE_OWN, {state: {state: state}})
+        navigate(routes.PROFILE_OWN, {
+            state: {
+                state: state,
+                previousUrl: location.pathname
+            }
+        })
     }
 
     function onSubmit(e) {
         e.preventDefault()
-        cvService.createCV(userId, state).then(res => {
-            console.log(res)
+        setIsLoading(true)
+        const service = isEdit
+            ? cvService.updateCV.bind(null, userId, cvId, state)
+            : cvService.createCV.bind(null, userId, state);
+        service().then(res => {
+            setIsLoading(false)
+            navigate(
+                routes.CV_DETAILS.replace(":cvId", res.id),
+                {state: {cv: res}}
+            )
         }).catch(err => {
+            setIsLoading(false)
             console.log(err)
         })
     }
@@ -107,10 +142,10 @@ export function CVCreate() {
         setState(prevState => {
             const newState = {...prevState};
             const id = Number(e.target.id);
-            if (!newState[section +"Ids"]?.includes(id)) {
-                newState[section +"Ids"].push(id);
+            if (!newState[section + "Ids"]?.includes(id)) {
+                newState[section + "Ids"].push(id);
             } else {
-                newState[section +"Ids"] = newState[section +"Ids"]?.filter(x => x !== id);
+                newState[section + "Ids"] = newState[section + "Ids"]?.filter(x => x !== id);
             }
             return newState;
         })
@@ -132,9 +167,9 @@ export function CVCreate() {
         return (
             <button
                 onClick={() => open(section)}
-                className={styles.addBtn}
+                className={styles.Btn}
             >
-                Add
+                Modify
             </button>
         )
     }
@@ -172,7 +207,22 @@ export function CVCreate() {
         )
     }
 
+    let publicStatusBackgroundColor = null
 
+    switch (state.publicStatus) {
+        case "Public":
+            publicStatusBackgroundColor = "#2bc01a"
+            break
+        case "Protected":
+            publicStatusBackgroundColor = "#21adc0"
+            break
+        case "Private":
+            publicStatusBackgroundColor = "#626060"
+            break
+        default:
+            break
+
+    }
 
     return (
         <>
@@ -182,8 +232,19 @@ export function CVCreate() {
 
                 <div className={styles.cvDetailsContainer + " " + createStyles.container}>
                     <section className={styles.title}>
-                        <h1>CV Details</h1>
+                        <h1>{isEdit ? "Edit" : "Create"} CV</h1>
                         <h2>CV {cvData.id} {cvData.title}</h2>
+                        <FormField
+                            name={"publicStatus"}
+                            value={state.publicStatus}
+                            onChange={changeHandler}
+                            type={"select"}
+                            label={null}
+                            options={['Public','Protected', 'Private']}
+                            fieldTitle={"Public is visible to all\nProtected is visible to all logged in users\nPrivate is visible only to you"}
+                            fieldStyle={{backgroundColor: publicStatusBackgroundColor}}
+                        />
+
                     </section>
                     <SectionPersonalInformation
                         onDoubleClick={EditProfile}
@@ -250,7 +311,6 @@ export function CVCreate() {
                             label={null}
                         />
                     </section>
-                    ,
                     <SectionRequirements
                         addPopUp={createAddPopUp(data.requirements, state.requirementsId, "requirements")}
                         addBtn={createAddBtn("requirements")}
@@ -259,8 +319,9 @@ export function CVCreate() {
                         data={data.requirements}
                         setData={setData}
                     />
+                    <button className={styles.Btn}>Submit</button>
+
                 </div>
-                <button>Submit</button>
             </form>
 
         </>

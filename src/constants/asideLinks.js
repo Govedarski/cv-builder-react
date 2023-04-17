@@ -1,6 +1,8 @@
 import {createAsideLink} from "../utils/helper_functions";
 
 export const asideLinks = [
+    createAsideLink("List", "/cv"),
+    createAsideLink('Back', 'back'),
     createAsideLink("Personal Information", "#personal-information"),
     createAsideLink("Summary", "#summary"),
     createAsideLink("Work Experience", "#work-experience"),

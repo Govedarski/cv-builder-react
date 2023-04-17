@@ -44,7 +44,6 @@ export function SectionEducation({
             return indexA - indexB;
         });
     }
-    console.log(data)
 
     return (
         <section

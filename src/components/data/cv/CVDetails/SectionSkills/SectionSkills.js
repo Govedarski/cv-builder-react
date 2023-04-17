@@ -64,7 +64,7 @@ export function SectionSkills({cvData, modify, state, setState,}) {
                             />
                             <button
                                 id={"professionalSkills"}
-                                className={styles.addBtn}
+                                className={styles.Btn}
                                 onClick={onClickHandler}
                             >
                                 Add
@@ -88,7 +88,7 @@ export function SectionSkills({cvData, modify, state, setState,}) {
                         />
                         <button
                             id={"languages"}
-                            className={styles.addBtn}
+                            className={styles.Btn}
                             onClick={onClickHandler}
                         >
                             Add
@@ -112,7 +112,7 @@ export function SectionSkills({cvData, modify, state, setState,}) {
                         />
                         <button
                             id={"softSkills"}
-                            className={styles.addBtn}
+                            className={styles.Btn}
                             onClick={onClickHandler}
                         >
                             Add

@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {useLocation, useParams,} from 'react-router-dom';
 import {UserContext} from "../../../../context/UserContext";
 import * as cvService from "../../../../services/dataServices/cvService/cvService";
@@ -62,7 +62,6 @@ export function CVDetails() {
             cvService.getCV(userId, cvId)
                 .then((response) => {
                     response = changeObjectKeysNaming(response, snakeCaseToCamelCase)
-                    console.log(response)
                     setDataCV(response);
                     setIsLoading(false);
                 })
@@ -106,12 +105,14 @@ export function CVDetails() {
                 <h2 className={styles.sectionInfoTitle}>Hobbies</h2>
                 <p className={styles.sectionInfoContainer}>{cvData.hobbies}</p>
             </section>,
-            <SectionRequirements requirementsData={cvData?.requirements}/>
+            <SectionRequirements data={cvData?.requirements}/>
         </>
     )
 
     return <DetailsTemplate
         sections={sections}
         asideLinks={asideLinks}
+        deleteService={cvService.deleteCV.bind(null, userId, cvId)}
+
     />
 }

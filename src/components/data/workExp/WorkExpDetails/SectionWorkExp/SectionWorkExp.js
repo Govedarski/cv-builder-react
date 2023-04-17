@@ -18,7 +18,6 @@ export function SectionWorkExp({
     const {setIsLoading} = useContext(LoadingContext);
     const userContext = useContext(UserContext);
     const userId = userContext.userData.id;
-    console.log("workExpData", workExpData)
     workExpData = workExpData?.map(x => changeObjectKeysNaming(x, snakeCaseToCamelCase))
 
     useEffect(() => {

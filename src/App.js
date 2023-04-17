@@ -27,7 +27,7 @@ import {RequirementsDetails} from "./components/data/requirements/RequirementsDe
 import {CertificatesList} from "./components/data/certificates/CertificatesList/CertificatesList";
 import {CertificatesCreateEdit} from "./components/data/certificates/CertificatesCreateEdit/CertificatesCreateEdit";
 import {CertificatesDetails} from "./components/data/certificates/CertificatesDetails/CertificatesDetails";
-import {CVCreate} from "./components/data/cv/CVCreate/CVCreate";
+import {CVCreateEdit} from "./components/data/cv/CVCreate/CVCreateEdit";
 
 export function App() {
     return (
@@ -46,8 +46,8 @@ export function App() {
 
                         <Route path={routes.CV_LIST} element={<CVList/>}/>
                         <Route path={routes.CV_DETAILS} element={<CVDetails/>}/>
-                        <Route path={routes.CV_CREATE} element={<CVCreate/>}/>
-                        <Route path={routes.CV_EDIT} element={<CVDetails/>}/>
+                        <Route path={routes.CV_CREATE} element={<CVCreateEdit/>}/>
+                        <Route path={routes.CV_EDIT} element={<CVCreateEdit isEdit={true}/>}/>
 
                         <Route path={routes.WORK_EXP_LIST} element={<WorkExpList/>}/>
                         <Route path={routes.WORK_EXP_CREATE} element={<WorkExpCreateEdit/>}/>

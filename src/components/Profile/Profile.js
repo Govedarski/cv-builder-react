@@ -9,7 +9,8 @@ import {EditProfilePopupForm} from './EditProfilePopupForm/EditProfilePopupForm.
 import * as profileService from '../../services/profileService/profileService.js';
 import {LoadingContext} from '../../context/LoadingContext.js';
 import {camelCaseTextToSnakeCase} from '../../utils/helper_functions.js';
-import {useLocation, useNavigate} from "react-router-dom";
+import {Routes, useLocation, useNavigate} from "react-router-dom";
+import {routes} from "../../constants/routes";
 export function Profile() {
     const [isInitialRendering, setIsInitialRendering] = useState(true);
     const {setIsLoading} = useContext(LoadingContext);
@@ -21,7 +22,7 @@ export function Profile() {
     const user_id = userContext.userData.id;
     const user = userContext.userData.user;
     const location = useLocation()
-    const {state} = location.state || {};
+    const {previousUrl, state} = location.state || {};
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -91,7 +92,10 @@ export function Profile() {
     }
 
     function backToCV(){
-        navigate(-1, {state: {state: state}})
+        navigate(
+            previousUrl,
+            {state: {cv: state}}
+        )
     }
 
     return (
