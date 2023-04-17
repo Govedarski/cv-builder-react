@@ -19,6 +19,9 @@ import {FormField} from "../../../helpers/FormField/FormField";
 import {AddPopUp} from "../../common/AddPopUp/AddPopUp";
 import {WorkExpItem} from "../../workExp/WorkExpList/WorkExpItem/WorkExpItem";
 import {EducationItem} from "../../education/EducationList/EducationItem/EducationItem";
+import {ReferencesItem} from "../../references/ReferencesList/ReferencesItem/ReferencesItem";
+import {RequirementsItem} from "../../requirements/RequirementsList/RequirementsItem/RequirementsItem";
+import {CertificatesItem} from "../../certificates/CertificatesList/CertificatesItems/CertificatesItem";
 
 
 export function CVCreate() {
@@ -36,15 +39,15 @@ export function CVCreate() {
     const [add, setAdd] = React.useState({
         workExp: false,
         education: false,
-        references: false,
-        certificates: false,
+        reference: false,
+        certificate: false,
         requirements: false
     });
     const [data, setData] = React.useState({
         workExp: [],
         education: [],
-        references: [],
-        certificates: [],
+        reference: [],
+        certificate: [],
         requirements: []
     });
 
@@ -99,8 +102,8 @@ export function CVCreate() {
         setAdd({
             workExp: false,
             education: false,
-            references: false,
-            certificates: false,
+            reference: false,
+            certificate: false,
             requirements: false,
             [section]: true
         })
@@ -125,6 +128,15 @@ export function CVCreate() {
                 break
             case "education":
                 item = EducationItem;
+                break
+            case "reference":
+                item = ReferencesItem;
+                break
+            case "certificate":
+                item = CertificatesItem;
+                break
+            case "requirements":
+                item = RequirementsItem;
                 break
             default:
                 break
@@ -187,9 +199,22 @@ export function CVCreate() {
                         setData={setData}
                     />
                     <SectionSkills cvData={cvData}/>
-                    <SectionReferences referencesData={cvData?.references}/>
+                    <SectionReferences
+                        addPopUp={createAddPopUp(data.reference, state.referenceIds, "reference")}
+                        addBtn={createAddBtn("reference")}
+                        add={add.reference}
+                        state={state}
+                        data={data.reference}
+                        setData={setData}
+                    />
                     <SectionCertificates
-                        certificatesData={cvData?.certificates}/>
+                        addPopUp={createAddPopUp(data.certificate, state.certificateIds, "certificate")}
+                        addBtn={createAddBtn("certificate")}
+                        add={add.certificate}
+                        state={state}
+                        data={data.certificate}
+                        setData={setData}
+                    />
                     <section id={"hobbies"} className={styles.sectionContainer}>
                         <h2 className={styles.sectionInfoTitle}>Hobbies</h2>
                         <p className={styles.sectionInfoContainer}>{cvData.hobbies}</p>

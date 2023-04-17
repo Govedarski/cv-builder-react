@@ -15,13 +15,14 @@ export function AddPopUp({section, data, setAdd, mark, marked, item}) {
     console.log(mark)
     return (
         <div id={"popUp"} className={styles.container}>
-            {data?.map(x => item
+            {data?.map(x => (<div key={x.id}>{item
                 ({
                     className: (marked?.includes(x.id) && styles.mark) || "",
                     key: x.id,
                     data: x,
                     onClick: (e) => mark(e, section)
-                })
+                })}
+                </div>)
             )}
             <button onClick={close}>Done</button>
         </div>
