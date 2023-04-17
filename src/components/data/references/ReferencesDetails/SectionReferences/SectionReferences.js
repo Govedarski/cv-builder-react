@@ -47,7 +47,10 @@ export function SectionReferences({
     const dataToShow = itemData || sortedList
 
     return (
-        <section id={"references"} className={styles.sectionContainer}>
+        <section
+            key={'references'}
+            id={"references"}
+            className={styles.sectionContainer}>
             <h2 className={styles.sectionInfoTitle}>References</h2>
             <ul className={styles.sectionInfoList}>
                 {dataToShow?.map(reference => (

@@ -18,7 +18,8 @@ export function SectionWorkExp({
     const {setIsLoading} = useContext(LoadingContext);
     const userContext = useContext(UserContext);
     const userId = userContext.userData.id;
-
+    console.log("workExpData", workExpData)
+    workExpData = workExpData?.map(x => changeObjectKeysNaming(x, snakeCaseToCamelCase))
 
     useEffect(() => {
         if (addPopUp) {
@@ -47,7 +48,10 @@ export function SectionWorkExp({
     const dataToShow = workExpData || sortedList
 
     return (
-        <section id={"work-experience"} className={styles.sectionContainer}>
+        <section
+            key={"work-experience"}
+            id={"work-experience"}
+            className={styles.sectionContainer}>
             <h2 className={styles.sectionInfoTitle}>Work Experience</h2>
             <ul className={styles.sectionInfoList}>
                 {dataToShow?.map(workExp => (

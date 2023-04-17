@@ -22,6 +22,9 @@ import {EducationItem} from "../../education/EducationList/EducationItem/Educati
 import {ReferencesItem} from "../../references/ReferencesList/ReferencesItem/ReferencesItem";
 import {RequirementsItem} from "../../requirements/RequirementsList/RequirementsItem/RequirementsItem";
 import {CertificatesItem} from "../../certificates/CertificatesList/CertificatesItems/CertificatesItem";
+import {createCV} from "../../../../services/dataServices/cvService/cvService";
+import * as cvServce from "../../../../services/dataServices/cvService/cvService";
+import * as cvService from "../../../../services/dataServices/cvService/cvService";
 
 
 export function CVCreate() {
@@ -41,14 +44,18 @@ export function CVCreate() {
         education: false,
         reference: false,
         certificate: false,
-        requirements: false
+        requirements: false,
+        skills: false
     });
     const [data, setData] = React.useState({
         workExp: [],
         education: [],
         reference: [],
         certificate: [],
-        requirements: []
+        requirements: [],
+        professionalSkills: [],
+        softSkills: [],
+        standardLanguages: [],
     });
 
 
@@ -81,10 +88,22 @@ export function CVCreate() {
 
     function onSubmit(e) {
         e.preventDefault()
-        console.log(state)
+        cvService.createCV(userId, state).then(res => {
+            console.log(res)
+        }).catch(err => {
+            console.log(err)
+        })
     }
 
     function mark(e, section) {
+        if (section === "requirements") {
+            setState(prevState => ({
+                ...prevState,
+                requirementsId: Number(e.target.id)
+            }))
+            return;
+        }
+
         setState(prevState => {
             const newState = {...prevState};
             const id = Number(e.target.id);
@@ -177,11 +196,11 @@ export function CVCreate() {
                             value={state.summary}
                             onChange={changeHandler}
                             type={"textarea"}
+                            label={null}
                         />
                     </section>
 
                     <SectionWorkExp
-                        workExpData={cvData?.work_exps}
                         addPopUp={createAddPopUp(data.workExp, state.workExpIds, "workExp")}
                         addBtn={createAddBtn("workExp")}
                         add={add.workExp}
@@ -198,7 +217,13 @@ export function CVCreate() {
                         data={data.education}
                         setData={setData}
                     />
-                    <SectionSkills cvData={cvData}/>
+                    <SectionSkills
+                        createPopUp={createAddPopUp}
+                        createBtn={createAddBtn}
+                        modify={true}
+                        state={state}
+                        setState={setState}
+                    />
                     <SectionReferences
                         addPopUp={createAddPopUp(data.reference, state.referenceIds, "reference")}
                         addBtn={createAddBtn("reference")}
@@ -217,10 +242,23 @@ export function CVCreate() {
                     />
                     <section id={"hobbies"} className={styles.sectionContainer}>
                         <h2 className={styles.sectionInfoTitle}>Hobbies</h2>
-                        <p className={styles.sectionInfoContainer}>{cvData.hobbies}</p>
+                        <FormField
+                            name={"hobbies"}
+                            value={state.hobbies}
+                            onChange={changeHandler}
+                            type={"textarea"}
+                            label={null}
+                        />
                     </section>
                     ,
-                    <SectionRequirements requirementsData={cvData?.requirements}/>
+                    <SectionRequirements
+                        addPopUp={createAddPopUp(data.requirements, state.requirementsId, "requirements")}
+                        addBtn={createAddBtn("requirements")}
+                        add={add.requirements}
+                        state={state}
+                        data={data.requirements}
+                        setData={setData}
+                    />
                 </div>
                 <button>Submit</button>
             </form>

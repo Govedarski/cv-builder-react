@@ -5,6 +5,7 @@ import * as cvService from "../../../../services/dataServices/cvService/cvServic
 import {LoadingContext} from "../../../../context/LoadingContext";
 import {routes} from "../../../../constants/routes";
 import {CVItem} from "./CVItem/CVItem";
+import {changeObjectKeysNaming, snakeCaseToCamelCase} from "../../../../utils/helper_functions";
 
 export function CVList() {
     const userContext = useContext(UserContext);
@@ -13,15 +14,15 @@ export function CVList() {
     const {setIsLoading} = useContext(LoadingContext);
 
 
-
-
     useEffect(() => {
         setIsLoading(true);
         cvService.getCVs(userId)
             .then((response) => {
+                response = response.map(x => changeObjectKeysNaming(x, snakeCaseToCamelCase))
                 setCvs(response.map(x => <CVItem key={x.id} cv={x}/>));
                 setIsLoading(false);
             }).catch((error) => {
+            console.log(error)
             setIsLoading(false);
         })
     }, [])
@@ -30,7 +31,7 @@ export function CVList() {
         <ListTemplate
             title={'CV List'}
             data={cvs}
-            createLink = {routes.CV_CREATE}
+            createLink={routes.CV_CREATE}
         />
     );
 }

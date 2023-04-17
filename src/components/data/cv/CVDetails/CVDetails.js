@@ -10,7 +10,7 @@ import {SectionSkills} from "./SectionSkills/SectionSkills";
 import {SectionReferences} from "../../references/ReferencesDetails/SectionReferences/SectionReferences";
 import {SectionCertificates} from "../../certificates/CertificatesDetails/SectionCertificates/SectionCertificates";
 import {SectionRequirements} from "../../requirements/RequirementsDetails/SectionRequirements/SectionRequirements";
-import {createAsideLink} from "../../../../utils/helper_functions";
+import {changeObjectKeysNaming, createAsideLink, snakeCaseToCamelCase} from "../../../../utils/helper_functions";
 import Scroll from 'react-scroll';
 import {DetailsTemplate} from "../../common/DetailsTemplate/DetailsTemplate";
 import styles from "../../common/DetailsTemplate/DetailsTemplate.module.css";
@@ -22,31 +22,29 @@ export function CVDetails() {
     const userId = userContext.userData.id;
     const {cvId} = useParams();
     const [cvData, setDataCV] = React.useState({});
-    const {cv} = location.state || {};
+    let {cv} = location.state || {};
+    cv = changeObjectKeysNaming(cv, snakeCaseToCamelCase)
+
     const {setIsLoading} = useContext(LoadingContext);
     const scroller = Scroll.scroller;
 
     useEffect(() => {
-        const sectionId = location.hash.slice(1);
-        if (!sectionId) {
-            return;
-        }
+            const sectionId = location.hash.slice(1);
+            if (!sectionId) {
+                return;
+            }
 
-        scroller.scrollTo(sectionId, {
-            duration: 500,
-            smooth: true,
-            offset: -116
-        });
+            scroller.scrollTo(sectionId, {
+                duration: 500,
+                smooth: true,
+                offset: -116
+            });
         }, [location.hash]
     )
     window.history.replaceState('', document.title, window.location.pathname)
 
 
-
     const asideLinks = [
-        createAsideLink("Edit", `/cv/${cvId}/edit`),
-        createAsideLink("Delete", `/cv/${cvId}/delete`),
-        createAsideLink("Back", "back"),
         createAsideLink("Personal Information", "#personal-information"),
         createAsideLink("Summary", "#summary"),
         createAsideLink("Work Experience", "#work-experience"),
@@ -63,10 +61,13 @@ export function CVDetails() {
             setIsLoading(true);
             cvService.getCV(userId, cvId)
                 .then((response) => {
+                    response = changeObjectKeysNaming(response, snakeCaseToCamelCase)
+                    console.log(response)
                     setDataCV(response);
                     setIsLoading(false);
                 })
                 .catch((error) => {
+                    console.log(error)
                     setIsLoading(false);
                 });
         } else {
@@ -74,31 +75,43 @@ export function CVDetails() {
         }
     }, []);
 
-    const sections = [
-        <section  className={styles.title}>
-            <h1>CV Details</h1>
-            <h2>CV {cvData.id} {cvData.title}</h2>
-        </section>,
-        <SectionPersonalInformation/>,
-        <section id={"summary"} className={styles.sectionContainer}>
-            <h2 className={styles.sectionInfoTitle}>Summary</h2>
-            <p className={styles.sectionInfoContainer}>{cvData.summary}</p>
-        </section>,
-        <SectionWorkExp workExpData={cvData?.work_exps}/>,
-        <SectionEducation educationData={cvData?.education}/>,
-        <SectionSkills cvData={cvData}/>,
-        <SectionReferences referencesData={cvData?.references}/>,
-        <SectionCertificates
-            certificatesData={cvData?.certificates}/>,
-        <section id={"hobbies"} className={styles.sectionContainer}>
-            <h2 className={styles.sectionInfoTitle}>Hobbies</h2>
-            <p className={styles.sectionInfoContainer}>{cvData.hobbies}</p>
-        </section>,
-        <SectionRequirements requirementsData={cvData?.requirements}/>
-    ]
+    const sections = (
+        <>
+            <section
+                key={"header"}
+                className={styles.title}
+            >
+                <h1>CV Details</h1>
+                <h2>CV {cvData.id} {cvData.title}</h2>
+            </section>
+            ,
+            <SectionPersonalInformation/>,
+            <section
+                key={"summary"}
+                id={"summary"}
+                className={styles.sectionContainer}
+            >
+                <h2 className={styles.sectionInfoTitle}>Summary</h2>
+                <p className={styles.sectionInfoContainer}>{cvData.summary}</p>
+            </section>,
+            <SectionWorkExp workExpData={cvData?.workExps}/>,
+            <SectionEducation data={cvData?.education}/>,
+            <SectionSkills cvData={cvData}/>,
+            <SectionReferences itemData={cvData?.references}/>,
+            <SectionCertificates data={cvData?.certificates}/>,
+            <section
+                key={"hobbies"}
+                id={"hobbies"}
+                className={styles.sectionContainer}>
+                <h2 className={styles.sectionInfoTitle}>Hobbies</h2>
+                <p className={styles.sectionInfoContainer}>{cvData.hobbies}</p>
+            </section>,
+            <SectionRequirements requirementsData={cvData?.requirements}/>
+        </>
+    )
 
     return <DetailsTemplate
         sections={sections}
         asideLinks={asideLinks}
-        />
+    />
 }

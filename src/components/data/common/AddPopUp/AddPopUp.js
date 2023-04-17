@@ -12,7 +12,10 @@ export function AddPopUp({section, data, setAdd, mark, marked, item}) {
         });
     }
 
-    console.log(mark)
+    if(section === "requirements") {
+        marked = [marked]
+    }
+
     return (
         <div id={"popUp"} className={styles.container}>
             {data?.map(x => (<div key={x.id}>{item

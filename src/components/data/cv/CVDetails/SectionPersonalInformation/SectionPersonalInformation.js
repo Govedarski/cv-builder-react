@@ -9,6 +9,7 @@ export function SectionPersonalInformation({title, onDoubleClick}) {
 
     return (
         <section
+            key={"personal-information"}
             onDoubleClick={onDoubleClick}
             id={"personal-information"}
             className={styles.sectionContainer}

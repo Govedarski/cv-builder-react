@@ -16,6 +16,7 @@ export function SectionEducation({
     const {setIsLoading} = useContext(LoadingContext);
     const userContext = useContext(UserContext);
     const userId = userContext.userData.id;
+    data = data?.map(x => changeObjectKeysNaming(x, snakeCaseToCamelCase))
 
     useEffect(() => {
         if (addPopUp) {
@@ -43,9 +44,14 @@ export function SectionEducation({
             return indexA - indexB;
         });
     }
+    console.log(data)
 
     return (
-        <section id={"education"} className={styles.sectionContainer}>
+        <section
+            key={"education"}
+            id={"education"}
+            className={styles.sectionContainer}
+        >
             <h2 className={styles.sectionInfoTitle}>Education</h2>
             <ul className={styles.sectionInfoList}>
                 {data?.map(education => (

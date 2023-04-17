@@ -17,6 +17,8 @@ export function SectionCertificates({                                    addPopU
     const {setIsLoading} = useContext(LoadingContext);
     const userContext = useContext(UserContext);
     const userId = userContext.userData.id;
+    data = data?.map(x => changeObjectKeysNaming(x, snakeCaseToCamelCase))
+
     function handleImageClick(e) {
         setSelectedImage(e.target.src);
     }
@@ -48,7 +50,10 @@ export function SectionCertificates({                                    addPopU
     }
 
     return (
-        <section id={"certificates"} className={styles.sectionContainer}>
+        <section
+            key={'certificates'}
+            id={"certificates"}
+            className={styles.sectionContainer}>
             <h2 className={styles.sectionInfoTitle}>Certificates</h2>
             <ul className={styles.sectionInfoList}>
                 {data?.map(certificate => (
