@@ -16,5 +16,7 @@
 
 .container img{
     max-width: 50%;
+    max-height: 120px;
+    object-fit: cover;
     border-radius: 64px;
 }
