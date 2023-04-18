@@ -40,7 +40,7 @@ export function Menu({hideMenuHandler}) {
                 {isAuthenticated &&
                     <>
                         <li className={styles.navListItem}>
-                            <Link to={routes.CV_LIST}>CV</Link>
+                            <Link to={routes.CV_LIST}>My data</Link>
                         </li>
                         <li className={styles.navListItem}>
                             <Link to={routes.PROFILE_OWN}>Profile</Link>
