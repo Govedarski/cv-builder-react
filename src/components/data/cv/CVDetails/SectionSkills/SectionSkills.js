@@ -12,12 +12,12 @@ export function SectionSkills({cvData, modify, state, setState}) {
         e.preventDefault()
         switch (e.target.id) {
             case "professionalSkills":
+                if(professionalSkillsRef?.current?.value?.length > 64){
+                    professionalSkillsRef.current.value = ""
+                    alert("Professional skill name is too long. Max length is 64 characters.")
+                    return;
+                }
                 setState(prevState => {
-                    if(professionalSkillsRef.current.value.length > 64){
-                        professionalSkillsRef.current.value = ""
-                        alert("Professional skill name is too long. Max length is 64 characters.")
-                        return;
-                    }
                     const newState = {...prevState}
                     newState.professionalSkills.push(professionalSkillsRef.current.value)
                     professionalSkillsRef.current.value = ""
@@ -25,7 +25,7 @@ export function SectionSkills({cvData, modify, state, setState}) {
                 })
                 break;
             case "softSkills":
-                if(softSkillsRef.current.value.length > 64){
+                if(softSkillsRef?.current?.value?.length > 64){
                     alert("Soft skill name is too long. Max length is 64 characters.")
                     return;
                 }
@@ -37,7 +37,7 @@ export function SectionSkills({cvData, modify, state, setState}) {
                 })
                 break;
             case "languages":
-                if(languagesRef.current.value.length > 64){
+                if(languagesRef?.current?.value?.length > 64){
                     alert("Language name is too long. Max length is 64 characters.")
                     return;
                 }
