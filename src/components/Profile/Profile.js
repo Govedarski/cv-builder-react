@@ -8,7 +8,7 @@ import styles from './Profile.module.css';
 import {EditProfilePopupForm} from './EditProfilePopupForm/EditProfilePopupForm.js';
 import * as profileService from '../../services/profileService/profileService.js';
 import {LoadingContext} from '../../context/LoadingContext.js';
-import {camelCaseTextToSnakeCase} from '../../utils/helper_functions.js';
+import {camelCaseTextToNormalText, camelCaseTextToSnakeCase, capitalize} from '../../utils/helper_functions.js';
 import {Routes, useLocation, useNavigate} from "react-router-dom";
 import {routes} from "../../constants/routes";
 export function Profile() {
@@ -125,14 +125,14 @@ export function Profile() {
                     onDoubleClick={doubleClickHandler}
                     style={{borderColor: 'green', color: 'green'}}
                 >
-                    {user.email}
+                    Email: {user.email}
                 </span>
                 <span
                     id={'username'}
                     onDoubleClick={doubleClickHandler}
                     style={{borderColor: 'green', color: 'green'}}
                 >
-                    {user.username}
+                    Username: {user.username || 'Not set'}
                 </span>
                 {fieldNames.map(fieldName => {
                     return (
@@ -148,7 +148,7 @@ export function Profile() {
                                 : {}}
                             title={'Double click to edit'}
                         >
-                            {profileData[fieldName]}
+                            {capitalize(camelCaseTextToNormalText(fieldName))}: {profileData[fieldName] || 'Not set'}
                         </span>
                     );
                 })}
