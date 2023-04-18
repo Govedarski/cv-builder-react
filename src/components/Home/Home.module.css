@@ -1,9 +1,14 @@
 .container{
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-evenly;
     align-items: center;
     box-sizing: border-box;
     color: #fff;
     gap: 8px;
     margin-top: 16px;
+}
+
+.container > *{
+    max-height: 120px;
 }
