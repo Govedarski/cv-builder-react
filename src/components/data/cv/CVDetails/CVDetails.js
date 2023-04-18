@@ -56,7 +56,7 @@ export function CVDetails() {
         createAsideLink("Hobbies", "#hobbies"),
         createAsideLink("Requirements", "#requirements"),
     ]
-
+    console.log(cv)
     useEffect(() => {
         if (!cv) {
             setIsLoading(true)
@@ -64,8 +64,11 @@ export function CVDetails() {
                 ? cvService.getPublicCV.bind(null, cvId)
                 : cvService.getCV.bind(null, userId, cvId);
 
+
             service()
                 .then((response) => {
+                    console.log(response)
+
                     response = changeObjectKeysNaming(response, snakeCaseToCamelCase)
                     setDataCV(response);
                     setIsLoading(false);
