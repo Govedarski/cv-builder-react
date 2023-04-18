@@ -92,6 +92,8 @@ export function Profile() {
     }
 
     function backToCV(){
+        state.profile = profileData
+        state.email = user.email
         navigate(
             previousUrl,
             {state: {cv: state}}
@@ -151,7 +153,7 @@ export function Profile() {
                     );
                 })}
             </div>
-            {state && <button onClick={backToCV}>Back to CV</button>}
+            {state && <button className={styles.btn} onClick={backToCV}>Back to CV</button>}
 
             {editedFieldName &&
                 <EditProfilePopupForm

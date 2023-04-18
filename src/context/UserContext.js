@@ -1,6 +1,8 @@
 import { createContext, useContext } from "react";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import {changeObjectKeysNaming, snakeCaseToCamelCase} from '../utils/helper_functions.js';
+import {Navigate, useNavigate} from "react-router-dom";
+import {routes} from "../constants/routes";
 
 export const UserContext = createContext({
     userData : {},
@@ -57,3 +59,7 @@ export const UserProvider = ({
     );
 };
 
+export const LoginRequired = ({children}) => {
+    const {isAuthenticated} = useContext(UserContext);
+    return isAuthenticated ? children : <Navigate to={routes.LOGIN}/>
+}

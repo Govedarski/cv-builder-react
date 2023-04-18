@@ -14,12 +14,13 @@ import {changeObjectKeysNaming, createAsideLink, snakeCaseToCamelCase} from "../
 import Scroll from 'react-scroll';
 import {DetailsTemplate} from "../../common/DetailsTemplate/DetailsTemplate";
 import styles from "../../common/DetailsTemplate/DetailsTemplate.module.css";
+import {publicStatusColors} from "../../../../constants/publicStatusColors";
 
 
 export function CVDetails() {
     const location = useLocation();
     const userContext = useContext(UserContext);
-    const userId = userContext.userData.id;
+    const userId = userContext.userData?.id;
     const {cvId} = useParams();
     const [cvData, setDataCV] = React.useState({});
     let {cv} = location.state || {};
@@ -58,8 +59,12 @@ export function CVDetails() {
 
     useEffect(() => {
         if (!cv) {
-            setIsLoading(true);
-            cvService.getCV(userId, cvId)
+            setIsLoading(true)
+            const service = !userContext.userData?.cvIds?.includes(Number(cvId))
+                ? cvService.getPublicCV.bind(null, cvId)
+                : cvService.getCV.bind(null, userId, cvId);
+
+            service()
                 .then((response) => {
                     response = changeObjectKeysNaming(response, snakeCaseToCamelCase)
                     setDataCV(response);
@@ -74,6 +79,7 @@ export function CVDetails() {
         }
     }, []);
 
+
     const sections = (
         <>
             <section
@@ -81,17 +87,22 @@ export function CVDetails() {
                 className={styles.title}
             >
                 <h1>CV Details</h1>
-                <h2>CV {cvData.id} {cvData.title}</h2>
+                <h2>CV {cvData?.id} {cvData?.title}</h2>
+                <h3 style={{color: publicStatusColors[cvData?.publicStatus]}}>
+                    ({cvData?.publicStatus})
+                </h3>
             </section>
             ,
-            <SectionPersonalInformation/>,
+            <SectionPersonalInformation
+                data={cvData}
+            />,
             <section
                 key={"summary"}
                 id={"summary"}
                 className={styles.sectionContainer}
             >
                 <h2 className={styles.sectionInfoTitle}>Summary</h2>
-                <p className={styles.sectionInfoContainer}>{cvData.summary}</p>
+                <p className={styles.sectionInfoContainer}>{cvData?.summary}</p>
             </section>,
             <SectionWorkExp workExpData={cvData?.workExps}/>,
             <SectionEducation data={cvData?.education}/>,
@@ -103,7 +114,7 @@ export function CVDetails() {
                 id={"hobbies"}
                 className={styles.sectionContainer}>
                 <h2 className={styles.sectionInfoTitle}>Hobbies</h2>
-                <p className={styles.sectionInfoContainer}>{cvData.hobbies}</p>
+                <p className={styles.sectionInfoContainer}>{cvData?.hobbies}</p>
             </section>,
             <SectionRequirements data={cvData?.requirements}/>
         </>
@@ -112,7 +123,7 @@ export function CVDetails() {
     return <DetailsTemplate
         sections={sections}
         asideLinks={asideLinks}
+        hideAsideLinks={!userId || userId !== cvData?.ownerId}
         deleteService={cvService.deleteCV.bind(null, userId, cvId)}
-
     />
 }

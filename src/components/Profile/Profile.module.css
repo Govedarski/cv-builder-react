@@ -119,3 +119,13 @@
         transform: translate(-50%, -50%) scale(1);;
     }
 }
+
+.btn{
+    background: #ffeba7;
+    color: #464545;
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.2rem;
+    border: none;
+    outline: none;
+    margin: auto;
+}

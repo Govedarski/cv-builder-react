@@ -5,7 +5,6 @@ import {DateInput} from '../custom_inputs/DateInput/DateInput.js';
 import {PhoneNumberInput} from '../custom_inputs/PhoneNumberInput/PhoneNumberInput.js';
 
 export function FormField(fieldData) {
-    console.log(fieldData.fieldStyle)
 
     let field = '';
     switch (fieldData.type) {

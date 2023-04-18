@@ -24,11 +24,13 @@ import {RequirementsItem} from "../../requirements/RequirementsList/Requirements
 import {CertificatesItem} from "../../certificates/CertificatesList/CertificatesItems/CertificatesItem";
 import * as cvService from "../../../../services/dataServices/cvService/cvService";
 import {changeObjectKeysNaming, snakeCaseToCamelCase} from "../../../../utils/helper_functions";
+import {publicStatusColors} from "../../../../constants/publicStatusColors";
 
 
 export function CVCreateEdit({isEdit}) {
     const location = useLocation();
     const userContext = useContext(UserContext);
+    const {profileData, userData} = useContext(UserContext);
     const userId = userContext.userData.id;
     const {cvId} = useParams();
     const [cvData, setDataCV] = React.useState({});
@@ -207,22 +209,7 @@ export function CVCreateEdit({isEdit}) {
         )
     }
 
-    let publicStatusBackgroundColor = null
 
-    switch (state.publicStatus) {
-        case "Public":
-            publicStatusBackgroundColor = "#2bc01a"
-            break
-        case "Protected":
-            publicStatusBackgroundColor = "#21adc0"
-            break
-        case "Private":
-            publicStatusBackgroundColor = "#626060"
-            break
-        default:
-            break
-
-    }
 
     return (
         <>
@@ -242,12 +229,17 @@ export function CVCreateEdit({isEdit}) {
                             label={null}
                             options={['Public','Protected', 'Private']}
                             fieldTitle={"Public is visible to all\nProtected is visible to all logged in users\nPrivate is visible only to you"}
-                            fieldStyle={{backgroundColor: publicStatusBackgroundColor}}
+                            fieldStyle={{backgroundColor: publicStatusColors[state.publicStatus]}}
                         />
 
                     </section>
                     <SectionPersonalInformation
                         onDoubleClick={EditProfile}
+                        data={state.profile
+                            ? state
+                            : {profile:profileData,
+                            email:userData.user.email}
+                    }
                         title={"Double click to Edit"}
                     />
                     <section id={"summary"} className={styles.sectionContainer}>

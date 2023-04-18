@@ -1,11 +1,9 @@
 import styles from "../../../common/DetailsTemplate/DetailsTemplate.module.css";
 
-import React, {useContext} from "react";
-import {UserContext} from "../../../../../context/UserContext";
+import React from "react";
 
-export function SectionPersonalInformation({title, onDoubleClick}) {
-    const {profileData} = useContext(UserContext);
-    const {userData} = useContext(UserContext);
+export function SectionPersonalInformation({data, title, onDoubleClick}) {
+
 
     return (
         <section
@@ -17,34 +15,36 @@ export function SectionPersonalInformation({title, onDoubleClick}) {
         >
             <h2 className={styles.sectionInfoTitle}>Personal Information</h2>
             <div className={styles.sectionInfoContainer}>
-                <div className={styles.sectionImageContainer}>
-                    <img className={styles.sectionImage} src={profileData.profilePictureFileUrl}
-                         alt="Profile Picture"/>
-                </div>
+                {data?.profile?.profilePictureFileUrl &&
+                    <div className={styles.sectionImageContainer}>
+                        <img className={styles.sectionImage} src={data?.profile?.profilePictureFileUrl}
+                             alt="Profile Picture"/>
+                    </div>
+                }
                 <div className={styles.sectionInfo}>
                     <p className={styles.sectionInfoItem}>
                         <span className={styles.infoLabel}>Name: </span>
-                        {profileData.firstName} {profileData.lastName}
+                        {data?.profile?.firstName} {data?.profile?.lastName}
                     </p>
                     <p className={styles.sectionInfoItem}>
                         <span className={styles.infoLabel}>Date of Birth: </span>
-                        {profileData.dateOfBirth}
+                        {data?.profile?.dateOfBirth}
                     </p>
                     <p className={styles.sectionInfoItem}>
                         <span className={styles.infoLabel}>Phone Number: </span>
-                        {profileData.phoneNumber}
+                        {data?.profile?.phoneNumber}
                     </p>
                     <p className={styles.sectionInfoItem}>
                         <span className={styles.infoLabel}>Email: </span>
-                        {userData.user.email}
+                        {data?.email}
                     </p>
                     <p className={styles.sectionInfoItem}>
                         <span className={styles.infoLabel}>City: </span>
-                        {profileData.city}
+                        {data?.profile?.city}
                     </p>
                     <p className={styles.sectionInfoItem}>
                         <span className={styles.infoLabel}>Address: </span>
-                        {profileData.address}
+                        {data?.profile?.address}
                     </p>
                 </div>
             </div>

@@ -5,6 +5,7 @@ import {Arrow} from '../../../helpers/Arrow/Arrow.js';
 import arrowStyles from '../../../helpers/Arrow/Arrow.module.css';
 import {UserContext} from '../../../../context/UserContext.js';
 import {routes} from '../../../../constants/routes.js';
+import {Logout} from "../../../authentication/Logout/Logout";
 
 export function Menu({hideMenuHandler}) {
     const {isAuthenticated, userData} = useContext(UserContext);
@@ -45,7 +46,7 @@ export function Menu({hideMenuHandler}) {
                             <Link to={routes.PROFILE_OWN}>Profile</Link>
                         </li>
                         <li className={styles.navListItem}>
-                            <Link to={routes.LOGOUT}>Logout</Link>
+                            <Logout/>
                         </li>
                     </>
                 }

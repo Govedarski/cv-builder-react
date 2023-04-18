@@ -15,7 +15,7 @@ export function SectionEducation({
                                  }) {
     const {setIsLoading} = useContext(LoadingContext);
     const userContext = useContext(UserContext);
-    const userId = userContext.userData.id;
+    const userId = userContext?.userData?.id;
     data = data?.map(x => changeObjectKeysNaming(x, snakeCaseToCamelCase))
 
     useEffect(() => {
@@ -72,8 +72,8 @@ export function SectionEducation({
                             {education.endDate}
                         </p>
                         <p className={styles.sectionInfoItem}>
-                            <span className={styles.infoLabel}>Fields of Study: </span>
-                            {education.fieldsOfStudy?.join(", ")}
+                            <span className={styles.infoLabel}>Description: </span>
+                            {education.description}
                         </p>
                         <p className={styles.sectionInfoItem}>
                             <span className={styles.infoLabel}>Qualification: </span>

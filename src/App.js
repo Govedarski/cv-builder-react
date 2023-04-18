@@ -4,7 +4,7 @@ import {Route, Routes} from 'react-router-dom';
 import {Login} from './components/authentication/Login/Login.js';
 import {Navigation} from './components/common/Navigation/Navigation.js';
 import {Credits} from './components/common/Credits/Credits.js';
-import {UserProvider} from './context/UserContext.js';
+import {LoginRequired, UserProvider} from './context/UserContext.js';
 import {Logout} from './components/authentication/Logout/Logout.js';
 import {RegisterProvider} from './components/authentication/Register/RegisterContext/RegisterContext.js';
 import {routes} from './constants/routes.js';
@@ -38,43 +38,132 @@ export function App() {
                 </header>
                 <main>
                     <Routes>
-                        <Route path={routes.HOME} element={<Home/>}/>
-                        <Route path={routes.REGISTER} element={<RegisterProvider/>}/>
-                        <Route path={routes.PROFILE_OWN} element={<Profile/>}/>
-                        <Route path={routes.LOGIN} element={<Login/>}/>
-                        <Route path={routes.LOGOUT} element={<Logout/>}/>
+                        <Route
+                            path={routes.HOME}
+                            element={<Home/>}
+                        />
+                        <Route
+                            path={routes.REGISTER}
+                            element={<RegisterProvider/>}
+                        />
+                        <Route
+                            path={routes.PROFILE_OWN}
+                            element={<LoginRequired><Profile/></LoginRequired>}
+                        />
+                        <Route
+                            path={routes.LOGIN}
+                            element={<Login/>}/>
+                        <Route
+                            path
+                                ={routes.LOGOUT}
+                            element={<LoginRequired><Logout/></LoginRequired>}
+                        />
 
-                        <Route path={routes.CV_LIST} element={<CVList/>}/>
-                        <Route path={routes.CV_DETAILS} element={<CVDetails/>}/>
-                        <Route path={routes.CV_CREATE} element={<CVCreateEdit/>}/>
-                        <Route path={routes.CV_EDIT} element={<CVCreateEdit isEdit={true}/>}/>
+                        <Route
+                            path={routes.CV_DETAILS}
+                            element={<CVDetails/>}
+                        />
 
-                        <Route path={routes.WORK_EXP_LIST} element={<WorkExpList/>}/>
-                        <Route path={routes.WORK_EXP_CREATE} element={<WorkExpCreateEdit/>}/>
-                        <Route path={routes.WORK_EXP_EDIT} element={<WorkExpCreateEdit isEdit={true}/>}/>
-                        <Route path={routes.WORK_EXP_DETAILS} element={<WorkExpDetails/>}/>
+                        <Route
 
-                        <Route path={routes.EDUCATION_LIST} element={<EducationList/>}/>
-                        <Route path={routes.EDUCATION_CREATE} element={<EducationCreateEdit/>}/>
-                        <Route path={routes.EDUCATION_EDIT} element={<EducationCreateEdit isEdit={true}/>}/>
-                        <Route path={routes.EDUCATION_DETAILS} element={<EducationDetails/>}/>
+                            path={routes.CV_LIST}
+                            element={<LoginRequired><CVList/></LoginRequired>}
+                        />
+                        <Route
+                            path={routes.CV_CREATE}
+                            element={<LoginRequired><CVCreateEdit/></LoginRequired>}
+                        />
+                        <Route
+                            path={routes.CV_EDIT}
+                            element={<LoginRequired><CVCreateEdit isEdit={true}/></LoginRequired>}
+                        />
+                        <Route
+                            path={routes.WORK_EXP_LIST}
+                            element={<LoginRequired><WorkExpList/></LoginRequired>}
+                        />
+                        <Route
+                            path={routes.WORK_EXP_CREATE}
+                            element={<LoginRequired><WorkExpCreateEdit/></LoginRequired>}
+                        />
+                        <Route
+                            path={routes.WORK_EXP_EDIT}
+                            element={<LoginRequired><WorkExpCreateEdit isEdit={true}/></LoginRequired>}
+                        />
+                        <Route
+                            path={routes.WORK_EXP_DETAILS}
+                            element={<LoginRequired><WorkExpDetails/></LoginRequired>}
+                        />
 
-                        <Route path={routes.REFERENCES_LIST} element={<ReferencesList/>}/>
-                        <Route path={routes.REFERENCES_CREATE} element={<ReferencesCreateEdit/>}/>
-                        <Route path={routes.REFERENCES_EDIT} element={<ReferencesCreateEdit isEdit={true}/>}/>
-                        <Route path={routes.REFERENCES_DETAILS} element={<ReferencesDetails/>}/>
+                        <Route
+                            path={routes.EDUCATION_LIST}
+                            element={<LoginRequired><EducationList/></LoginRequired>}
+                        />
+                        <Route
+                            path={routes.EDUCATION_CREATE}
+                            element={<LoginRequired><EducationCreateEdit/></LoginRequired>}
+                        />
+                        <Route
+                            path={routes.EDUCATION_EDIT}
+                            element={<LoginRequired><EducationCreateEdit isEdit={true}/></LoginRequired>}
+                        />
+                        <Route
+                            path={routes.EDUCATION_DETAILS}
+                            element={<LoginRequired><EducationDetails/></LoginRequired>}
+                        />
 
-                        <Route path={routes.REQUIREMENTS_LIST} element={<RequirementsList/>}/>
-                        <Route path={routes.REQUIREMENTS_CREATE} element={<RequirementsCreateEdit/>}/>
-                        <Route path={routes.REQUIREMENTS_EDIT} element={<RequirementsCreateEdit isEdit={true}/>}/>
-                        <Route path={routes.REQUIREMENTS_DETAILS} element={<RequirementsDetails/>}/>
+                        <Route
+                            path={routes.REFERENCES_LIST}
+                            element={<LoginRequired><ReferencesList/></LoginRequired>}
+                        />
+                        <Route
+                            path={routes.REFERENCES_CREATE}
+                            element={<LoginRequired><ReferencesCreateEdit/></LoginRequired>}
+                        />
+                        <Route
+                            path={routes.REFERENCES_EDIT}
+                            element={<LoginRequired><ReferencesCreateEdit isEdit={true}/></LoginRequired>}
+                        />
+                        <Route
+                            path={routes.REFERENCES_DETAILS}
+                            element={<LoginRequired><ReferencesDetails/></LoginRequired>}
+                        />
+
+                        <Route
+                            path={routes.REQUIREMENTS_LIST}
+                            element={<LoginRequired><RequirementsList/></LoginRequired>}
+                        />
+                        <Route
+                            path={routes.REQUIREMENTS_CREATE}
+                            element={<LoginRequired><RequirementsCreateEdit/></LoginRequired>}
+                        />
+                        <Route
+                            path={routes.REQUIREMENTS_EDIT}
+                            element={<LoginRequired><RequirementsCreateEdit isEdit={true}/></LoginRequired>}
+                        />
+                        <Route
+                            path={routes.REQUIREMENTS_DETAILS}
+                            element={<LoginRequired><RequirementsDetails/></LoginRequired>}
+                        />
 
 
-                        <Route path={routes.CERTIFICATES_LIST} element={<CertificatesList/>}/>
-                        <Route path={routes.CERTIFICATES_CREATE} element={<CertificatesCreateEdit/>}/>
-                        <Route path={routes.CERTIFICATES_EDIT} element={<CertificatesCreateEdit isEdit={true}/>}/>
-                        <Route path={routes.CERTIFICATES_DETAILS} element={<CertificatesDetails/>}/>
+                        <Route
+                            path={routes.CERTIFICATES_LIST}
+                            element={<LoginRequired><CertificatesList/></LoginRequired>}
+                        />
+                        <Route
+                            path={routes.CERTIFICATES_CREATE}
+                            element={<LoginRequired><CertificatesCreateEdit/></LoginRequired>}
+                        />
+                        <Route
+                            path={routes.CERTIFICATES_EDIT}
+                            element={<LoginRequired><CertificatesCreateEdit isEdit={true}/></LoginRequired>}
+                        />
+                        <Route
+                            path={routes.CERTIFICATES_DETAILS}
+                            element={<LoginRequired><CertificatesDetails/></LoginRequired>}
+                        />
                     </Routes>
+
                 </main>
 
                 <footer>

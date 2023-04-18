@@ -18,7 +18,7 @@ export function SectionRequirements({
 
     const {setIsLoading} = useContext(LoadingContext);
     const userContext = useContext(UserContext);
-    const userId = userContext.userData.id;
+    const userId = userContext?.userData?.id;
 
     useEffect(() => {
         if (addPopUp) {

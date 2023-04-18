@@ -1,14 +1,19 @@
 import {useContext} from 'react';
-import {useNavigate} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import {UserContext} from '../../../context/UserContext.js';
+import {routes} from "../../../constants/routes";
 
 
 export function Logout() {
-    const navigate = useNavigate();
     const {userLogout} = useContext(UserContext);
 
-    userLogout();
-    navigate('/');
+    function handleLogout(userLogout) {
+        userLogout();
+    }
 
-    return null;
+    return (
+        <Link to={routes.HOME} onClick={() => handleLogout(userLogout)}>
+            Logout
+        </Link>
+    );
 }

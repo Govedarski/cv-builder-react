@@ -4,9 +4,14 @@ import {camelCaseTextToSnakeCase, changeObjectKeysNaming} from "../../../utils/h
 export async function getCVs(userId) {
     return request.get(`/user/${userId}/cv`);
 }
-
+export async function getAllCVs() {
+    return request.get(`/cv`);
+}
 export async function getCV(userId, cvId) {
     return request.get(`/user/${userId}/cv/${cvId}`);
+}
+export async function getPublicCV( cvId) {
+    return request.get(`/cv/${cvId}`);
 }
 
 export async function createCV(userId, cvData) {
@@ -28,8 +33,8 @@ export async function updateCV(userId, cvId, cvData) {
         requirements_id: Number(cvData.requirementsId),
         professional_skills: cvData.professionalSkills,
         soft_skills: cvData.softSkills,
+        public_status: cvData.publicStatus,
     }
-    console.log(cvData);
     return request.put(`/user/${userId}/cv/${cvId}`, cvData);
 }
 

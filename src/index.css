@@ -47,3 +47,7 @@ h1 {
     cursor: pointer;
 
 }
+
+textarea{
+    padding: 16px;
+}

@@ -1,5 +1,4 @@
 import {AsideMenu} from "../../../helpers/AsideMenu/AsideMenu";
-import {CloseButton} from "../../../helpers/CloseButton/CloseButton";
 import styles from './DetailsTemplate.module.css'
 import {createAsideLink} from "../../../../utils/helper_functions";
 import {useLocation, useNavigate} from "react-router-dom";
@@ -7,7 +6,7 @@ import {useContext, useState} from "react";
 import {DeletePopupMenu} from "../DeletePopUpMenu/DeletePopUpMenu";
 import {LoadingContext} from "../../../../context/LoadingContext";
 
-export function DetailsTemplate({sections, deleteService, asideLinks}) {
+export function DetailsTemplate({sections, deleteService, asideLinks, hideAsideLinks}) {
     const location = useLocation();
     const listLink = location.pathname.split("/").slice(0, -1).join("/")
     const {setIsLoading} = useContext(LoadingContext);
@@ -45,7 +44,9 @@ export function DetailsTemplate({sections, deleteService, asideLinks}) {
 
     return (
         <>
-            <AsideMenu links={allAsideLinks}/>
+            {!hideAsideLinks &&
+                <AsideMenu links={allAsideLinks}/>
+            }
             <div className={styles.cvDetailsContainer}>
                 {sections}
                 {showDelete && <DeletePopupMenu onDelete={deleteItem} onCancel={hideDeleteMenu}/>}

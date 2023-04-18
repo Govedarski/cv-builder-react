@@ -104,11 +104,12 @@ export function EducationCreateEdit({isEdit}) {
 
     function dataModifier(data) {
         let finalData = {...data}
-        if (finalData.endDate === '') {
+        if (!finalData.endDate) {
             finalData.endDate = 'Present'
         } else {
             finalData.endDate = dateToString(finalData.endDate, 'dd/mm/yyyy')
         }
+        console.log(finalData)
         finalData.startDate = dateToString(finalData.startDate, 'dd/mm/yyyy')
         return finalData
     }

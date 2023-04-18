@@ -16,7 +16,7 @@ export function SectionCertificates({                                    addPopU
     const [selectedImage, setSelectedImage] = useState(null);
     const {setIsLoading} = useContext(LoadingContext);
     const userContext = useContext(UserContext);
-    const userId = userContext.userData.id;
+    const userId = userContext?.userData?.id;
     data = data?.map(x => changeObjectKeysNaming(x, snakeCaseToCamelCase))
 
     function handleImageClick(e) {
