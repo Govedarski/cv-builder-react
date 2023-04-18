@@ -3,7 +3,7 @@ import styles from "../../../common/DetailsTemplate/DetailsTemplate.module.css";
 import React from "react";
 import {FormField} from "../../../../helpers/FormField/FormField";
 
-export function SectionSkills({cvData, modify, state, setState,}) {
+export function SectionSkills({cvData, modify, state, setState}) {
     const professionalSkillsRef = React.useRef();
     const softSkillsRef = React.useRef();
     const languagesRef = React.useRef();
@@ -13,6 +13,11 @@ export function SectionSkills({cvData, modify, state, setState,}) {
         switch (e.target.id) {
             case "professionalSkills":
                 setState(prevState => {
+                    if(professionalSkillsRef.current.value.length > 64){
+                        professionalSkillsRef.current.value = ""
+                        alert("Professional skill name is too long. Max length is 64 characters.")
+                        return;
+                    }
                     const newState = {...prevState}
                     newState.professionalSkills.push(professionalSkillsRef.current.value)
                     professionalSkillsRef.current.value = ""
@@ -20,15 +25,22 @@ export function SectionSkills({cvData, modify, state, setState,}) {
                 })
                 break;
             case "softSkills":
+                if(softSkillsRef.current.value.length > 64){
+                    alert("Soft skill name is too long. Max length is 64 characters.")
+                    return;
+                }
                 setState(prevState => {
                     const newState = {...prevState}
                     newState.softSkills.push(softSkillsRef.current.value)
                     softSkillsRef.current.value = ""
                     return newState;
-
                 })
                 break;
             case "languages":
+                if(languagesRef.current.value.length > 64){
+                    alert("Language name is too long. Max length is 64 characters.")
+                    return;
+                }
                 setState(prevState => {
                     const newState = {...prevState}
                     newState.otherLanguages.push(languagesRef.current.value)
@@ -36,6 +48,8 @@ export function SectionSkills({cvData, modify, state, setState,}) {
                     return newState;
 
                 })
+                break;
+            default:
                 break;
         }
     }

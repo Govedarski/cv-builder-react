@@ -9,7 +9,6 @@ export function useScroller() {
         if (!sectionId) {
             return;
         }
-        console.log("here")
         scroller.scrollTo(sectionId, {
             duration: 500,
             smooth: true,

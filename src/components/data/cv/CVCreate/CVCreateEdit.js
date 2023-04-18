@@ -25,6 +25,10 @@ import {CertificatesItem} from "../../certificates/CertificatesList/Certificates
 import * as cvService from "../../../../services/dataServices/cvService/cvService";
 import {changeObjectKeysNaming, snakeCaseToCamelCase} from "../../../../utils/helper_functions";
 import {publicStatusColors} from "../../../../constants/publicStatusColors";
+import {useErrorManager} from '../../../../hooks/useErrorManager.js';
+import {validationManager} from '../../../../utils/validation/validatonManager.js';
+import {ValidateMaxLength} from '../../../../utils/validation/validators/validators.js';
+import {ErrorList} from '../../../helpers/ErrorList/ErrorList.js';
 
 
 export function CVCreateEdit({isEdit}) {
@@ -40,6 +44,7 @@ export function CVCreateEdit({isEdit}) {
     const [effectFunc, resetFunc] = useScroller()
     useEffect(effectFunc, [location.hash])
     resetFunc()
+    const errorManager = useErrorManager({});
     const [add, setAdd] = React.useState({
         workExp: false,
         education: false,
@@ -116,6 +121,22 @@ export function CVCreateEdit({isEdit}) {
 
     function onSubmit(e) {
         e.preventDefault()
+        validationManager.validate(
+            [new ValidateMaxLength(1000)],
+            "description",
+            data.description,
+            errorManager
+        )
+        validationManager.validate(
+            [new ValidateMaxLength(1000)],
+            "summary",
+            data.summary,
+            errorManager
+        )
+        errorManager.showAllErrors();
+        if (errorManager.hasError()) {
+            return;
+        }
         setIsLoading(true)
         const service = isEdit
             ? cvService.updateCV.bind(null, userId, cvId, state)
@@ -223,19 +244,19 @@ export function CVCreateEdit({isEdit}) {
                         <h2>CV {cvData.id} {cvData.title}</h2>
                         <FormField
                             name={"publicStatus"}
-                            value={state.publicStatus}
+                            value={state?.publicStatus}
                             onChange={changeHandler}
                             type={"select"}
                             label={null}
                             options={['Public','Protected', 'Private']}
                             fieldTitle={"Public is visible to all\nProtected is visible to all logged in users\nPrivate is visible only to you"}
-                            fieldStyle={{backgroundColor: publicStatusColors[state.publicStatus]}}
+                            fieldStyle={{backgroundColor: publicStatusColors[state?.publicStatus]}}
                         />
 
                     </section>
                     <SectionPersonalInformation
                         onDoubleClick={EditProfile}
-                        data={state.profile
+                        data={state?.profile
                             ? state
                             : {profile:profileData,
                             email:userData.user.email}
@@ -246,7 +267,7 @@ export function CVCreateEdit({isEdit}) {
                         <h2 className={styles.sectionInfoTitle}>Summary</h2>
                         <FormField
                             name={"summary"}
-                            value={state.summary}
+                            value={state?.summary}
                             onChange={changeHandler}
                             type={"textarea"}
                             label={null}
@@ -312,7 +333,7 @@ export function CVCreateEdit({isEdit}) {
                         setData={setData}
                     />
                     <button className={styles.Btn}>Submit</button>
-
+                    <ErrorList errorData={errorManager.errorData}/>
                 </div>
             </form>
 

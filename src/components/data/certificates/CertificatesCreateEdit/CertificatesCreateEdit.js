@@ -101,21 +101,7 @@ export function CertificatesCreateEdit({isEdit}) {
             data.imageFileUrl = ""
             certificatesService.deleteImage(userId, itemId)
         }
-        // if (!profileData.profilePictureFileUrl && !profilePicture.image) {
-        //     return;
-        // }
-        // setIsLoading(true);
-        // profileService.deleteProfilePicture(user_id)
-        //     .then(res => {
-        //         userContext.setProfile(res);
-        //         setProfilePicture('', '', '');
-        //         setIsLoading(false);
-        //     })
-        //     .catch(err => {
-        //         setIsLoading(false);
-        //     });
     }
-    console.log(data)
     const formFields = [
         <FormField
             key={"name"}
