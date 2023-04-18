@@ -79,6 +79,7 @@ export function CertificatesCreateEdit({isEdit}) {
         let finalData = {...data}
         finalData.date = dateToString(finalData.date, 'dd/mm/yyyy')
         finalData.imageBinary = image.binary;
+
         finalData.imageExtension = image.extension;
         delete finalData.imageFileUrl
 
@@ -98,6 +99,7 @@ export function CertificatesCreateEdit({isEdit}) {
         if (image || data.imageFileUrl){
             setImage('', '', '');
             data.imageFileUrl = ""
+            certificatesService.deleteImage(userId, itemId)
         }
         // if (!profileData.profilePictureFileUrl && !profilePicture.image) {
         //     return;

@@ -22,3 +22,7 @@ export async function update(userId, itemId, data) {
 export async function deleteItem(userId, itemId) {
     return request.delete(`/user/${userId}/certificates/${itemId}`);
 }
+
+export async function deleteImage(userId, itemId) {
+    return request.delete(`/user/${userId}/certificates/${itemId}/image`);
+}
