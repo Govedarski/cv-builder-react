@@ -25,11 +25,14 @@ setIsLoading(true);
         )
     }, [])
     return (
+        <div className={styles.wrapper}>
+        <h1>CV Catalog</h1>
         <div className={styles.container}>
             {data.map(x => <CvItem
                 key={x.id}
                 data={x}
             />)}
+        </div>
         </div>
     )
 }
