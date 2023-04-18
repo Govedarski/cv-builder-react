@@ -15,7 +15,7 @@ export function CvItem({data}) {
         >
             <img alt={"No photo provided"} src={data.profile.profilePictureFileUrl || placeholder}/>
             <div>
-            <h3>Name: {data.first_name} {data.last_name}</h3>
+            <h3>Name: {data.profile.firstName} {data.profile.lastName}</h3>
             <p>{data.email}</p>
             </div>
         </div>
