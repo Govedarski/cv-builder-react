@@ -23,6 +23,7 @@ export class ValidateMinLength extends Validator {
     }
 
     validate(name, value) {
+        value = value || '';
         if (value.length < this.minLength) {
             return this.getError(`${name} must be at least ${this.minLength} characters long!`);
         }
@@ -38,6 +39,7 @@ export class ValidateMaxLength extends Validator {
     }
 
     validate(name, value) {
+        value = value || '';
         if (value.length > this.maxLength) {
             return this.getError(`${name} should be ${this.maxLength} characters or less!`);
         }

@@ -197,7 +197,7 @@ export function CVCreateEdit({isEdit}) {
         )
     }
 
-    function createAddPopUp(data, state, section) {
+    function createAddPopUp(data, marked, section) {
         let item = null;
         switch (section) {
             case "workExp":
@@ -224,8 +224,9 @@ export function CVCreateEdit({isEdit}) {
                 data={data}
                 setAdd={setAdd}
                 mark={mark}
-                marked={state}
+                marked={marked}
                 item={item}
+                state={state}
             />
         )
     }

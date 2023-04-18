@@ -23,6 +23,7 @@ export function CreateEditTemplate({   title,
 
     const [data, setData] = state
     const {stateData} = location.state || {};
+    const {backData} = location.state || {};
 
     useEffect(() => {
         if (!getService){

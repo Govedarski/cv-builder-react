@@ -1,7 +1,9 @@
 import React from "react";
 import styles from "./AddPopUp.module.css";
+import {routes} from '../../../../constants/routes.js';
+import {Link} from 'react-router-dom';
 
-export function AddPopUp({section, data, setAdd, mark, marked, item}) {
+export function AddPopUp({section, data, setAdd, mark, marked, item, state}) {
 
 
     function close() {
@@ -27,7 +29,15 @@ export function AddPopUp({section, data, setAdd, mark, marked, item}) {
                 })}
                 </div>)
             )}
-            <button onClick={close}>Done</button>
+            <div>
+                {/*<Link*/}
+                {/*    to={routes[section.toUpperCase() + "_CREATE"]}*/}
+                {/*    state={{backData: state}}*/}
+                {/*>*/}
+                {/*    Create new {section}*/}
+                {/*</Link>*/}
+                <button onClick={close}>Done</button>
+            </div>
         </div>
     )
 }
