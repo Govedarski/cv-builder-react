@@ -3,7 +3,6 @@
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
-    min-height: 100%;
     box-sizing: border-box;
     color: #fff;
     gap: 32px;
@@ -13,6 +12,7 @@
     padding-right: 16px;
     width: max-content;
     min-width: 45%;
+    max-height: 240px;
 }
 
 .container img{

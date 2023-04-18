@@ -14,10 +14,7 @@
     align-items: center;
     box-sizing: border-box;
     color: #fff;
-    gap: 8px;
+    gap: 32px;
     margin-top: 16px;
 }
 
-.container > *{
-    max-height: 120px;
-}
