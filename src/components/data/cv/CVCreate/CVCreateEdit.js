@@ -124,13 +124,13 @@ export function CVCreateEdit({isEdit}) {
         validationManager.validate(
             [new ValidateMaxLength(1000)],
             "summary",
-            data.summary,
+            state.summary,
             errorManager
         )
         validationManager.validate(
             [new ValidateMaxLength(1000)],
             "hobbies",
-            data.hobbies,
+            state.hobbies,
             errorManager
         )
         errorManager.showAllErrors();
