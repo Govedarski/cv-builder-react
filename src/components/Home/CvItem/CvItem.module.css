@@ -1,12 +1,12 @@
 .container{
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
     min-height: 100%;
     box-sizing: border-box;
     color: #fff;
-    gap: 8px;
+    gap: 32px;
     cursor: pointer;
     background-color: rgba(0, 0, 0, 0.3);
     border-radius: 64px;
